@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ShowAllFiles>true</ShowAllFiles>
+    <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='3DS|ARM'">
     <RemoteDebuggerCommand>
@@ -9,8 +9,11 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <RemoteDebuggerCommandArguments>
     </RemoteDebuggerCommandArguments>
-    <LocalDebuggerCommand>C:\devkitPro\msys\bin\make.exe</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments>-f Makefile_3ds run</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommand>
+    </LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NDS|ARM'">
     <RemoteDebuggerCommand>
@@ -18,7 +21,10 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <RemoteDebuggerCommandArguments>
     </RemoteDebuggerCommandArguments>
-    <LocalDebuggerCommand>C:\devkitPro\msys\bin\make.exe</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments>-f Makefile_nds run</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommand>
+    </LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory />
   </PropertyGroup>
 </Project>

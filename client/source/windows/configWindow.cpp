@@ -320,7 +320,7 @@ bool WindowClass::Update()
 		ButtonSlider3DFunction();
 		last_slider_3d_status = g_slider_3d_status;
 	}
-#elif defined(_NDS)
+//#elif defined(_NDS) // TODO why did this check defined(_NDS)
 	else if(g_keys_down&KEY_BLUE)
 		ButtonBlueFunction();
 	else if(g_keys_down&KEY_YELLOW)

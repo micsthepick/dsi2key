@@ -12,7 +12,7 @@
 #elif defined(_NDS)
 #include <nds.h>
 #include <fat.h>
-#include <dswifi9.h>
+#include <dsiwifi9.h>
 #endif
 
 #include "core.h"
@@ -483,9 +483,9 @@ bool Init(int argc, char* argv[])
 	if(!EMULATOR) 
 	{
 		LOG(INFO) << "Connecting via WFC data\n";
-		if(!Wifi_InitDefault(WFC_CONNECT))
+		if(!DSiWifi_InitDefault(WFC_CONNECT))
 		{
-			LOG(ERROR) << "Error (Wifi_InitDefault): Failed to connect\n";
+			LOG(ERROR) << "Error (DSiWifi_InitDefault): Failed to connect\n";
 
 			return true; // Return with error
 		}
@@ -513,6 +513,16 @@ bool Init(int argc, char* argv[])
 
 	UDP::Init();    // Initilize UDP
 	Config::Load(); // Load UDP settings
+
+	// wait a few seconds on nds
+#ifdef _NDS
+	for (int i = 0; i < 60*5; i++)
+	{
+		WaitForVBlank();
+	}
+#endif
+
+
 	UDP::Connect(); // Connect with settings
 #ifdef _NDS
 	if(!toggle_both_lights)

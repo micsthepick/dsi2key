@@ -16,7 +16,7 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 BUILD		:=	build_arm7
 SOURCES		:=	source/arm7
-INCLUDES	:=	
+INCLUDES	:=	../../dsiwifi/include
 DATA		:=
 
 #---------------------------------------------------------------------------------
@@ -36,13 +36,13 @@ CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions -fno-rtti
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=ds_arm7.specs -g $(ARCH) -Wl,-Map,$(notdir $*).map
 
-LIBS	:=	-ldswifi7 -lnds7
+LIBS	:=	-ldsiwifi7 -lnds7
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	$(LIBNDS)
+LIBDIRS	:= ../../dsiwifi $(LIBNDS)
 
 
 #---------------------------------------------------------------------------------
@@ -85,10 +85,10 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-.PHONY: $(BUILD) clean
+.PHONY: $(BUILD) clean ../dsiwifi/lib/libdsiwifi7
 
 #---------------------------------------------------------------------------------
-$(BUILD):
+$(BUILD): ../dsiwifi/lib/libdsiwifi7
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile_arm7
 
@@ -96,6 +96,12 @@ $(BUILD):
 clean:
 	@echo clean ...
 	@rm -fr $(BUILD) *.elf
+	$(MAKE) -C ../dsiwifi/arm_iop clean
+
+../dsiwifi/lib/libdsiwifi7:
+	mkdir -p ../dsiwifi/lib
+	$(MAKE) -C ../dsiwifi/arm_iop TOPDIR=$(CURDIR)/../dsiwifi BUILD=release
+
 
 
 #---------------------------------------------------------------------------------

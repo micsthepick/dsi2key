@@ -17,7 +17,7 @@
 #include <sys/ioctl.h>    // ioctl
 #elif defined(_NDS)
 #include <nds.h>
-#include <dswifi9.h>
+#include <dsiwifi9.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <cerrno>
@@ -52,8 +52,8 @@
 #define NETclosesocket close
 #define SOCKET_ERROR -1
 #elif defined(_NDS)
-typedef int socklen_t;
-#define NETclosesocket closesocket
+#define SOCKET_ERROR -1
+#define NETclosesocket close
 #elif defined(_3DS)
 #define SOCKET_ERROR -1
 #define NETclosesocket closesocket
@@ -63,8 +63,8 @@ typedef int socklen_t;
 
 #if defined(_NDS) || defined(_3DS)
 #include "core.h"
-#include "commandWindow.h"
-#include "configWindow.h"
+#include "windows/commandWindow.h"
+#include "windows/configWindow.h"
 #endif
 
 #include "udp.h"
@@ -199,7 +199,7 @@ int Connect(bool _non_blocking, uint16_t _port)
 		return err;
 	}
 	connected = true;
-	LOG(INFO) << "Connected on UDP port #" << GetPort();
+	LOG(INFO) << "Connected on UDP port #" << GetPort() << "\n";
 
 	return 0;
 }
@@ -220,7 +220,7 @@ int Disconnect()
 
 			return err;
 		}
-		LOG(INFO) << "UDP Disconnected";
+		LOG(INFO) << "UDP Disconnected\n";
 	}
 
 	return 0;
@@ -252,7 +252,7 @@ int Send(const void* buffer, unsigned int length)
 			LOG(ERROR) << "Error #" << err << " (sendto): " << strerror(err) << "\n";
 			return err;
 		}
-		LOG_EVERY_N(300, TRACE) << "Sent " << length << " bytes";
+		//LOG_EVERY_N(300, TRACE) << "Sent " << length << " bytes";
 	}
 
 	return 0;
@@ -296,7 +296,7 @@ int Recv(void* buffer, unsigned int length, struct sockaddr* _remote_sockaddr)
 
 			return err;
 		}
-		LOG_EVERY_N(300, TRACE) << "Received " << length << " bytes";
+		//LOG_EVERY_N(300, TRACE) << "Received " << length << " bytes";
 	}
 
 	return 0;
@@ -305,7 +305,7 @@ int Recv(void* buffer, unsigned int length, struct sockaddr* _remote_sockaddr)
 unsigned long GetLocalIP()
 {
 #if defined(_NDS)
-	return Wifi_GetIP();
+	return DSiWifi_GetIP();
 #elif defined(_3DS)
 	return gethostid();
 #elif defined(_WIN32) || defined(__linux__)
@@ -367,7 +367,7 @@ void SetConfigPort(uint16_t _port)
 {
 	// If port is 0, Use default port 9501
 	UDP::port = _port == 0 ? DEFAULT_PORT : _port;
-	LOG(INFO) << "UDP Port set to #" << UDP::GetPort() << ".";
+	LOG(INFO) << "UDP Port set to #" << UDP::GetPort() << ".\n";
 }
 
 #if defined(D2KCLIENT)
@@ -375,7 +375,7 @@ void SetConfigPort(uint16_t _port)
 void SendNormalSetting(DS2KeySingleInputSettingPacket setting)
 {
 	Send(&setting, sizeof(DS2KeySingleInputSettingPacket));
-	LOG(TRACE) << "SendNormalSetting()";
+	LOG(TRACE) << "SendNormalSetting()\n";
 }
 void SendCommand(uint8_t command)
 {
@@ -388,7 +388,7 @@ void SendCommand(uint8_t command)
 	packet.keys = command;
 
 	Send(&packet, sizeof(DS2KeyPacket));            // Send packet
-	LOG(TRACE) << "SendCommand(" << (int)command << ")";
+	LOG(TRACE) << "SendCommand(" << (int)command << ")\n";
 }
 
 void Update(uint32_t keys, uint32_t keysTurbo, const touchPosition* touch_position,
@@ -454,7 +454,7 @@ void Update(uint32_t keys, uint32_t keysTurbo, const touchPosition* touch_positi
 	packet.keyboard = keyboard;
 
 	Send(&packet, sizeof(DS2KeyPacket));           // Send packet
-	LOG_EVERY_N(300, TRACE) << "Sent UDP::Update()";
+	//LOG_EVERY_N(300, TRACE) << "Sent UDP::Update()";
 }
 
 void SendLookupPacket()
@@ -463,7 +463,7 @@ void SendLookupPacket()
 	packet.type = UDP::PACKET::LOOKUP;   // Set as a lookup packet
 
 	Send(&packet, sizeof(DS2KeyPacket)); // Send the packet out
-	LOG_EVERY_N(10, TRACE) << "SendLookupPacket()";
+	//LOG_EVERY_N(10, TRACE) << "SendLookupPacket()";
 }
 
 void RequestSettingsCommand()
@@ -473,7 +473,7 @@ void RequestSettingsCommand()
 	packet.profile = UDP::GetProfile();             // Set profile
 
 	UDP::Send(&packet, sizeof(UDP::DS2KeyPacket));  // Send the packet out
-	LOG(TRACE) << "RequestSettingsCommand()";
+	LOG(TRACE) << "RequestSettingsCommand()\n";
 }
 
 void RequestInputSettings()
@@ -483,7 +483,7 @@ void RequestInputSettings()
 	packet.profile = UDP::GetProfile();             // Set profile
 
 	UDP::Send(&packet, sizeof(UDP::DS2KeyPacket));  // Send the packet out
-	LOG(TRACE) << "RequestInputSettings()";
+	LOG(TRACE) << "RequestInputSettings()\n";
 }
 
 void ServerLookup()
@@ -543,11 +543,11 @@ void ListenForServer()
 			break;
 		case UDP::PACKET::COMMAND_SETTINGS: // Received Command Settings
 			GUI::Command::ProcessCommandSettingsPacket(command_settings_packet);
-			LOG(TRACE) << "Received UDP::PACKET::COMMAND_SETTINGS";
+			LOG(TRACE) << "Received UDP::PACKET::COMMAND_SETTINGS\n";
 			break;
 		case UDP::PACKET::INPUT_SETTINGS:  // Received Input Settings
 			GUI::ConfigWindow::ProcessInputSettingsPacket(*input_settings_packet_pointer);
-			LOG(TRACE) << "Received UDP::PACKET::INPUT_SETTINGS";
+			LOG(TRACE) << "Received UDP::PACKET::INPUT_SETTINGS\n";
 			break;
 		default:
 			break;
@@ -580,12 +580,12 @@ void SetProfile(uint8_t _profile)
 void SendCommandSettings(DS2KeyCommandSettingsPacket settings)
 {
 	Send(&settings, sizeof(DS2KeyCommandSettingsPacket));
-	LOG(TRACE) << "SendCommandSettings()";
+	LOG(TRACE) << "SendCommandSettings()\n";
 }
 void SendInputSettings(DS2KeyInputSettingsPacket settings)
 {
 	Send(&settings, sizeof(DS2KeyInputSettingsPacket));
-	LOG(TRACE) << "SendInputSettings()";
+	LOG(TRACE) << "SendInputSettings()\n";
 }
 #endif
 

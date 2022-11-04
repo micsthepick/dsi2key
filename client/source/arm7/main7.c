@@ -1,5 +1,5 @@
 #include <nds.h>
-#include <dswifi7.h>
+#include <dsiwifi7.h>
 
 volatile bool exit_flag = false;
 

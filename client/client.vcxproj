@@ -118,20 +118,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NDS|ARM'">
-    <NMakeBuildCommandLine>C:\devkitPro\msys\bin\make.exe -f Makefile_nds</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_nds"</NMakeBuildCommandLine>
     <NMakeOutput>ds2key.nds</NMakeOutput>
-    <NMakeCleanCommandLine>C:\devkitPro\msys\bin\make.exe -f Makefile_nds clean</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_nds clean"</NMakeCleanCommandLine>
     <NMakePreprocessorDefinitions>EMULATOR=0;D2KCLIENT;ARM9;_NDS;</NMakePreprocessorDefinitions>
-    <IncludePath>$(ProjectDir)source;$(ProjectDir)..\common;$(ProjectDir)..;C:\devkitPro\portlibs\armv5te\include\freetype2;C:\devkitPro\portlibs\armv5te\include;C:\devkitPro\devkitARM\include;C:\devkitPro\libnds\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <NMakeReBuildCommandLine>C:\devkitPro\msys\bin\make.exe -f Makefile_nds clean &amp;&amp; C:\devkitPro\msys\bin\make.exe -f Makefile_nds</NMakeReBuildCommandLine>
+    <IncludePath>$(ProjectDir)source;$(ProjectDir)..\common;$(ProjectDir)..;$(ProjectDir)..\dsiwifi\include;C:\devkitPro\portlibs\nds\include\freetype2;C:\devkitPro\portlibs\nds\include;C:\devkitPro\devkitARM\include;C:\devkitPro\libnds\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <NMakeReBuildCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_nds clean &amp;&amp; make -f Makefile_nds"</NMakeReBuildCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='3DS|ARM'">
-    <NMakeBuildCommandLine>C:\devkitPro\msys\bin\make.exe -f Makefile_3ds</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_3ds"</NMakeBuildCommandLine>
     <NMakeOutput>3ds2key.3dsx</NMakeOutput>
-    <NMakeCleanCommandLine>C:\devkitPro\msys\bin\make.exe -f Makefile_3ds clean</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_3ds clean"</NMakeCleanCommandLine>
     <NMakePreprocessorDefinitions>EMULATOR=0;D2KCLIENT;ARM11;_3DS;</NMakePreprocessorDefinitions>
     <IncludePath>$(ProjectDir)source;$(ProjectDir)..\common;$(ProjectDir)..;C:\devkitPro\portlibs\armv6k\include\freetype2;C:\devkitPro\portlibs\armv6k\include;C:\devkitPro\devkitARM\include;C:\devkitPro\libctru\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <NMakeReBuildCommandLine>C:\devkitPro\msys\bin\make.exe -f Makefile_3ds clean &amp;&amp; C:\devkitPro\msys\bin\make.exe -f Makefile_3ds</NMakeReBuildCommandLine>
+    <NMakeReBuildCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_3ds clean &amp;&amp; make -f Makefile_3ds"</NMakeReBuildCommandLine>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
