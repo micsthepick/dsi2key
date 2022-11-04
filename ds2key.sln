@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server\server.vcxproj", "{90C7424E-D238-441D-8590-3A125AA0C29B}"
 EndProject
@@ -14,6 +14,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		3DS|x86 = 3DS|x86
 		Debug|x86 = Debug|x86
+		GUI Debug|x86 = GUI Debug|x86
 		GUI Release|x86 = GUI Release|x86
 		NDS|x86 = NDS|x86
 		Release|x86 = Release|x86
@@ -23,6 +24,8 @@ Global
 		{90C7424E-D238-441D-8590-3A125AA0C29B}.3DS|x86.Build.0 = Debug|Win32
 		{90C7424E-D238-441D-8590-3A125AA0C29B}.Debug|x86.ActiveCfg = Debug|Win32
 		{90C7424E-D238-441D-8590-3A125AA0C29B}.Debug|x86.Build.0 = Debug|Win32
+		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Debug|x86.ActiveCfg = GUI Debug|Win32
+		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Debug|x86.Build.0 = GUI Debug|Win32
 		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Release|x86.ActiveCfg = GUI Release|Win32
 		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Release|x86.Build.0 = GUI Release|Win32
 		{90C7424E-D238-441D-8590-3A125AA0C29B}.NDS|x86.ActiveCfg = Debug|Win32
@@ -33,6 +36,7 @@ Global
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.3DS|x86.Build.0 = 3DS|ARM
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.Debug|x86.ActiveCfg = 3DS|ARM
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.Debug|x86.Build.0 = 3DS|ARM
+		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.GUI Debug|x86.ActiveCfg = NDS|ARM
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.GUI Release|x86.ActiveCfg = 3DS|ARM
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.GUI Release|x86.Build.0 = 3DS|ARM
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.NDS|x86.ActiveCfg = NDS|ARM
@@ -42,5 +46,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3DB59E8-1EB5-46A2-9211-BB4BA6284D85}
 	EndGlobalSection
 EndGlobal

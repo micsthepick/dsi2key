@@ -42,6 +42,9 @@
 *.3dsx
 *.smdh
 *.lst
+*.exe.recipe
+*.iobj
+*.ipdb
 client.nds
 DS2Key.nds
 /client/ds2key/dstwo_icon.bmp
@@ -54,3 +57,7 @@ DS2Key.nds
 /SDCARD/ds2key/font_small.ttf
 /SDCARD/ds2key/font_large.ttf
 /SDCARD/ds2key/background.png
+/Debug
+/server/Gui Debug
+/server/Gui Release
+!/vJoyInterface.dll

@@ -224,4 +224,7 @@
   <ItemGroup>
     <Xml Include="gui\xpmanifest.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\vJoyInterface.dll" />
+  </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
 #include <sstream>//std::stringstream
 #include "core/core.h"
 #include "core/config.h"
-#include "core/key.h"
+#include "common/key.h"
 #include "mainWindow.h"
 #include "common/misc.h"
 
@@ -238,7 +238,7 @@ void listView1Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				if(i != VK_LBUTTON && i != VK_RBUTTON && i != VK_MBUTTON)
 				{
 					listView1->SetText(Key::GetString(i), selected, 1);
-					g_client_array[GUI::MainWindow::Profile::comboButton1->GetSelection()]->GetProfileDataPointer()->SetVirtualKey(listView1->GetSelection() + 3, i);
+					g_client_array[GUI::MainWindow::Profile::comboButton1->GetSelection()]->GetProfileDataPointer()->SetVirtualKey(listView1->GetSelection() + 5, i);
 
 					waiting = false;
 				}
