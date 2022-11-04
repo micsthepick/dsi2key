@@ -1,0 +1,3 @@
+[submodule "dsiwifi"]
+	path = dsiwifi
+	url = git@github.com:shinyquagsire23/dsiwifi.git
