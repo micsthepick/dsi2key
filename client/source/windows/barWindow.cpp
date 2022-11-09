@@ -281,7 +281,7 @@ bool WindowClass::Update()
 	return Window::Update();
 }
 
-void SetText(std::string Text)
+void SetText(const std::string& Text)
 {
 	label_title->SetText(Text);
 }

@@ -4,10 +4,10 @@
 
 namespace D2K {namespace GUI {
 
-LetterButton::LetterButton(uint8_t screen, GUI::Rect rect, std::string letter, std::string text, std::string sub_text, void (*function)()) : Label(screen, rect, text)
+LetterButton::LetterButton(uint8_t screen, GUI::Rect rect, const std::string& letter, const std::string& text, const std::string& sub_text, void (*function)()) : Label(screen, rect, text)
 {
 	GUI::Rect thisRect = GetRect();
-	int width = text.length() * 6 + 4; // Calculate width of "std::string text"
+	int width = text.length() * 6 + 4; // Calculate width of "const std::string& text"
 
 	if(thisRect.GetW() < width)        // If button isn't big enough
 		thisRect.SetW(width);      // Adjust it to text's length
@@ -44,7 +44,7 @@ bool LetterButton::Draw()
 
 	return true;
 }
-void LetterButton::SetSubText(std::string sub_text)
+void LetterButton::SetSubText(const std::string& sub_text)
 {
 	LetterButton::SetUpdate(true);
 	m_sub_text = sub_text;

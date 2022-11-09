@@ -14,6 +14,6 @@ public:
 	~WindowClass();
 };
 extern GUI::Keypad::WindowClass g_window;
-extern std::string Entry(GUI::Label* label, GUI::Edit* edit, std::string text, int maxLength);
+extern std::string Entry(GUI::Label* label, GUI::Edit* edit, const std::string& text, int maxLength);
 
 }}} // namespace D2K::GUI::Keypad

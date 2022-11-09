@@ -25,12 +25,12 @@ std::string ltos (long t);
 // return: converts long into const char*
 const char* ltoa (long t);
 // return: converts std::string into long
-long stol(std::string str);
+long stol(const std::string& str);
 
 // return: converts std::string into uint8_t
-uint8_t string_to_uint8_t(std::string str);
+uint8_t string_to_uint8_t(const std::string& str);
 // return: converts std::string into uint16_t
-uint16_t string_to_uint16_t(std::string str);
+uint16_t string_to_uint16_t(const std::string& str);
 
 // We'll have c++17 someday!
 // TODO: comment

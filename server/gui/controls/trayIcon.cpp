@@ -10,13 +10,13 @@ Windows GUI
 
 namespace D2K {namespace GUI {
 
-TrayIcon::TrayIcon(std::string text) : Label(text, 0, 0, 0, 0)
+TrayIcon::TrayIcon(const std::string& text) : Label(text, 0, 0, 0, 0)
 {
 	ZeroMemory(&niData, sizeof(NOTIFYICONDATA));
 	niData.cbSize = NOTIFYICONDATA_V1_SIZE;
 	niData.uID = ID;//tray icon identifier
 	niData.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-	SetText(text.c_str());
+	SetText(text);
 	niData.hIcon = LoadIcon(GUI::hThisInstance, MAKEINTRESOURCE(IDI_MAIN_ICON));
 	niData.uCallbackMessage = WM_TRAYMSG;
 }
@@ -34,11 +34,11 @@ bool TrayIcon::Attach(Object *parentObject)
 	}
 	return false;
 }
-void TrayIcon::SetText(std::string Text)
+void TrayIcon::SetText(const std::string& text)
 {
-	this->Text = Text;
+	this->Text = text.c_str();
 	ZeroMemory(&niData.szTip, 64);
-	strncpy(niData.szTip, this->Text.c_str(), 63);
+	strncpy(niData.szTip, this->Text, 63);
 
 	return;
 }

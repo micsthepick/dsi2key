@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance,
 #include <chrono>
 namespace D2K {
 
-void ExecuteCommand(std::string Command);
+void ExecuteCommand(const std::string& Command);
 void SendClient()
 {
 	using namespace std::chrono;

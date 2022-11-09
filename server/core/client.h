@@ -139,18 +139,18 @@ public:
 	std::string m_null{};
 
 private:
-	bool SetVirtualKey(int enum_key, std::string value);
-	bool SetRaw(int enum_key, std::string value);
+	bool SetVirtualKey(int enum_key, const std::string& value);
+	bool SetRaw(int enum_key, const std::string& value);
 	bool SetCommand(int enum_key, std::string value);
 	bool SetAxis(int enum_key, std::string value);
 
 	// returns true if `button` is a command, false otherwise
-	bool isCommand(std::string button);
+	bool isCommand(const std::string& button);
 	// returns true if `button` is an axis, false otherwise
-	bool isAxis(std::string button);
+	bool isAxis(const std::string& button);
 	// returns true if `button` is a virtual keypress, false otherwise
-	bool isVirtualKey(std::string button);
-	uint16_t StringToVirtualKey(std::string button);
+	bool isVirtualKey(const std::string& button);
+	uint16_t StringToVirtualKey(const std::string& button);
 	std::string VirtualKeyToString(uint16_t button);
 };
 

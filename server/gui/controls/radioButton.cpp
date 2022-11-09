@@ -10,14 +10,14 @@ Windows GUI
 
 namespace D2K {namespace GUI {
 
-RadioButton::RadioButton(std::string text, int x, int y, int width, int height) : CheckButton(text, x, y, width, height) { }
+RadioButton::RadioButton(const std::string& text, int x, int y, int width, int height) : CheckButton(text, x, y, width, height) { }
 RadioButton::~RadioButton() { }
 bool RadioButton::Attach(Object *parentObject)
 {
 	if(Object::Attach(parentObject))
 	{
 		hwnd = CreateWindow (
-					"BUTTON", Text.c_str(),
+					"BUTTON", Text,
 					WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
 					X, Y, Width, Height,
 					GetParentHWND(),

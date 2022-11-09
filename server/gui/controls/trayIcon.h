@@ -11,10 +11,10 @@ namespace D2K {namespace GUI {
 class TrayIcon : public Label
 {
 public:
-	TrayIcon(std::string text);
+	TrayIcon(const std::string& text);
 	~TrayIcon();
 	bool Attach(Object *parentObject);
-	void SetText(std::string Text);
+	void SetText(const std::string& text);
 	void Delete();
 
 private:

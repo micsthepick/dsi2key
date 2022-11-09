@@ -6,9 +6,9 @@
 namespace D2K {namespace iniParser {
 
 void dump(dictionary* d, FILE* f);
-std::string getstring(dictionary* d, std::string key, std::string def);
-int getint(dictionary* d, std::string key, int notfound);
-dictionary* load(std::string ininame);
+std::string getstring(dictionary* d, const std::string& key, const std::string& def);
+int getint(dictionary* d, const std::string& key, int notfound);
+dictionary* load(const std::string& ininame);
 void freedict(dictionary* d);
 
 }} // namespace D2K::iniParser

@@ -10,7 +10,7 @@ Windows GUI
 
 namespace D2K {namespace GUI {
 
-Edit::Edit(std::string text, int x, int y, int width, int height) : Label(text, x, y, width, height) { }
+Edit::Edit(const std::string& text, int x, int y, int width, int height) : Label(text, x, y, width, height) { }
 Edit::~Edit() { }
 bool Edit::Attach(Object *parentObject)
 {
@@ -18,7 +18,7 @@ bool Edit::Attach(Object *parentObject)
 	{
 		hwnd = CreateWindowEx(
 					WS_EX_CLIENTEDGE,
-					"EDIT", Text.c_str(),
+					"EDIT", Text,
 					WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
 					X, Y, Width, Height,
 					GetParentHWND(),

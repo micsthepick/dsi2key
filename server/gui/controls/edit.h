@@ -10,7 +10,7 @@ namespace D2K {namespace GUI {
 class Edit : public Label
 {
 public:
-	Edit(std::string text, int x, int y, int width, int height);
+	Edit(const std::string& text, int x, int y, int width, int height);
 	~Edit();
 	bool Attach(Object *parentObject);
 };

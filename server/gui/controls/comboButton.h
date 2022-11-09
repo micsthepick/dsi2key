@@ -13,7 +13,7 @@ public:
 	ComboButton(int x, int y, int width, int height);
 	~ComboButton();
 	bool Attach(Object *parentObject);
-	void Append(std::string text);
+	void Append(const std::string& text);
 	void SetSelection(unsigned row);
 	int GetSelection();
 };

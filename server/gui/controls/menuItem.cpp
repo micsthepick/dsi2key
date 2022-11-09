@@ -10,7 +10,7 @@ Windows GUI
 #include "menuItem.h"
 
 namespace D2K {namespace GUI {
-MenuItem::MenuItem(std::string text) : Label(text, 0, 0, 0, 0)
+MenuItem::MenuItem(const std::string& text) : Label(text, 0, 0, 0, 0)
 {
 	hwnd = (HWND)NULL_VALUE;
 }
@@ -36,9 +36,9 @@ bool MenuItem::Attach(Object *parentObject)
 		std::cout << "MenuItem:" << (unsigned int)hwnd << "\n";
 		std::cout << "Text:" << Text << "\n";
 		if(Text == "-")//if it's a seperator
-			return AppendMenu((HMENU)GetParentHWND(), MF_SEPARATOR, ID, Text.c_str());
+			return AppendMenu((HMENU)GetParentHWND(), MF_SEPARATOR, ID, Text);
 
-		return AppendMenu((HMENU)GetParentHWND(), MF_STRING, ID, Text.c_str());
+		return AppendMenu((HMENU)GetParentHWND(), MF_STRING, ID, Text);
 	}
 	return false;
 }

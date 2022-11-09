@@ -102,7 +102,7 @@ void ButtonBackspaceFunction()
 		Buffer.resize(Buffer.length() - 1);
 }
 
-std::string Entry(Label* label, Edit* edit, std::string text, int maxLength)
+std::string Entry(Label* label, Edit* edit, const std::string& text, int maxLength)
 {
 	ForceBacklightsOn(true);                             // Lock backlights on
 	Keypad::label_entry->SetRect(label->GetRect());

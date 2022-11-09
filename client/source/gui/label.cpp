@@ -3,10 +3,10 @@
 
 namespace D2K {namespace GUI {
 
-Label::Label(uint8_t screen, GUI::Rect rect, std::string text) : Object(screen, rect)
+Label::Label(uint8_t screen, GUI::Rect rect, const std::string& text) : Object(screen, rect)
 {
 	GUI::Rect thisRect = GetRect();
-	int width = text.length() * 6; // calculate width of "std::string text"
+	int width = text.length() * 6; // calculate width of "const std::string& text"
 	if(thisRect.GetW() < width)    // if button isn't big enough
 		thisRect.SetW(width);  // adjust it to text's length
 	SetRect(thisRect);             // and then reassign the Rect
@@ -28,7 +28,7 @@ bool Label::Draw()
 
 	return true;
 }
-void Label::SetText(std::string text)
+void Label::SetText(const std::string& text)
 {
 	if(text != m_text)
 	{

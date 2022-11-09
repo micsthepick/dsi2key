@@ -9,7 +9,7 @@ namespace D2K {namespace GUI{
 
 // TODO: merge GUI::LoadPngImage, GUI::LoadButtonImage, GUI::DrawButtonImage, GUI::LoadBackgroundImage, GUI::DrawBackgroundImage
 // TODO: into a class
-uint32_t LoadPngImage(const std::string filename, int &width, int &height, bool alpha, unsigned char **output)
+uint32_t LoadPngImage(const std::string& filename, int &width, int &height, bool alpha, unsigned char **output)
 {
 	// Open png file
 	FILE *file = fopen(filename.c_str(), "rb");

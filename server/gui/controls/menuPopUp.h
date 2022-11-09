@@ -10,7 +10,7 @@ namespace D2K {namespace GUI {
 class MenuPopUp : public Label
 {
 public:
-	MenuPopUp(std::string text);
+	MenuPopUp(const std::string& text);
 	~MenuPopUp();
 	void Append(Object *object, void (*function)(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam));
 	void Append(Object *object);

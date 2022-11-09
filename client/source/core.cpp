@@ -513,16 +513,6 @@ bool Init(int argc, char* argv[])
 
 	UDP::Init();    // Initilize UDP
 	Config::Load(); // Load UDP settings
-
-	// wait a few seconds on nds
-#ifdef _NDS
-	for (int i = 0; i < 60*5; i++)
-	{
-		WaitForVBlank();
-	}
-#endif
-
-
 	UDP::Connect(); // Connect with settings
 #ifdef _NDS
 	if(!toggle_both_lights)

@@ -10,7 +10,7 @@ Windows GUI
 
 namespace D2K {namespace GUI {
 
-ListView::ListView(std::string text, int x, int y, int width, int height) : Label(text, x, y, width, height) { }
+ListView::ListView(const std::string& text, int x, int y, int width, int height) : Label(text, x, y, width, height) { }
 ListView::~ListView() { }
 void ListView::SetHeaderVisible(bool visible)
 {
@@ -18,13 +18,13 @@ void ListView::SetHeaderVisible(bool visible)
 					(GetWindowLong(hwnd, GWL_STYLE) & ~LVS_NOCOLUMNHEADER) |
 					(visible ? 0 : LVS_NOCOLUMNHEADER));
 }
-void ListView::InsertColumn(std::string Text, int i)
+void ListView::InsertColumn(const std::string& text, int i)
 {
 	LVCOLUMN column;
 	column.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
 	column.fmt = LVCFMT_LEFT;
 	column.iSubItem = i;
-	column.pszText = (LPSTR)Text.c_str();
+	column.pszText = (LPSTR)Text;
 	ListView_InsertColumn(hwnd, i, &column);
 	AutoSizeColumns();
 }
@@ -37,8 +37,8 @@ std::string ListView::GetText(int row, int column)
 
 	return text;
 }
-void ListView::SetText(std::string Text, int row, int column) {
-	ListView_SetItemText(hwnd, row, column, (LPSTR)Text.c_str());//set second item text
+void ListView::SetText(const std::string& text, int row, int column) {
+	ListView_SetItemText(hwnd, row, column, (LPSTR)Text);//set second item text
 
 	return;
 }
@@ -78,7 +78,7 @@ bool ListView::Attach(Object *parentObject)
 	{
 		hwnd = CreateWindowEx(
 					WS_EX_CLIENTEDGE,
-					WC_LISTVIEW, Text.c_str(),
+					WC_LISTVIEW, Text,
 					WS_CHILD | WS_VISIBLE | WS_TABSTOP | LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | LVS_NOCOLUMNHEADER,
 					X, Y, Width, Height,
 					GetParentHWND(),
@@ -92,7 +92,7 @@ bool ListView::Attach(Object *parentObject)
 	}
 	return false;
 }
-void ListView::Append(std::string text)
+void ListView::Append(const std::string& text)
 {
 	unsigned row = ListView_GetItemCount(hwnd);
 	LVITEM item;
@@ -105,7 +105,7 @@ void ListView::Append(std::string text)
 	ListView_InsertItem(hwnd, &item);//set item text
 	locked = false;
 }
-void ListView::Append(std::string text, std::string text2)
+void ListView::Append(const std::string& text, const std::string& text2)
 {
 	unsigned row = ListView_GetItemCount(hwnd);
 	LVITEM item;

@@ -10,7 +10,7 @@ Windows GUI
 
 namespace D2K {namespace GUI {
 
-void voidFunction(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+void voidFunction(HWND, UINT, WPARAM, LPARAM)
 {
 	std::clog << "voidFunction()\n";
 }

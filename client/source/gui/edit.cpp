@@ -4,7 +4,7 @@
 
 namespace D2K {namespace GUI{
 
-Edit::Edit(uint8_t screen, GUI::Rect rect, std::string text, void (*function)()) : Button(screen, rect, text, function) { }
+Edit::Edit(uint8_t screen, GUI::Rect rect, const std::string& text, void (*function)()) : Button(screen, rect, text, function) { }
 
 Edit::~Edit() { }
 

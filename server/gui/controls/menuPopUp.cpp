@@ -10,7 +10,7 @@ Windows GUI
 #include "menuPopUp.h"
 
 namespace D2K {namespace GUI {
-MenuPopUp::MenuPopUp(std::string text) : Label(text, 0, 0, 0, 0)
+MenuPopUp::MenuPopUp(const std::string& text) : Label(text, 0, 0, 0, 0)
 {
 	hwnd = (HWND)CreatePopupMenu();
 }
@@ -35,7 +35,7 @@ bool MenuPopUp::Attach(Object *parentObject)
 		std::cout << "Parent:" << (unsigned int)GetParentHWND() << "\n";
 		std::cout << "MenuItem:" << (unsigned int)hwnd << "\n";
 		std::cout << "Text:" << Text << "\n";
-		return AppendMenu((HMENU)GetParentHWND(), MF_STRING | MF_POPUP, (UINT)hwnd, Text.c_str());
+		return AppendMenu((HMENU)GetParentHWND(), MF_STRING | MF_POPUP, (UINT)hwnd, Text);
 	}
 	return false;
 }

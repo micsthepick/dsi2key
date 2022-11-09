@@ -13,6 +13,6 @@ namespace D2K {namespace GUI {
 //  param: output   - A pointer filled in with the raw 24bit image data. Left alone if image fails to load.
 // 
 // return: Total buffer size in bytes, 0 on failure
-uint32_t LoadPngImage(std::string filename, int &width, int &height, bool alpha, unsigned char **output);
+uint32_t LoadPngImage(const std::string& filename, int &width, int &height, bool alpha, unsigned char **output);
 
 }} // namespace D2K::GUI

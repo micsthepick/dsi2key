@@ -14,14 +14,14 @@ public:
 // TODO: adjust (rect) to text, sub_text, and the letter button
 	// (rect) is then adjusted to fit the contents of (text).
 	// (function) is assigned here, and is called when "LetterButton" is clicked.
-	LetterButton(uint8_t screen, GUI::Rect rect, std::string letter, std::string text, std::string sub_text, void (*function)());
+	LetterButton(uint8_t screen, GUI::Rect rect, const std::string& letter, const std::string& text, const std::string& sub_text, void (*function)());
 	~LetterButton();
 	// Draws Button onto screen if it OR the gui has been updated
 	// return: true if we updated, false if not
 	bool Draw();
 
 	// set Sub Text to (sub_text) and force update
-	void SetSubText(std::string sub_text);
+	void SetSubText(const std::string& sub_text);
 	std::string GetSubText();
 
 protected:

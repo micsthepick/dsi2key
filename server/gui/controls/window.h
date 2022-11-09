@@ -13,11 +13,11 @@ public:
 	~Window();
 	void Append(Object *object, void (*function)(HWND, UINT, WPARAM, LPARAM));
 	void Append(Object *object);
-	bool Setup(HINSTANCE hThisInstance, std::string ClassName, std::string Title, int Width, int Height);
+	bool Setup(HINSTANCE hThisInstance, const std::string& ClassName, const std::string& Title, int Width, int Height);
 	void SetVisible(int visible);
 	void SetVisible(bool visible = true);
 	void CreateMainMenu();
-	void SetText(std::string text);
+	void SetText(const std::string & text);
 
 private:
 	std::string Text;

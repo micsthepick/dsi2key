@@ -89,7 +89,7 @@ uint32_t EnumKeyToNDSKeypadBit(int enum_key)
 	}
 }
 
-bool ProfileData::isCommand(std::string button)
+bool ProfileData::isCommand(const std::string& button)
 {
 	if(button.substr(0, D2K_COMMAND_LENGTH) == D2K_COMMAND)
 		return true;
@@ -97,7 +97,7 @@ bool ProfileData::isCommand(std::string button)
 	return false;
 }
 
-bool ProfileData::isAxis(std::string button)
+bool ProfileData::isAxis(const std::string& button)
 {
 	if(button.substr(0, D2K_AXIS_LENGTH) == D2K_AXIS)
 		return true;
@@ -105,7 +105,7 @@ bool ProfileData::isAxis(std::string button)
 	return false;
 }
 
-bool ProfileData::isVirtualKey(std::string button)
+bool ProfileData::isVirtualKey(const std::string& button)
 {
 	if(button == "" 
 	|| button == "0"
@@ -116,7 +116,7 @@ bool ProfileData::isVirtualKey(std::string button)
 	return true;
 }
 
-uint16_t ProfileData::StringToVirtualKey(std::string button)
+uint16_t ProfileData::StringToVirtualKey(const std::string& button)
 {
 	if(isVirtualKey(button))
 		return D2K::string_to_uint16_t(button);
@@ -294,7 +294,7 @@ uint16_t ProfileData::GetVirtualKey(int enum_key)
 	return StringToVirtualKey(string_reference);
 }
 
-bool ProfileData::SetRaw(int enum_key, std::string value)
+bool ProfileData::SetRaw(int enum_key, const std::string& value)
 {
 	std::string& string_reference = GetStringReference(enum_key);
 	if(&string_reference == &m_null)
@@ -304,7 +304,7 @@ bool ProfileData::SetRaw(int enum_key, std::string value)
 	return true;
 }
 
-bool ProfileData::SetVirtualKey(int enum_key, std::string value)
+bool ProfileData::SetVirtualKey(int enum_key, const std::string& value)
 {
 	if(isVirtualKey(value))
 	{

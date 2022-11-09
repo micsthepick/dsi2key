@@ -9,7 +9,7 @@ namespace D2K {namespace GUI {
 class Button : public Label
 {
 public:
-	Button(std::string text, int x, int y, int width, int height);
+	Button(const std::string& text, int x, int y, int width, int height);
 	~Button();
 	bool Attach(Object *parentObject);
 };

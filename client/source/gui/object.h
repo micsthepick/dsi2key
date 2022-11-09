@@ -23,7 +23,7 @@ public:
 	virtual bool Draw();
 	void (*Function)();
 
-	virtual void SetText(std::string text);
+	virtual void SetText(const std::string& text);
 	virtual std::string GetText();
 
 	// sets visibility to (visible) and forces an update

@@ -4,8 +4,8 @@ namespace D2K {
 
 void InitLogging(int argc, char* argv[])
 {
-// TODO: Fix logging on NDS
-#ifndef _NDS
+// TODO: Fix logging.
+#if 0
 	const char* LOGGING_CONFIG = "\
 * GLOBAL:\n \
 FORMAT=\"[%datetime{%H:%m:%s}] %msg\"\n \
@@ -38,7 +38,7 @@ FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n";
 
 void DeInitLogging()
 {
-#ifndef _NDS
+#if 0
 	el::Loggers::flushAll();
 #endif
 }

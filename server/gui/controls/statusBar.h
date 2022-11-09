@@ -10,10 +10,10 @@ namespace D2K {namespace GUI {
 class StatusBar : public Label
 {
 public:
-	StatusBar(std::string text, int x, int y, int width, int height);
+	StatusBar(const std::string& text, int x, int y, int width, int height);
 	~StatusBar();
 	bool Attach(Object *parentObject);
-	void SetText(std::string Text);
+	void SetText(const std::string& Text);
 };
 
 }}//namespace D2K::GUI

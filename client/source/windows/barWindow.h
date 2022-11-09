@@ -12,7 +12,7 @@ public:
 
 	bool Update();
 };
-extern void SetText(std::string Text);
+extern void SetText(const std::string& Text);
 extern GUI::Bar::WindowClass g_window;
 
 }}} // namespace D2K::GUI::Main

@@ -35,7 +35,7 @@ std::string GetFont(uint8_t font_face);
 bool DrawBackgroundImage(uint8_t screen, uint8_t c);
 bool DrawBackgroundImage(uint8_t screen, GUI::Rect rect, uint8_t c);
 bool LoadButtonImage();
-bool DrawButtonImage(uint8_t screen, std::string letter, uint16_t x, uint16_t y);
+bool DrawButtonImage(uint8_t screen, const std::string& letter, uint16_t x, uint16_t y);
 void SetUpdate(bool value);
 bool IsUpdated();
 void SetPixel(uint8_t screen, uint16_t x, uint16_t y, uint16_t color);
@@ -44,9 +44,9 @@ void SetPixel(uint8_t screen, uint16_t x, uint16_t y, uint16_t color, uint8_t al
 void ClearScreen(uint8_t screen, uint16_t color);
 void DrawRect(uint8_t screen, GUI::Rect rect, uint16_t c);
 void DrawFilledRect(uint8_t screen, GUI::Rect rect, uint16_t c);
-void DrawLine(uint8_t screen, std::string text, uint16_t x, uint16_t y, uint16_t c);
+void DrawLine(uint8_t screen, const std::string& text, uint16_t x, uint16_t y, uint16_t c);
 void DrawLetter(uint8_t screen, char letter, uint16_t x, uint16_t y, uint16_t c);
-void DrawString(uint8_t screen, std::string text, uint8_t font_size, uint8_t face_type, uint16_t x, uint16_t y, uint16_t c);
+void DrawString(uint8_t screen, const std::string& text, uint8_t font_size, uint8_t face_type, uint16_t x, uint16_t y, uint16_t c);
 enum { 	COLOR_BACKGROUND,
 		COLOR_LABEL_TEXT, COLOR_LABEL_BACKGROUND,
 		COLOR_BUTTON_TEXT, COLOR_BUTTON_BACKGROUND, COLOR_BUTTON_OUTLINE, COLOR_BUTTON_OUTLINE_ACTIVE,

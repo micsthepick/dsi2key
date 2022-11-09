@@ -36,7 +36,7 @@ void Window::Append(Object *object)
 {
 	Window::Append(object, &voidFunction);
 }
-bool Window::Setup(HINSTANCE hThisInstance, std::string ClassName, std::string Title, int Width, int Height)
+bool Window::Setup(HINSTANCE hThisInstance, const std::string& ClassName, const std::string& Title, int Width, int Height)
 {
 	if(!hwnd)
 	{
@@ -109,7 +109,7 @@ void Window::SetVisible(bool visible)
 	if(hwnd)
 		ShowWindow(hwnd, visible);
 }
-void Window::SetText(std::string text)
+void Window::SetText(const std::string& text)
 {
 	Text = text;
 	locked = true;

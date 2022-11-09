@@ -24,7 +24,7 @@ bool Object::Draw()
 	Object::SetUpdate(false);
 	return true;
 }
-void Object::SetText(std::string text)
+void Object::SetText(const std::string& text)
 {
 
 }

@@ -17,7 +17,7 @@ const char* ltoa(long t)
 	return ltos(t).c_str();
 }
 
-long stol(std::string str)
+long stol(const std::string& str)
 {
 	std::stringstream stream(str);
 	long return_value;
@@ -25,12 +25,12 @@ long stol(std::string str)
 	return !(stream >> return_value) ? 0L : return_value;
 }
 
-uint8_t string_to_uint8_t(std::string str)
+uint8_t string_to_uint8_t(const std::string& str)
 {
 	return (uint8_t)D2K::clamp(D2K::stol(str), 0L, (long)UINT8_MAX);
 }
 
-uint16_t string_to_uint16_t(std::string str)
+uint16_t string_to_uint16_t(const std::string& str)
 {
 	return (uint16_t)D2K::clamp(D2K::stol(str), 0L, (long)UINT16_MAX);
 }

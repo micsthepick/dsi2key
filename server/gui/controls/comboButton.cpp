@@ -30,7 +30,7 @@ bool ComboButton::Attach(Object *parentObject)
 	}
 	return false;
 }
-void ComboButton::Append(std::string text)
+void ComboButton::Append(const std::string& text)
 {
 	SendMessage(hwnd, CB_ADDSTRING, 0, (LPARAM)text.c_str());
 	if(SendMessage(hwnd, CB_GETCOUNT, 0, 0) == 1) SetSelection(0);

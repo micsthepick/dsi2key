@@ -8,12 +8,12 @@
 //ELPP_DISABLE_WARNING_LOGS
 //ELPP_DISABLE_ERROR_LOGS
 //ELPP_DISABLE_FATAL_LOGS
-#ifdef _NDS
+#if 1
 #include  <iostream>
 #define TRACE
 #define DEBUG
 #define ERROR
-#define FATAL
+//#define FATAL //TODO: conflicting definition for vjoy's public.h
 #define LOG(a) std::cout
 #define LOG_EVERY_N(a,b) std::cout
 #define LOG_N_TIMES(a,b) std::cout

@@ -4,10 +4,10 @@
 
 namespace D2K {namespace GUI {
 
-Button::Button(uint8_t screen, GUI::Rect rect, std::string text, void (*function)()) : Label(screen, rect, text)
+Button::Button(uint8_t screen, GUI::Rect rect, const std::string& text, void (*function)()) : Label(screen, rect, text)
 {
 	GUI::Rect thisRect = GetRect();
-	int width = text.length() * 6 + 4; // Calculate width of "std::string text"
+	int width = text.length() * 6 + 4; // Calculate width of "const std::string& text"
 
 	if(thisRect.GetW() < width)        // If button isn't big enough
 		thisRect.SetW(width);      // Adjust it to text's length

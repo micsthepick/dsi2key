@@ -3,14 +3,14 @@
 
 namespace D2K {namespace GUI {
 
-CheckButton::CheckButton(std::string text, int x, int y, int width, int height) : Label(text, x, y, width, height) { }
+CheckButton::CheckButton(const std::string& text, int x, int y, int width, int height) : Label(text, x, y, width, height) { }
 CheckButton::~CheckButton() { }
 bool CheckButton::Attach(Object *parentObject)
 {
 	if(Object::Attach(parentObject))
 	{
 		hwnd = CreateWindow (
-					"BUTTON", Text.c_str(),
+					"BUTTON", Text,
 					WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX,
 					X, Y, Width, Height,
 					GetParentHWND(),

@@ -10,9 +10,9 @@ Windows GUI label control
 
 namespace D2K {namespace GUI {
 
-Label::Label(std::string text, int x, int y, int width, int height) : Object(x, y, width, height)
+Label::Label(const std::string& text, int x, int y, int width, int height) : Object(x, y, width, height)
 {
-	Text = text;
+	Text = text.c_str();
 }
 Label::~Label() { }
 bool Label::Attach(Object *parentObject)
@@ -20,7 +20,7 @@ bool Label::Attach(Object *parentObject)
 	if(Object::Attach(parentObject))
 	{
 		hwnd = CreateWindow (
-					"STATIC", Text.c_str(),
+					"STATIC", Text,
 					WS_CHILD | WS_VISIBLE | BS_TEXT,
 					X, Y, Width, Height,
 					GetParentHWND(),
@@ -39,14 +39,14 @@ std::string Label::GetText()
 	GetWindowText(hwnd, windowText, length+1);
 	windowText[length] = 0;
 	Text = windowText;
-	delete windowText;
+	//delete windowText;
 	return Text;
 }
-void Label::SetText(std::string text)
+void Label::SetText(const std::string& text)
 {
-	Text = text;
+	Text = text.c_str();
 	locked = true;
-	SetWindowText(hwnd, Text.c_str());
+	SetWindowText(hwnd, Text);
 	locked = false;
 }
 void Label::SetEnabled(bool enabled)

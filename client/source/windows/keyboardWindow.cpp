@@ -557,7 +557,7 @@ WindowClass::WindowClass() : Window()
 WindowClass::~WindowClass() { }
 
 // configWindow function
-std::string GetString(Label* label, Edit* edit, std::string text, int maxLength)
+std::string GetString(Label* label, Edit* edit, const std::string& text, int maxLength)
 {
 	Keyboard::label_entry->SetRect(label->GetRect());
 	Keyboard::label_entry->SetText(label->GetText());

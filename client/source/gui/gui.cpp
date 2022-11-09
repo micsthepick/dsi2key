@@ -271,7 +271,7 @@ bool LoadButtonImage()
 	}
 	return false;
 }
-bool DrawButtonImage(uint8_t screen, std::string letter, uint16_t x, uint16_t y)
+bool DrawButtonImage(uint8_t screen, const std::string& letter, uint16_t x, uint16_t y)
 {
 	if(letter.length() == 1)
 	{
@@ -523,7 +523,7 @@ void DrawFilledRect(uint8_t screen, GUI::Rect rect, uint16_t c)
 //#endif
 	}
 }
-void DrawLine(uint8_t screen, std::string text, uint16_t x, uint16_t y, uint16_t c)
+void DrawLine(uint8_t screen, const std::string& text, uint16_t x, uint16_t y, uint16_t c)
 {
 	if (text == "X")
 	{
@@ -1074,7 +1074,7 @@ void DrawLetter(uint8_t screen, char letter, uint16_t x, uint16_t y, uint16_t c)
 	}
 	}
 }
-void DrawString(uint8_t screen, std::string text, uint8_t font_size, uint8_t face_type, uint16_t x, uint16_t y, uint16_t c)
+void DrawString(uint8_t screen, const std::string& text, uint8_t font_size, uint8_t face_type, uint16_t x, uint16_t y, uint16_t c)
 {
 // TODO:Disabled TTF functions for now, REALLY SLOW!
 //#if defined(_3DS)

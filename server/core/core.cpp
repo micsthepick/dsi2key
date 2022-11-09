@@ -31,14 +31,15 @@ INITIALIZE_EASYLOGGINGPP
 
 namespace D2K{
 
-void ExecuteCommand(std::string Command)
+void ExecuteCommand(const std::string& Command)
 {
-	if(Command != "")
+	std::string command = Command;
+	if(!Command.empty())
 	{
 		if(Command.substr(0, D2K_COMMAND_LENGTH) == D2K_COMMAND)
-			Command = Command.substr(D2K_COMMAND_LENGTH);
+			command = Command.substr(D2K_COMMAND_LENGTH);
 #ifdef _WIN32
-		WinExec(Command.c_str(), SW_SHOWNORMAL);
+		WinExec(command.c_str(), SW_SHOWNORMAL);
 #elif defined(__linux__)
 		std::ostringstream stringStream;
 		stringStream << Command << " &";

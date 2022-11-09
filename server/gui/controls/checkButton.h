@@ -8,7 +8,7 @@ namespace D2K {namespace GUI {
 class CheckButton : public Label
 {
 public:
-	CheckButton(std::string text, int x, int y, int width, int height);
+	CheckButton(const std::string& text, int x, int y, int width, int height);
 	~CheckButton();
 	bool Attach(Object *parentObject);
 	void SetChecked(bool checked);

@@ -21,6 +21,15 @@ int main(int argc, char* argv[])
 
 		return 1;                            // halt on error
 	}
+	
+	// wait a few seconds on nds
+#ifdef _NDS
+	for (int i = 0; i < 60*5; i++)
+	{
+		D2K::WaitForVBlank();
+	}
+#endif
+
 	D2K::GUI::Locked::g_window.SetVisible(true); // Show locked window
 
 	while(D2K::Loop())                           // DS hardware loop
