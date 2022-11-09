@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 	{
 		D2K::UDP::Update(D2K::g_keys_held,   // Update ds2key network
 		                 D2K::GUI::Turbo::GetKeys(),
-		                 nullptr,            // No touch position
+		                 &D2K::g_stylus_position,            // No touch position
 		                 &D2K::g_circle_position,
 		                 &D2K::g_cstick_position,
 		                 &D2K::g_accel_status,

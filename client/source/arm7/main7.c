@@ -27,6 +27,7 @@ int main()
 
 	initClockIRQ(); // Start the RTC tracking IRQ
 	fifoInit();
+	touchInit();
 
 	SetYtrigger(80);
 
