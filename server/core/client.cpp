@@ -132,13 +132,11 @@ std::string ProfileData::VirtualKeyToString(uint16_t button)
 	return stream.str();
 }
 ProfileData::ProfileData()
-{
+= default;
 
-}
 ProfileData::~ProfileData()
-{
+= default;
 
-}
 std::string& ProfileData::GetStringReference(int enum_key)
 {
 	switch(enum_key)
@@ -382,6 +380,7 @@ const std::string& ProfileData::GetAxis(int enum_key)
 
 Client::Client()
 {
+	m_profile_data = new ProfileData();
 	m_packet = UDP::DS2KeyPacket{};
 	m_keys = {};
 	m_keys_old = {};
@@ -401,7 +400,7 @@ void Client::Scan(void)
 
 ProfileData* Client::GetProfileDataPointer()
 {
-	return &m_profile_data;
+	return m_profile_data;
 }
 
 void Client::SetPacket(UDP::DS2KeyPacket packet)
@@ -447,7 +446,7 @@ bool Client::Turbo(uint32_t key)
 
 uint32_t Client::GetIP()
 {
-	return m_profile_data.m_ip_address;
+	return m_profile_data->m_ip_address;
 }
 std::string Client::GetIPString()
 {
@@ -459,7 +458,7 @@ std::string Client::GetIPString()
 
 void Client::SetIP(uint32_t ip_address)
 {
-	m_profile_data.m_ip_address = ip_address;
+	m_profile_data->m_ip_address = ip_address;
 }
 
 uint16_t Client::GetX()

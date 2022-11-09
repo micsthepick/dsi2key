@@ -703,7 +703,8 @@ void Loop()
 		}
 	}
 
-	CheckForDeadClients();
+	// TODO: handle setting profile for dead clients
+	//CheckForDeadClients();
 
 	// Sleep to avoid 99% cpu when not using -O2
 	std::this_thread::sleep_for(std::chrono::milliseconds(1));

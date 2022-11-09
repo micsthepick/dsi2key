@@ -114,29 +114,29 @@ public:
 	void SetTouchPos(uint8_t i, uint8_t x, uint8_t y, uint8_t w, uint8_t h);
 
 	uint32_t m_ip_address{};
-	std::string m_name{};
-	std::string m_description{};
-	std::string m_mouse{};
-	std::string m_joy{};
-	std::string m_dpad_up, m_dpad_down, m_dpad_left, m_dpad_right, m_a, m_b, m_x, m_y, m_l, m_r, m_start, m_select, m_lid{};
+	std::string m_name;
+	std::string m_description;
+	std::string m_mouse;
+	std::string m_joy;
+	std::string m_dpad_up = "0", m_dpad_down, m_dpad_left, m_dpad_right, m_a, m_b, m_x, m_y, m_l, m_r, m_start, m_select, m_lid;
 
-	std::string m_zl, m_zr{};
+	std::string m_zl, m_zr;
 
-	std::string m_cstick_up, m_cstick_down, m_cstick_left, m_cstick_right{};
+	std::string m_cstick_up, m_cstick_down, m_cstick_left, m_cstick_right;
 
-	std::string m_cpad_up, m_cpad_down, m_cpad_left, m_cpad_right{};
+	std::string m_cpad_up, m_cpad_down, m_cpad_left, m_cpad_right;
 
-	std::string m_blue, m_yellow, m_red, m_green{};
+	std::string m_blue, m_yellow, m_red, m_green;
 
-	std::string m_slider_volume, m_slider_3d{};
+	std::string m_slider_volume, m_slider_3d;
 
-	std::string m_touch_command[12]{};
-	std::string m_touch_string[12]{};
+	std::string m_touch_command[12];
+	std::string m_touch_string[12];
 	uint8_t m_touch_x[12]{};
 	uint8_t m_touch_y[12]{};
 	uint8_t m_touch_w[12]{};
 	uint8_t m_touch_h[12]{};
-	std::string m_null{};
+	std::string m_null;
 
 private:
 	bool SetVirtualKey(int enum_key, const std::string& value);
@@ -164,8 +164,11 @@ enum CLIENT_STATUS : bool
 class Client final
 {
 public:
-	Client();
-	~Client();
+	Client(
+	);
+	~Client(
+		//delete m_profile_data;
+	);
 
 	// Updates current button state after calls made to Press, Release
 	void Scan(void);
@@ -248,7 +251,7 @@ private:
 	void Release(uint32_t key);
 
 	UDP::DS2KeyPacket m_packet;
-	ProfileData m_profile_data;
+	ProfileData* m_profile_data;
 
 	bool m_alive;
 

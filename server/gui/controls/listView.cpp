@@ -38,7 +38,7 @@ std::string ListView::GetText(int row, int column)
 	return text;
 }
 void ListView::SetText(const std::string& text, int row, int column) {
-	ListView_SetItemText(hwnd, row, column, (LPSTR)Text);//set second item text
+	ListView_SetItemText(hwnd, row, column, (LPSTR)text.c_str());//set second item text
 
 	return;
 }
