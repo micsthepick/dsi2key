@@ -365,8 +365,8 @@ void ProcessTouchScreen(D2K::Client* client)
 		// If newly pressed
 		if(last_screen_touched == false)
 		{
-			//Input::Press(KEY_LBUTTON);
-			Input::Press(13 + 256, 1);
+			Input::Press(Key::KEY_LBUTTON, 0);
+			//Input::Press(13 + 256, 1);
 			last_x = x;
 			last_y = y;
 			last_screen_touched = true;
@@ -419,7 +419,8 @@ void ProcessTouchScreen(D2K::Client* client)
 	{
 		last_x = last_y = 0;
 		last_screen_touched = false;
-		Input::Release(13 + 256, 1);
+		Input::Release(Key::KEY_LBUTTON, 0);
+		//Input::Release(13 + 256, 1);
 	}
 }
 
