@@ -133,7 +133,7 @@ void radioButton3Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	std::cout << "profileRadioButton3Function()\n";
 	ProfileData *Profile = g_client_array[comboButton1->GetSelection()]->GetProfileDataPointer();
-	Profile->m_mouse = "Buttons";
+	Profile->m_mouse = "Relative";
 	checkButton1->SetEnabled(false);
 }
 
@@ -206,8 +206,10 @@ void comboButton1Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		radioButton3->SetChecked(true);
 		checkButton1->SetEnabled(false);
 	}*/											//disabled
-	else
+	else if (pData->m_mouse == "Relative")
 		radioButton1->SetChecked(true);
+	else
+		radioButton4->SetChecked(true);
 }
 
 void listView1Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
