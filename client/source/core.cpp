@@ -357,8 +357,8 @@ void UpdateLid()
 	if(g_keys_up&KEY_LID             // If lid just opened OR
 	|| g_keys_held&KEY_TOUCH)        // Screen is touched
 	{
-		s_vblank_count = 0;      // Reset timer
-		BacklightsOn();          // Backlights on
+		//s_vblank_count = 0;      // Reset timer
+		//BacklightsOn();          // Backlights on
 	}
 	else if(g_keys_down              // A button pressed, possibly the lid OR
 	|| s_vblank_count == VBLANK_MAX) // Enough time passed
