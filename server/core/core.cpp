@@ -419,10 +419,7 @@ void ProcessTouchScreen(D2K::Client* client)
 	{
 		last_x = last_y = 0;
 		last_screen_touched = false;
-		if (moveType == "Joystick")
-		{
-			Input::Release(13 + 256, 1);
-		}
+		Input::Release(13 + 256, 1);
 	}
 }
 
