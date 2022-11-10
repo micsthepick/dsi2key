@@ -39,4 +39,7 @@ void Move(signed long int x, signed long int y);
 // Moves cursor to (X), (Y)
 void MoveAbsolute(signed long int x, signed long int y);
 
+// Moves virtual Joystick with touchscreen
+void MoveJoystick(uint8_t x, uint8_t y);
+
 }} // namespace D2K::Input

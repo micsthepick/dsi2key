@@ -99,6 +99,7 @@ Edit *edit1;
 RadioButton *radioButton1;
 RadioButton *radioButton2;
 RadioButton *radioButton3;
+RadioButton *radioButton4;
 CheckButton *checkButton1;
 ComboButton *comboButton1;
 ListView *listView1;
@@ -133,6 +134,14 @@ void radioButton3Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	std::cout << "profileRadioButton3Function()\n";
 	ProfileData *Profile = g_client_array[comboButton1->GetSelection()]->GetProfileDataPointer();
 	Profile->m_mouse = "Buttons";
+	checkButton1->SetEnabled(false);
+}
+
+void radioButton4Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	std::cout << "profileRadioButton4Function()\n";
+	ProfileData *Profile = g_client_array[comboButton1->GetSelection()]->GetProfileDataPointer();
+	Profile->m_mouse = "Joystick";
 	checkButton1->SetEnabled(false);
 }
 
@@ -187,6 +196,7 @@ void comboButton1Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	radioButton1->SetChecked(false);
 	radioButton2->SetChecked(false);
 	radioButton3->SetChecked(false);
+	radioButton4->SetChecked(false);
 	checkButton1->SetEnabled(true);
 
 	if(pData->m_mouse == "Absolute")
@@ -210,6 +220,7 @@ void listView1Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	GUI::MainWindow::Profile::radioButton1->SetEnabled(false);
 	GUI::MainWindow::Profile::radioButton2->SetEnabled(false);
 	GUI::MainWindow::Profile::radioButton3->SetEnabled(false);
+	GUI::MainWindow::Profile::radioButton4->SetEnabled(false);
 	GUI::MainWindow::Profile::checkButton1->SetEnabled(false);
 	GUI::MainWindow::Profile::comboButton1->SetEnabled(false);
 	GUI::MainWindow::Profile::listView1->SetEnabled(false);
@@ -251,7 +262,8 @@ void listView1Function(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	GUI::MainWindow::categoryListView->SetEnabled(true);
 	GUI::MainWindow::Profile::radioButton1->SetEnabled(true);
 	GUI::MainWindow::Profile::radioButton2->SetEnabled(true);
-	GUI::MainWindow::Profile::radioButton3->SetEnabled(true);//disabled
+	GUI::MainWindow::Profile::radioButton3->SetEnabled(true);
+	GUI::MainWindow::Profile::radioButton4->SetEnabled(true);//disabled
 	GUI::MainWindow::Profile::checkButton1->SetEnabled(true);
 	GUI::MainWindow::Profile::comboButton1->SetEnabled(true);
 	GUI::MainWindow::Profile::listView1->SetEnabled(true);
@@ -329,9 +341,11 @@ void Setup()
 	window.Append(
 		radioButton2 = new RadioButton("Touchpad (Absolute)", x + 120 + border, border, 120, 16), &radioButton2Function);
 	window.Append(
-		radioButton3 = new RadioButton("Touch Buttons", x + (120 * 2) + border, border, 120, 16), &radioButton3Function);
+		radioButton3 = new RadioButton("Touch Buttons", x + (120 * 3) + border, border, 120, 16), &radioButton3Function);
 	window.Append(
-		checkButton1 = new CheckButton("Double tap click", x + (120 * 3) + border, border, 120, 16), &checkButton1Function);
+		radioButton4 = new RadioButton("Touch Joystick (stays)", x + (120 * 2) + border, border, 120, 16), &radioButton4Function);
+	window.Append(
+		checkButton1 = new CheckButton("Double tap click", x + (120 * 4) + border, border, 120, 16), &checkButton1Function);
 	window.Append(
 		comboButton1 = new ComboButton(x, (border * 2) + 16, width - (border * 2) - x, 250), &comboButton1Function);
 
@@ -466,11 +480,12 @@ void Setup()
 	List[0] = radioButton1;
 	List[1] = radioButton2;
 	List[2] = radioButton3;
-	List[3] = checkButton1;
-	List[4] = comboButton1;
-	List[5] = listView1;
-	List[6] = button1;
-	List[7] = button2;
+	List[3] = radioButton3;
+	List[4] = checkButton1;
+	List[5] = comboButton1;
+	List[6] = listView1;
+	List[7] = button1;
+	List[8] = button2;
 }
 void SetVisible(bool visible)
 {

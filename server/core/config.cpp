@@ -158,7 +158,7 @@ int LoadProfile(ProfileData* profile_data, uint8_t profile_number)
 
 	std::string mouse = iniParser::getstring(ini, "profile:mouse", "Relative");
 
-	if(mouse == "Absolute")
+	if(mouse == "Absolute" || mouse == "Joystick")
 		profile_data->m_mouse = mouse;
 	else
 		profile_data->m_mouse = "Relative";

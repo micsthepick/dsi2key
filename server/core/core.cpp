@@ -19,6 +19,7 @@
 
 // This looks wrong because it's a macro
 #include "common/easylogging++Wrapper.h"
+#include "common/misc.h"
 INITIALIZE_EASYLOGGINGPP
 
 #include "common/udp.h"
@@ -371,10 +372,10 @@ void ProcessTouchScreen(D2K::Client* client)
 		}
 
 		// check that we've moved
-		if(!((x - last_x < -s_ignore)
+		if(true/*!((x - last_x < -s_ignore)
 		|| (x - last_x > s_ignore)
 		|| (y - last_y < -s_ignore)
-		|| (y - last_y > s_ignore)))
+		|| (y - last_y > s_ignore))*/)
 		{
 			// relative movement
 			if(moveType == "Relative")
@@ -401,6 +402,12 @@ void ProcessTouchScreen(D2K::Client* client)
 				Input::MoveAbsolute(
 					temporary_x * (65535  / (255 - s_deadzone - s_deadzone)),
 					temporary_y * (65535  / (191 - s_deadzone - s_deadzone)));
+			}
+			else
+			{
+				int temporary_x = x * 100 / 255;
+				int temporary_y = y * 100 / 191;
+				Input::MoveJoystick(clamp(temporary_x, 0, 100), clamp(temporary_y, 0, 100));
 			}
 			last_x = x;
 			last_y = y;

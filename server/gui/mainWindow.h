@@ -10,7 +10,7 @@ const int width = 580;
 const int height = 360;
 const int x = 100;
 const int border = 10;
-const int listMax = 8;
+const int listMax = 9;
 
 extern GUI::Window window;
 extern GUI::ListView *categoryListView;

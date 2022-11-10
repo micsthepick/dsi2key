@@ -14,6 +14,8 @@
 
 #include "input.h"
 
+#include "common/misc.h"
+
 namespace D2K {namespace Input {
 
 #ifdef __linux__
@@ -88,8 +90,9 @@ enum KeyState
 };
 enum MouseMovement
 {
-	relative = false,
-	absolute = true,
+	relative = 0,
+	absolute = 1,
+	joystick = 2,
 };
 
 static uint16_t s_press_counter[65535]{}; // this allows 1 or more profile to press the same key, instead of going crazy
@@ -192,6 +195,15 @@ void Mouse(MouseMovement type, signed long int x, signed long int y)
 		else
 			XTestFakeRelativeMotionEvent(g_display, x, y, 0);
 	}
+#endif
+}
+
+void MouseJoystick(uint8_t x, uint8_t y)
+{
+#ifdef _WIN32
+	Joystick::SetAxisPercent(1, HID_USAGE_X, x);
+	Joystick::SetAxisPercent(1, HID_USAGE_Y, y);
+	Joystick::Update(1);
 #endif
 }
 
@@ -398,6 +410,11 @@ void Move(signed long int x, signed long int y)
 void MoveAbsolute(signed long int x, signed long int y)
 {
 	Mouse(MouseMovement::absolute, x, y);
+}
+
+void MoveJoystick(uint8_t x, uint8_t y)
+{
+	MouseJoystick(x, y);
 }
 
 }} // namespace D2K::Input
