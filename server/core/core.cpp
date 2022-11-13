@@ -408,8 +408,8 @@ void ProcessTouchScreen(D2K::Client* client)
 				auto new_height = client->GetDY(65535);
 
 				Input::MoveAbsolute(
-					temporary_x * new_width / old_width,
-					temporary_y * new_height / old_height);
+					temporary_x * new_width / old_width + client->GetOffsetX(65535),
+					temporary_y * new_height / old_height + client->GetOffsetY(65535));
 			}
 			else
 			{

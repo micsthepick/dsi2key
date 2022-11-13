@@ -472,7 +472,17 @@ void Client::SetIP(uint32_t ip_address)
 	m_profile_data->m_ip_address = ip_address;
 }
 
-int Client::GetDX(uint16_t mult)
+long Client::GetOffsetX(int mult)
+{
+	return min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x) * mult / screen_width;
+}
+
+long Client::GetOffsetY(int mult)
+{
+	return min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y) * mult / screen_height;
+}
+
+int Client::GetDX(int mult)
 {
 	auto sm = m_profile_data->m_absolute_top_left_x;
 	auto la = m_profile_data->m_absolute_bot_right_x;
@@ -485,10 +495,10 @@ int Client::GetDX(uint16_t mult)
 	{
 		return mult;
 	}
-	return (int)mult * (la - sm) / screen_width;
+	return mult * (la - sm) / screen_width;
 }
 
-int Client::GetDY(uint16_t mult)
+int Client::GetDY(int mult)
 {
 	auto sm = m_profile_data->m_absolute_top_left_y;
 	auto la = m_profile_data->m_absolute_bot_right_y;
