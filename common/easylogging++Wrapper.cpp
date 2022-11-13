@@ -2,7 +2,7 @@
 
 namespace D2K {
 
-void InitLogging(int argc, char* argv[])
+void InitLogging(int, char*[])
 {
 // TODO: Fix logging.
 #if 0

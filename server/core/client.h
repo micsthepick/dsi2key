@@ -114,6 +114,9 @@ public:
 	void SetTouchPos(uint8_t i, uint8_t x, uint8_t y, uint8_t w, uint8_t h);
 
 	uint32_t m_ip_address{};
+
+	int m_absolute_top_left_x, m_absolute_top_left_y, m_absolute_bot_right_x, m_absolute_bot_right_y;
+
 	std::string m_name;
 	std::string m_description;
 	std::string m_mouse;
@@ -193,6 +196,12 @@ public:
 	// Sets the client's IP
 	void SetIP(uint32_t ip_address);
 
+	// gets the width of the absolute touch surface
+	int GetDX(uint16_t mult);
+
+	// gets the height of the absolute touch surface
+	int GetDY(uint16_t mult);
+
 	// return: Stylus current X Position. Values range 0-255(NDS), 0-319(3DS)
 	uint16_t GetX();
 
@@ -257,6 +266,9 @@ private:
 
 	uint32_t m_keys;
 	uint32_t m_keys_old;
+
+	int screen_width;
+	int screen_height;
 };
 
 extern Client* g_client_array[CLIENT_MAX];

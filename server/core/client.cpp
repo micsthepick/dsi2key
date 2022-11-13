@@ -6,6 +6,7 @@
 #include <sstream> // std::stringstream
 #if defined(__linux__)
 #include <arpa/inet.h>
+#include <X11/Xlib.h>
 #endif
 
 namespace D2K {
@@ -384,6 +385,16 @@ Client::Client()
 	m_packet = UDP::DS2KeyPacket{};
 	m_keys = {};
 	m_keys_old = {};
+
+#if WIN32
+    screen_width  = (int) GetSystemMetrics(SM_CXSCREEN);
+    screen_height = (int) GetSystemMetrics(SM_CYSCREEN);
+#else
+    Display* disp = XOpenDisplay(NULL);
+    Screen*  scrn = DefaultScreenOfDisplay(disp);
+    screen_width  = scrn->width;
+    screen_height = scrn->height;
+#endif
 	SetAlive(CLIENT_STATUS::ALIVE);
 }
 
@@ -459,6 +470,38 @@ std::string Client::GetIPString()
 void Client::SetIP(uint32_t ip_address)
 {
 	m_profile_data->m_ip_address = ip_address;
+}
+
+int Client::GetDX(uint16_t mult)
+{
+	auto sm = m_profile_data->m_absolute_top_left_x;
+	auto la = m_profile_data->m_absolute_bot_right_x;
+	if (sm > la)
+	{
+		sm = m_profile_data->m_absolute_bot_right_x;
+		la = m_profile_data->m_absolute_top_left_x;
+	}
+	if (la == 0 || sm == la || la - sm > screen_width)
+	{
+		return mult;
+	}
+	return (int)mult * (la - sm) / screen_width;
+}
+
+int Client::GetDY(uint16_t mult)
+{
+	auto sm = m_profile_data->m_absolute_top_left_y;
+	auto la = m_profile_data->m_absolute_bot_right_y;
+	if (sm > la)
+	{
+		sm = m_profile_data->m_absolute_bot_right_y;
+		la = m_profile_data->m_absolute_top_left_y;
+	}
+	if (la == 0 || sm == la || la - sm > screen_height)
+	{
+		return mult;
+	}
+	return mult * (la - sm) / screen_height;
 }
 
 uint16_t Client::GetX()

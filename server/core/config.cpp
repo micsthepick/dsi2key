@@ -65,6 +65,11 @@ void NewProfile(ProfileData* profile_data, uint8_t profile_number)
 	profile_data->m_mouse = "Relative";
 	profile_data->m_joy = "0";
 
+	profile_data->m_absolute_top_left_x = 0;
+	profile_data->m_absolute_top_left_y = 0;
+	profile_data->m_absolute_bot_right_x = -1;
+	profile_data->m_absolute_bot_right_y = -1;
+
 	profile_data->SetVirtualKey(KEYS::DUP, Key::KEY_UP);
 	profile_data->SetVirtualKey(KEYS::DDOWN, Key::KEY_DOWN);
 	profile_data->SetVirtualKey(KEYS::DLEFT, Key::KEY_LEFT);
@@ -164,6 +169,12 @@ int LoadProfile(ProfileData* profile_data, uint8_t profile_number)
 		profile_data->m_mouse = "Relative";
 
 	profile_data->m_joy = iniParser::getstring(ini, "profile:joy", "0");
+
+	profile_data->m_absolute_top_left_x = iniParser::getint(ini, "profile:topleftx", 0);
+	profile_data->m_absolute_top_left_y = iniParser::getint(ini, "profile:toplefty", 0);
+	profile_data->m_absolute_bot_right_x = iniParser::getint(ini, "profile:botrightx", -1);
+	profile_data->m_absolute_bot_right_y = iniParser::getint(ini, "profile:botrighty", -1);
+
 	profile_data->SetValue(KEYS::DUP, iniParser::getstring(ini, "profile:dpadup", "Key_None"));
 	profile_data->SetValue(KEYS::DDOWN, iniParser::getstring(ini, "profile:dpaddown", "Key_None"));
 	profile_data->SetValue(KEYS::DLEFT, iniParser::getstring(ini, "profile:dpadleft", "Key_None"));
@@ -308,6 +319,10 @@ int SaveProfile(ProfileData* Profile, uint8_t profileNumber)
 	fprintf(file, "Description=%s\n", Profile->m_description.c_str());
 	fprintf(file, "Mouse=%s\n", Profile->m_mouse.c_str());
 	fprintf(file, "Joy=%s\n", Profile->m_joy.c_str());
+	fprintf(file, "TopLeftX=%d\n", Profile->m_absolute_top_left_x);
+	fprintf(file, "TopLeftY=%d\n", Profile->m_absolute_top_left_y);
+	fprintf(file, "BotRightX=%d\n", Profile->m_absolute_bot_right_x);
+	fprintf(file, "BotRightY=%d\n", Profile->m_absolute_bot_right_y);
 
 	fprintf(file, "DPadUp=%s\n", Profile->GetButtonString(KEYS::DUP).c_str());
 	fprintf(file, "DPadDown=%s\n", Profile->GetButtonString(KEYS::DDOWN).c_str());
