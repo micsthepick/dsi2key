@@ -491,9 +491,9 @@ int Client::GetDX(int mult)
 		sm = m_profile_data->m_absolute_bot_right_x;
 		la = m_profile_data->m_absolute_top_left_x;
 	}
-	if (la == 0 || sm == la || la - sm > screen_width)
+	if (sm == la)
 	{
-		return mult;
+		return mult * (screen_width - sm) / screen_width / screen_width;
 	}
 	return mult * (la - sm) / screen_width;
 }
@@ -507,9 +507,9 @@ int Client::GetDY(int mult)
 		sm = m_profile_data->m_absolute_bot_right_y;
 		la = m_profile_data->m_absolute_top_left_y;
 	}
-	if (la == 0 || sm == la || la - sm > screen_height)
+	if (sm == la)
 	{
-		return mult;
+		return mult * (screen_height - sm) / screen_height / screen_height;
 	}
 	return mult * (la - sm) / screen_height;
 }
