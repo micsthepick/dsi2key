@@ -62,4 +62,5 @@ DS2Key.nds
 /Debug
 /server/Gui Debug
 /server/Gui Release
+/server/ds2key
 !/vJoyInterface.dll
