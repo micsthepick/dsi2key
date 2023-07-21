@@ -57,6 +57,8 @@ DS2Key.nds
 /SDCARD/ds2key/font_small.ttf
 /SDCARD/ds2key/font_large.ttf
 /SDCARD/ds2key/background.png
+/out
+/output
 /Debug
 /server/Gui Debug
 /server/Gui Release

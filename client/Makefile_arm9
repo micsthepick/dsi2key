@@ -19,7 +19,7 @@ SOURCES		:=	source source/gui source/windows ../common ../common/iniparser/src
 DATA		:=
 INCLUDES	:=	source source/gui source/windows .. ../dsiwifi/include
 GRAPHICS	:=	
-PORTLIBS	:= $(PORTLIBS_PATH)/nds
+PORTLIBS	:= $(DEVKITPRO)/portlibs/nds
 
 #---------------------------------------------------------------------------------
 # options for code generation

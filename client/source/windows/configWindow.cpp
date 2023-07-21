@@ -7,7 +7,7 @@
 #include "turboWindow.h"
 
 // controls
-#include "gui/Button.h"
+#include "gui/button.h"
 #include "gui/label.h"
 
 // core
