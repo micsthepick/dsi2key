@@ -474,12 +474,12 @@ void Client::SetIP(uint32_t ip_address)
 
 long Client::GetOffsetX(int mult)
 {
-	return min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x) * mult / screen_width;
+	return std::min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x) * mult / screen_width;
 }
 
 long Client::GetOffsetY(int mult)
 {
-	return min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y) * mult / screen_height;
+	return std::min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y) * mult / screen_height;
 }
 
 int Client::GetDX(int mult)
