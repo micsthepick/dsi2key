@@ -47,6 +47,7 @@
 *.ipdb
 client.nds
 DS2Key.nds
+ds2key.nds
 /client/ds2key/dstwo_icon.bmp
 /client/ds2key/background.png
 /server/htpc.lnk
