@@ -19,6 +19,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance,
 #include <chrono>
 namespace D2K {
 
+#if 0
 void ExecuteCommand(const std::string& Command);
 void SendClient()
 {
@@ -32,6 +33,7 @@ void SendClient()
 		time_previous = time_current;
 	}
 }
+#endif
 
 }
 
@@ -51,7 +53,6 @@ int main(int argc, char* argv[])
 
 #ifdef WIN32GUI
 		D2K::GUI::MainWindow::TrayIcon->Delete();
-	}
 #endif
 
 	return 0;

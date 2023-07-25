@@ -197,16 +197,16 @@ public:
 	void SetIP(uint32_t ip_address);
 
 	// gets the width of the absolute touch surface
-	int GetDX(int mult);
+	int GetDX();
 
 	// gets the height of the absolute touch surface
-	int GetDY(int mult);
+	int GetDY();
 
 	// gets the X offset of a point
-	long GetOffsetX(int mult);
+	long GetOffsetX();
 	
 	// gets the Y offset of a point
-	long GetOffsetY(int mult);
+	long GetOffsetY();
 
 	// return: Stylus current X Position. Values range 0-255(NDS), 0-319(3DS)
 	uint16_t GetX();

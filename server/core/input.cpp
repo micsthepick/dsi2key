@@ -158,7 +158,20 @@ void Keyboard(uint16_t key, KeyState state)
 
 	SendInput(1, (LPINPUT)&input, sizeof(INPUT));
 #elif defined(__linux__)
-	unsigned long int code = XKeysymToKeycode(g_display, key);
+	unsigned long int code;
+	if (key >= 0x8001 && key <= 0x8003) {
+		code = (key & 0x3);
+		//LOG(TRACE) << "XTestFakeButtonEvent:: code: " << code << ", state: " << state;
+		XTestFakeButtonEvent(g_display, code, !state, 0);
+		XFlush(g_display);
+		return;
+	}
+
+	code = XKeysymToKeycode(g_display, key);
+	if (code == 0) {
+		LOG(ERROR) << "XKeysymToKeycode returned 0 (NULL)" << std::endl;
+		return;
+	}
 	XTestFakeKeyEvent(g_display, code, !state, 0);
 	XFlush(g_display);
 #endif
@@ -172,8 +185,8 @@ void Mouse(MouseMovement type, signed long int x, signed long int y)
 	INPUT input{};
 
 	input.type = INPUT_MOUSE;
-	input.mi.dx = x; // -16 border
-	input.mi.dy = y; // -16 border
+	input.mi.dx = x;
+	input.mi.dy = y;
 	input.mi.dwFlags = (type ? MOUSEEVENTF_ABSOLUTE : 0) | MOUSEEVENTF_MOVE;
 	input.mi.dwExtraInfo = 0;
 	input.mi.mouseData = 0;
@@ -190,10 +203,13 @@ void Mouse(MouseMovement type, signed long int x, signed long int y)
 
 	if(XGetGeometry(g_display, rootwindow, &dummyWin, &dummySignedInt, &dummySignedInt, &width, &height, &dummyInt, &dummyInt))
 	{
+		//LOG(DEBUG) << x << ", " << y << std::endl;
+		//return;
 		if(type)
-			XTestFakeMotionEvent(g_display, screen, (x * width) / 65535, (y * height) / 65535, 0);
+			XTestFakeMotionEvent(g_display, screen, x, y, 0);
 		else
 			XTestFakeRelativeMotionEvent(g_display, x, y, 0);
+		XFlush(g_display);
 	}
 #endif
 }

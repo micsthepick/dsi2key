@@ -337,7 +337,9 @@ void ProcessButtons(D2K::Client* client)
 			ExecuteCommand(command);
 		}
 	}
+#ifdef _WIN32
 	D2K::Input::Joystick::Update(joystick);
+#endif
 }
 
 void ProcessTouchScreen(D2K::Client* client)
@@ -372,54 +374,45 @@ void ProcessTouchScreen(D2K::Client* client)
 			last_screen_touched = true;
 		}
 
-		// check that we've moved
-		if(true/*!((x - last_x < -s_ignore)
-		|| (x - last_x > s_ignore)
-		|| (y - last_y < -s_ignore)
-		|| (y - last_y > s_ignore))*/)
+		// relative movement
+		if(moveType == "Relative")
 		{
-			// relative movement
-			if(moveType == "Relative")
-			{
-				Input::Move((x - last_x) * s_sensitivity, (y - last_y) * s_sensitivity);
-			}
-			// absolute movement
-			else if(moveType == "Absolute")
-			{
-				int temporary_x = x;
-				int temporary_y = y;
-
-				if(temporary_x < s_deadzone)
-					temporary_x = s_deadzone;
-				if(temporary_x > 255 - s_deadzone)
-					temporary_x = 255 - s_deadzone;
-				if(temporary_y < s_deadzone)
-					temporary_y = s_deadzone;
-				if(temporary_y > 191 - s_deadzone)
-					temporary_y = 191 - s_deadzone;
-
-				temporary_x -= s_deadzone;
-				temporary_y -= s_deadzone;
-
-				auto old_width = 255 - s_deadzone - s_deadzone;
-				auto new_width = client->GetDX(65535);
-				
-				auto old_height = 191 - s_deadzone - s_deadzone;
-				auto new_height = client->GetDY(65535);
-
-				Input::MoveAbsolute(
-					temporary_x * new_width / old_width + client->GetOffsetX(65535),
-					temporary_y * new_height / old_height + client->GetOffsetY(65535));
-			}
-			else
-			{
-				int temporary_x = x * 100 / 255;
-				int temporary_y = y * 100 / 191;
-				Input::MoveJoystick(clamp(temporary_x, 0, 100), clamp(temporary_y, 0, 100));
-			}
-			last_x = x;
-			last_y = y;
+			Input::Move((x - last_x) * s_sensitivity, (y - last_y) * s_sensitivity);
 		}
+		// absolute movement
+		else if(moveType == "Absolute")
+		{
+			int temporary_x = x * client->GetDX() / 255 + client->GetOffsetX();
+			int temporary_y = y * client->GetDY() / 191 + client->GetOffsetY();
+
+			// if(temporary_x < s_deadzone)
+			// 	temporary_x = s_deadzone;
+			// if(temporary_x > 255 - s_deadzone)
+			// 	temporary_x = 255 - s_deadzone;
+			// if(temporary_y < s_deadzone)
+			// 	temporary_y = s_deadzone;
+			// if(temporary_y > 191 - s_deadzone)
+			// 	temporary_y = 191 - s_deadzone;
+
+			// temporary_x -= s_deadzone;
+			// temporary_y -= s_deadzone;
+
+			// auto old_width = 255 - s_deadzone - s_deadzone;
+			// auto new_width = client->GetDX(65535);
+			
+			// auto old_height = 191 - s_deadzone - s_deadzone;
+			// auto new_height = client->GetDY(65535);
+
+			Input::MoveAbsolute(temporary_x, temporary_y);
+		}
+		// joystick
+		else {
+			int temporary_x = x * 100 / 255;
+			int temporary_y = y * 100 / 191;
+			Input::MoveJoystick(clamp(temporary_x, 0, 100), clamp(temporary_y, 0, 100));
+		}
+		last_x = x;
+		last_y = y;
 	}
 	// If newly released
 	else if(last_screen_touched == true)
@@ -496,8 +489,9 @@ void ReleaseDeadClient(D2K::Client* client)
 		&& client->Held(ds_button_bit))
 			Input::Release(pc_key, joystick);
 	}
-
+#ifdef _WIN32
 	D2K::Input::Joystick::DeInit(joystick);
+#endif
 }
 
 void CheckForDeadClients()

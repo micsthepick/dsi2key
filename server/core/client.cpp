@@ -3,10 +3,15 @@
 #include "client.h"
 #include "common/key.h"
 #include "common/misc.h"
+#include "common/screen_size.h"
 #include <sstream> // std::stringstream
-#if defined(__linux__)
+#if defined(__linux__) && !defined(_NDS) && !defined(__3DS__)
 #include <arpa/inet.h>
 #include <X11/Xlib.h>
+#endif
+
+#if defined(__3DS__)
+#include <netinet/in.h>
 #endif
 
 namespace D2K {
@@ -389,7 +394,7 @@ Client::Client()
 #if WIN32
     screen_width  = (int) GetSystemMetrics(SM_CXSCREEN);
     screen_height = (int) GetSystemMetrics(SM_CYSCREEN);
-#else
+#elif defined(__linux__)
     Display* disp = XOpenDisplay(NULL);
     Screen*  scrn = DefaultScreenOfDisplay(disp);
     screen_width  = scrn->width;
@@ -472,17 +477,25 @@ void Client::SetIP(uint32_t ip_address)
 	m_profile_data->m_ip_address = ip_address;
 }
 
-long Client::GetOffsetX(int mult)
+long Client::GetOffsetX()
 {
-	return std::min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x) * mult / screen_width;
+	#ifdef _WIN32
+	return std::min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x)*25565 / screen_width;
+	#elif defined(__linux__)
+	return std::min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x);
+	#endif
 }
 
-long Client::GetOffsetY(int mult)
+long Client::GetOffsetY()
 {
-	return std::min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y) * mult / screen_height;
+	#ifdef _WIN32
+	return std::min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y)*25565 / screen_height;
+	#elif defined(__linux__)
+	return std::min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y);
+	#endif
 }
 
-int Client::GetDX(int mult)
+int Client::GetDX()
 {
 	auto sm = m_profile_data->m_absolute_top_left_x;
 	auto la = m_profile_data->m_absolute_bot_right_x;
@@ -493,12 +506,20 @@ int Client::GetDX(int mult)
 	}
 	if (sm == la)
 	{
-		return mult * (screen_width - sm) / screen_width / screen_width;
+		#ifdef _WIN32
+		return (screen_width - sm)*25565 / screen_width;
+		#elif defined(__linux__)
+		return (screen_width - sm);
+		#endif
 	}
-	return mult * (la - sm) / screen_width;
+	#ifdef _WIN32
+	return (la - sm)*25565 / screen_width;
+	#elif defined(__linux__)
+	return (la - sm);
+	#endif
 }
 
-int Client::GetDY(int mult)
+int Client::GetDY()
 {
 	auto sm = m_profile_data->m_absolute_top_left_y;
 	auto la = m_profile_data->m_absolute_bot_right_y;
@@ -509,9 +530,17 @@ int Client::GetDY(int mult)
 	}
 	if (sm == la)
 	{
-		return mult * (screen_height - sm) / screen_height / screen_height;
+		#ifdef _WIN32
+		return (screen_height - sm)*25565 / screen_height;
+		#elif defined(__linux__)
+		return (screen_height - sm);
+		#endif
 	}
-	return mult * (la - sm) / screen_height;
+	#ifdef _WIN32
+	return (la - sm)*25565 / screen_height;
+	#elif defined(__linux__)
+	return (la - sm);
+	#endif
 }
 
 uint16_t Client::GetX()
