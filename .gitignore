@@ -45,9 +45,8 @@
 *.exe.recipe
 *.iobj
 *.ipdb
-client.nds
-DS2Key.nds
-ds2key.nds
+*.nds
+*.dsi
 /client/ds2key/dstwo_icon.bmp
 /client/ds2key/background.png
 /server/htpc.lnk
@@ -65,3 +64,8 @@ ds2key.nds
 /server/Gui Release
 /server/ds2key
 !/vJoyInterface.dll
+/*.zip
+/*.tar
+/*.gz
+/ds2key-linux-server
+/copy-to-SD-root
