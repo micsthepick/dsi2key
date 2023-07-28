@@ -3,9 +3,9 @@ DS2Key is an application for Nintendo DS that allows you to send key signals to 
 
 ## Building
 
-make sure to clone all with git clone --recurse-submodules
+make sure to clone all with `git clone --recurse-submodules`
 
-otherwise, pull dsiwifi with git pull --recurse-submodules.
+otherwise, pull dsiwifi with `git submodule init && git pull --recurse-submodules`.
 
 Requires the devkitPro toolchain for building the nds file - https://devkitpro.org/wiki/Getting_Started
 If this is your first time building with DevkitPro, don't forget to carefully read the install instructions for the devkitPro pacman. You probably just need nds-dev, but reach out if that doesn't work.
