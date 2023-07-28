@@ -1,5 +1,5 @@
 #if defined(_NDS)
-#include <nds/arm9/video.h> // SCREEN_WIDTH
+#include <nds/arm9/video.h> //ARGB16
 #include <nds/dma.h>        // dmaFillHalfWords
 #endif
 #include <algorithm>        // std::min, std::max
@@ -8,18 +8,10 @@
 #include "gui.h"
 #include "png_format.h"
 #include "ttf_format.h"
+#include "common/screen_size.h"
 
 namespace D2K {namespace GUI {
 
-#if defined(_NDS)
-const uint16_t MAX_X = SCREEN_WIDTH;
-const uint16_t MAX_Y = SCREEN_HEIGHT;
-const uint8_t SCREEN_BYTES = 2;
-#elif defined(_3DS)
-const uint16_t MAX_X = _3DS_SCREEN_WIDTH;
-const uint16_t MAX_Y = _3DS_SCREEN_HEIGHT;
-const uint8_t SCREEN_BYTES = 3;
-#endif
 const uint8_t IMAGE_BYTES = 3;
 const uint8_t ALPHA_IMAGE_BYTES = 4;
 uint16_t* g_screen[2];
@@ -76,9 +68,9 @@ inline uint8_t* GetScreenPointer(uint8_t screen, uint16_t x, uint16_t y)
 {
 	uint8_t* screen_pointer = (uint8_t*)GUI::g_screen[screen];
 #if defined(_NDS)
-	screen_pointer += GetPixelPosition(x, y, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BYTES, false);
-#elif defined(_3DS)
-	screen_pointer += GetPixelPosition(x, y, _3DS_SCREEN_WIDTH, _3DS_SCREEN_HEIGHT, SCREEN_BYTES, true);
+	screen_pointer += GetPixelPosition(x, y, SCREEN_WIDTH_, SCREEN_HEIGHT_, SCREEN_BYTES, false);
+#elif defined(__3DS__)
+	screen_pointer += GetPixelPosition(x, y, SCREEN_WIDTH_, SCREEN_HEIGHT_, SCREEN_BYTES, true);
 #endif
 	return screen_pointer;
 }
@@ -162,8 +154,8 @@ char* background_image{};
 // TODO:logs
 bool LoadBackgroundImage()
 {
-	const int background_height = MAX_Y;
-	const int background_width  = MAX_X;
+	const int background_height = SCREEN_HEIGHT_;
+	const int background_width  = SCREEN_WIDTH_;
 	const int background_image_size = background_width * background_height * IMAGE_BYTES;
 	int png_width, png_height;
 	char* png_image{};
@@ -220,7 +212,7 @@ bool DrawBackgroundImage(uint8_t screen, GUI::Rect rect, uint8_t color)
 		{
 			for(int y = rect.GetY(); y <= rect.GetY2(); y++)
 			{
-				int background_memory_position = GetPixelPosition(x, y, MAX_X, MAX_Y, IMAGE_BYTES, true);
+				int background_memory_position = GetPixelPosition(x, y, SCREEN_WIDTH_, SCREEN_HEIGHT_, IMAGE_BYTES, true);
 
 				SetPixel(screen, x, y, background_image[background_memory_position + 0], background_image[background_memory_position + 1], background_image[background_memory_position + 2]);
 			}
@@ -236,7 +228,7 @@ bool DrawBackgroundImage(uint8_t screen, GUI::Rect rect, uint8_t color)
 }
 bool DrawBackgroundImage(uint8_t screen, uint8_t color)
 {
-	GUI::Rect rect = { 0, 0, MAX_X, MAX_Y };
+	GUI::Rect rect = { 0, 0, SCREEN_WIDTH_, SCREEN_HEIGHT_ };
 	return DrawBackgroundImage(screen, rect, color);
 }
 
@@ -245,19 +237,19 @@ const int button_max_h = 21;
 const int button_max_w = 21;
 bool LoadButtonImage()
 {
-	char* button_filename = "/ds2key/button.png";
+	const char* button_filename = "/ds2key/button.png";
 	int png_width, png_height;
 	char* png_image{};
 	if(LoadPngImage(button_filename, png_width, png_height, true, (unsigned char**)&png_image))
 	{
-		int target_height = button_max_h;
-		int target_width  = button_max_w;
-		if(png_width < target_width)
-			target_width = png_width;
-		if(png_height < target_height)
-			target_height = png_height;
+		// int target_height = button_max_h;
+		// int target_width  = button_max_w;
+		// if(png_width < target_width)
+		// 	target_width = png_width;
+		// if(png_height < target_height)
+		// 	target_height = png_height;
 
-		int target_image_size = png_width * png_height * (ALPHA_IMAGE_BYTES);
+		// int target_image_size = png_width * png_height * (ALPHA_IMAGE_BYTES);
 
 		if(button_image == nullptr)
 		{
@@ -327,7 +319,7 @@ void GetPixel(uint8_t screen, uint16_t x, uint16_t y, uint16_t& color)
 	uint8_t* screen_pointer = GetScreenPointer(screen, x, y);
 #if defined(_NDS)
 	color = (uint16_t)screen_pointer[0];
-#elif defined(_3DS)
+#elif defined(__3DS__)
 	color = RGB24TORGB15(screen_pointer[2], screen_pointer[1], screen_pointer[1]);
 #endif
 }
@@ -336,7 +328,7 @@ void GetPixel(uint8_t screen, uint16_t x, uint16_t y, uint8_t& red, uint8_t& gre
 	uint8_t* screen_pointer = GetScreenPointer(screen, x, y);
 #if defined(_NDS)
 	RGB15TORGB24(((uint16_t*)screen_pointer)[0], red, green, blue);
-#elif defined(_3DS)
+#elif defined(__3DS__)
 	blue  = screen_pointer[0];
 	green = screen_pointer[1];
 	red   = screen_pointer[2];
@@ -406,14 +398,14 @@ uint8_t AlphaBlend(uint8_t color_1, uint8_t color_2, uint8_t alpha)
 }
 void SetPixel(uint8_t screen, uint16_t x, uint16_t y, uint16_t color)
 {
-	if((x >= MAX_X) // if we're not drawing on screen
-	|| (y >= MAX_Y))
+	if((x >= SCREEN_WIDTH_) // if we're not drawing on screen
+	|| (y >= SCREEN_HEIGHT_))
 		return;
 #if defined(_NDS)
 	uint16_t* screen_pointer = (uint16_t*)GetScreenPointer(screen, x, y);
 
 	screen_pointer[0] = color;
-#elif defined(_3DS)
+#elif defined(__3DS__)
 	uint8_t blue, green, red{};
 	RGB15TORGB24(color, red, green, blue);
 		
@@ -422,10 +414,10 @@ void SetPixel(uint8_t screen, uint16_t x, uint16_t y, uint16_t color)
 }
 void SetPixel(uint8_t screen, uint16_t x, uint16_t y, uint8_t red, uint8_t green, uint8_t blue)
 {
-	if((x >= MAX_X) // if we're not drawing on screen
-	|| (y >= MAX_Y))
+	if((x >= SCREEN_WIDTH_) // if we're not drawing on screen
+	|| (y >= SCREEN_HEIGHT_))
 		return;
-#if defined(_3DS)
+#if defined(__3DS__)
 	uint8_t* screen_pointer = GetScreenPointer(screen, x, y);
 
 	screen_pointer[0] = blue;
@@ -438,8 +430,8 @@ void SetPixel(uint8_t screen, uint16_t x, uint16_t y, uint8_t red, uint8_t green
 // TODO: add errors or fatals if the boundary checks fail
 void SetPixel(uint8_t screen, uint16_t x, uint16_t y, uint16_t color, uint8_t alpha)
 {
-	if((x >= MAX_X) // if we're not drawing on screen
-	|| (y >= MAX_Y))
+	if((x >= SCREEN_WIDTH_) // if we're not drawing on screen
+	|| (y >= SCREEN_HEIGHT_))
 		return;
 
 	if(alpha == 255 || background_image == nullptr)
@@ -475,14 +467,14 @@ void ClearScreen(uint8_t screen, uint16_t color)
 // TODO: add errors or fatals if the boundary checks fail
 void DrawFastHorizontleLine(uint8_t screen, uint16_t x, uint16_t y, uint16_t w, uint16_t color)
 {
-	if((x > MAX_X) // if we're not drawing on screen
-	|| (y > MAX_Y))
+	if((x > SCREEN_WIDTH_) // if we're not drawing on screen
+	|| (y > SCREEN_HEIGHT_))
 		return;
 
-	if(x + w >= MAX_X)
+	if(x + w >= SCREEN_WIDTH_)
 	{
-		if(MAX_X - x > 0)
-			w = MAX_X - x;
+		if(SCREEN_WIDTH_ - x > 0)
+			w = SCREEN_WIDTH_ - x;
 		else
 			return;
 	}
@@ -491,7 +483,7 @@ void DrawFastHorizontleLine(uint8_t screen, uint16_t x, uint16_t y, uint16_t w, 
 #if defined(_NDS)
 	uint16_t* screen_pointer = (uint16_t*)GetScreenPointer(screen, x, y);
 	dmaFillHalfWords(color, &screen_pointer[0], w * SCREEN_BYTES);
-#elif defined(_3DS)
+#elif defined(__3DS__)
 	for(int i = 0; i < w; i++)
 	{
 		SetPixel(screen, x + i, y, color);
@@ -515,7 +507,7 @@ void DrawFilledRect(uint8_t screen, GUI::Rect rect, uint16_t c)
 	{
 //#if defined(_NDS)
 //		DrawFastHorizontleLine(screen, rect.GetX(), y, rect.GetW(), c);
-//#elif defined(_3DS)
+//#elif defined(__3DS__)
 		for(int x = rect.GetX(); x <= rect.GetX2(); x++)
 		{
 			SetPixel(screen, x, y, c, alpha_setting);
@@ -1077,7 +1069,7 @@ void DrawLetter(uint8_t screen, char letter, uint16_t x, uint16_t y, uint16_t c)
 void DrawString(uint8_t screen, const std::string& text, uint8_t font_size, uint8_t face_type, uint16_t x, uint16_t y, uint16_t c)
 {
 // TODO:Disabled TTF functions for now, REALLY SLOW!
-//#if defined(_3DS)
+//#if defined(__3DS__)
 //	TTF::DrawString(screen, x, y, font_size, face_type, c, text.c_str());
 //#elif defined(_NDS)
 	for(unsigned int i = 0; i < text.length(); i++)

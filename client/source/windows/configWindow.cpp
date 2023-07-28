@@ -17,7 +17,7 @@
 #include "common/udp.h"
 #include "config.h"
 
-#ifdef _3DS
+#ifdef __3DS__
 #include "gui/gui.h"
 #endif
 
@@ -249,9 +249,12 @@ void WindowClass::SetVisible(bool visible)
 }
 bool WindowClass::Update()
 {
+
+#ifdef __3DS__
 	static uint8_t last_slider_volume_status = g_slider_volume_status;
 	static uint8_t last_slider_3d_status = g_slider_3d_status;
-	
+#endif
+
 	UDP::Update(0, 0, nullptr,
 	            nullptr, nullptr,
 	            nullptr, nullptr,
@@ -261,13 +264,13 @@ bool WindowClass::Update()
 
 	if(g_keys_down&KEY_L)
 		ButtonLFunction();
-#ifdef _3DS
+#ifdef __3DS__
 	else if(g_keys_down&KEY_ZL)
 		ButtonZLFunction();
 #endif
 	else if(g_keys_down&KEY_R)
 		ButtonRFunction();
-#ifdef _3DS
+#ifdef __3DS__
 	else if(g_keys_down&KEY_ZR)
 		ButtonZRFunction();
 #endif
@@ -279,7 +282,7 @@ bool WindowClass::Update()
 		ButtonUpFunction();
 	else if(g_keys_down&KEY_DOWN)
 		ButtonDownFunction();
-#ifdef _3DS
+#ifdef __3DS__
 	else if(g_keys_down&KEY_CPAD_LEFT)
 		ButtonLeftCPadFunction();
 	else if(g_keys_down&KEY_CPAD_RIGHT)
@@ -309,7 +312,7 @@ bool WindowClass::Update()
 		ButtonStartFunction();
 	else if(g_keys_down&KEY_SELECT)
 		ButtonSelectFunction();
-#if defined(_3DS)
+#if defined(__3DS__)
 	else if(last_slider_volume_status != g_slider_volume_status)
 	{
 		ButtonSliderVolumeFunction();
@@ -320,15 +323,6 @@ bool WindowClass::Update()
 		ButtonSlider3DFunction();
 		last_slider_3d_status = g_slider_3d_status;
 	}
-//#elif defined(_NDS) // TODO why did this check defined(_NDS)
-	else if(g_keys_down&KEY_BLUE)
-		ButtonBlueFunction();
-	else if(g_keys_down&KEY_YELLOW)
-		ButtonYellowFunction();
-	else if(g_keys_down&KEY_RED)
-		ButtonRedFunction();
-	else if(g_keys_down&KEY_GREEN)
-		ButtonGreenFunction();
 #endif
 	else if(g_keys_down&KEY_LID)
 		ButtonLidFunction();

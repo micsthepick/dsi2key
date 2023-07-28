@@ -196,7 +196,7 @@ void ButtonGamepadBFunction()              { append(Key::JOY+1); }
 void ButtonGamepadXFunction()              { append(Key::JOY+2); }
 void ButtonGamepadYFunction()              { append(Key::JOY+3); }
 
-#if defined(_3DS)
+#if defined(__3DS__)
 void ButtonGamepadZLFunction()             { append(Key::JOY+4); }
 void ButtonGamepadZRFunction()             { append(Key::JOY+5); }
 #endif
@@ -207,7 +207,7 @@ void ButtonGamepadRFunction()              { append(Key::JOY_AXIS_Z_PLUS); }   /
 void ButtonGamepadSelectFunction()         { append(Key::JOY+6); }
 void ButtonGamepadStartFunction()          { append(Key::JOY+7); }
 
-#if defined(_3DS)
+#if defined(__3DS__)
 void ButtonGamepadSliderVolumeFunction()   { append(Key::DSKEY_VOLUME_UP); }
 void ButtonGamepadSlider3DFunction()       { append(Key::JOY+9); }
 #elif defined(_NDS)
@@ -480,7 +480,7 @@ WindowClass::WindowClass() : Window()
 		lx = gamepad_base_x + 9;
 		ly = gamepad_base_y + 15;
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(lx,ly,10,10), "L", &ButtonGamepadLFunction));
-	#ifdef _3DS
+	#ifdef __3DS__
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(lx,ly+13,10,10), "ZL", &ButtonGamepadZLFunction));
 	#endif
 		
@@ -488,7 +488,7 @@ WindowClass::WindowClass() : Window()
 		rx = gamepad_base_x + 235;
 		ry = gamepad_base_y + ly;
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(rx,ry,10,10), "R", &ButtonGamepadRFunction));
-	#ifdef _3DS
+	#ifdef __3DS__
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(rx,ry+13,10,10), "ZR", &ButtonGamepadZRFunction));
 	#endif
 
@@ -500,7 +500,7 @@ WindowClass::WindowClass() : Window()
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(dpad_x + 30, dpad_y,      10, 10), "^", &ButtonGamepadUpFunction));
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(dpad_x + 30, dpad_y + 30, 10, 10), "v", &ButtonGamepadDownFunction));
 	
-	#ifdef _3DS
+	#ifdef __3DS__
 		static uint16_t cpad_x, cpad_y;
 		cpad_x = gamepad_base_x + 30;
 		cpad_y = gamepad_base_y + 15;
@@ -532,7 +532,7 @@ WindowClass::WindowClass() : Window()
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(start_select_x + 60, start_select_y, 10, 10), "Start", &ButtonGamepadStartFunction));
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(start_select_x,     start_select_y, 10, 10), "Select", &ButtonGamepadSelectFunction));
 	
-	#if defined(_3DS)
+	#if defined(__3DS__)
 		static uint16_t sliders_x, sliders_y;
 		sliders_x = gamepad_base_x + 40;
 		sliders_y = gamepad_base_y + 130;

@@ -70,9 +70,9 @@ bool Window::CheckClick(Object* object)
 		         y = D2K::g_stylus_position.py;
 
 		// clamp x value
-		D2K::clamp(x, (uint16_t)0, (uint16_t)(MAX_X - 1));
+		D2K::clamp(x, (uint16_t)0, (uint16_t)(SCREEN_WIDTH_ - 1));
 		// clamp y value
-		D2K::clamp(y, (uint16_t)0, (uint16_t)(MAX_Y - 1));
+		D2K::clamp(y, (uint16_t)0, (uint16_t)(SCREEN_HEIGHT_ - 1));
 
 		if(g_keys_down&KEY_TOUCH
 		&& object->IsClicked(x, y))

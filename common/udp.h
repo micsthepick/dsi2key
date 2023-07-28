@@ -11,7 +11,7 @@
 #include <nds.h>
 #include <netinet/in.h>  // sockaddr_in
 #include "dummy_types.h" // 3ds types: circlePosition, etc
-#elif defined(_3DS)
+#elif defined(__3DS__)
 #include <3ds.h>
 #include <netinet/in.h>  // sockaddr_in
 #endif

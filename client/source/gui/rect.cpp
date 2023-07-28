@@ -10,7 +10,7 @@ namespace D2K {namespace GUI {
 
 #if defined(_NDS)
 const float SCREEN_SCALE = 1.0;
-#elif defined(_3DS)
+#elif defined(__3DS__)
 const float SCREEN_SCALE = 1.25;
 #endif
 
@@ -25,10 +25,10 @@ Rect::Rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
 	int x_2 = x + w;
 	int y_2 = y + h;
-	if(x_2 > SCREEN_WIDTH - 1)  // If x_2 is offscreen
-		w = SCREEN_WIDTH - 1 - x;
-	if(y_2 > SCREEN_HEIGHT - 1) // If y_2 is offscreen
-		h = SCREEN_HEIGHT - 1 - y;
+	if(x_2 > SCREEN_WIDTH_ - 1)  // If x_2 is offscreen
+		w = SCREEN_WIDTH_ - 1 - x;
+	if(y_2 > SCREEN_HEIGHT_ - 1) // If y_2 is offscreen
+		h = SCREEN_HEIGHT_ - 1 - y;
 	m_x = x;
 	m_y = y;
 	m_w = w;
@@ -57,8 +57,8 @@ uint16_t Rect::GetW()
 void Rect::SetW(uint16_t w)
 {
 	int tempW = m_x + w;
-	if(tempW > SCREEN_WIDTH - 1) // If tempW is offscreen
-		m_w = SCREEN_WIDTH - 1 - m_x;
+	if(tempW > SCREEN_WIDTH_ - 1) // If tempW is offscreen
+		m_w = SCREEN_WIDTH_ - 1 - m_x;
 	else
 		m_w = w;
 }
@@ -69,8 +69,8 @@ uint16_t Rect::GetH()
 void Rect::SetH(uint16_t h)
 {
 	int tempH = m_y + h;
-	if(tempH > SCREEN_HEIGHT - 1) // If tempH is offscreen
-		m_h = SCREEN_HEIGHT - 1 - m_y;
+	if(tempH > SCREEN_HEIGHT_ - 1) // If tempH is offscreen
+		m_h = SCREEN_HEIGHT_ - 1 - m_y;
 	else
 		m_h = h;
 }

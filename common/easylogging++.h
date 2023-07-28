@@ -102,8 +102,14 @@
 #else
 #  define ELPP_OS_SOLARIS 0
 #endif
+// Embedded (NDS, etc)
+#if (defined(_NDS) || defined(__3DS__))
+#  define ELPP_EMBEDDED 1
+#else
+#  define ELPP_EMBEDDED 0
+#endif
 // Unix
-#if ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARIS) && (!ELPP_OS_WINDOWS))
+#if ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARIS) && (!ELPP_OS_WINDOWS && !ELPP_EMBEDDED))
 #  define ELPP_OS_UNIX 1
 #else
 #  define ELPP_OS_UNIX 0
@@ -337,7 +343,7 @@ ELPP_INTERNAL_DEBUGGING_OUT_INFO << ELPP_INTERNAL_DEBUGGING_MSG(internalInfoStre
 #if ELPP_OS_ANDROID
 #   include <sys/system_properties.h>
 #endif  // ELPP_OS_ANDROID
-#if ELPP_OS_UNIX
+#if ELPP_OS_UNIX || ELPP_EMBEDDED
 #   include <sys/stat.h>
 #   include <sys/time.h>
 #elif ELPP_OS_WINDOWS
@@ -813,8 +819,10 @@ static const unsigned int kMaxLogPerContainer              =      100;
 static const unsigned int kMaxLogPerCounter                =      100000;
 static const unsigned int  kDefaultMillisecondsWidth       =      3;
 static const base::type::VerboseLevel kMaxVerboseLevel     =      9;
+#if !ELPP_EMBEDDED
 static const char* kUnknownUser                            =      "user";
 static const char* kUnknownHost                            =      "unknown-host";
+#endif
 #if defined(ELPP_DEFAULT_LOG_FILE)
 static const char* kDefaultLogFile                         =      ELPP_DEFAULT_LOG_FILE;
 #else
@@ -1197,7 +1205,7 @@ class File : base::StaticClass {
     if (path == nullptr) {
       return false;
     }
-#if ELPP_OS_UNIX
+#if ELPP_OS_UNIX || ELPP_EMBEDDED
     ELPP_UNUSED(considerFile);
     struct stat st;
     return (stat(path, &st) == 0);
@@ -1566,6 +1574,8 @@ class OS : base::StaticClass {
     const char* val = getenv(variableName);
 #elif ELPP_OS_WINDOWS
     const char* val = getWindowsEnvironmentVariable(variableName);
+#elif ELPP_EMBEDDED
+    const char* val = nullptr;
 #endif  // ELPP_OS_UNIX
     if ((val == nullptr) || ((strcmp(val, "") == 0))) {
 #if ELPP_OS_UNIX && defined(ELPP_FORCE_ENV_VAR_FROM_BASH)
@@ -1614,11 +1624,15 @@ class OS : base::StaticClass {
   }
   /// @brief Whether or not terminal supports colors
   static inline bool termSupportsColor(void) {
+#ifndef ELPP_EMBEDDED // todo colors on 3DS?
     std::string term = getEnvironmentVariable("TERM", "");
     return term == "xterm" || term == "xterm-color" || term == "xterm-256color"
            || term == "screen" || term == "linux" || term == "cygwin"
            || term == "screen-256color";
-  }
+#else
+    return false;
+#endif
+  };
 };
 extern std::string s_currentUser;
 extern std::string s_currentHost;
@@ -1666,7 +1680,7 @@ class DateTime : base::StaticClass {
     ::gettimeofday(tv, nullptr);
 #endif  // ELPP_OS_WINDOWS
   }
-
+  
   /// @brief Gets current date and time with milliseconds.
   /// @param format User provided date/time format
   /// @param msWidth A pointer to base::MillisecondsWidth from configuration (non-null)
@@ -2413,6 +2427,7 @@ class LogFormat : public Loggable {
       base::utils::Str::replaceFirstWithEscape(m_format, base::consts::kSeverityLevelShortFormatSpecifier,
       base::consts::kTraceLevelShortLogValue);
     }
+    #if !ELPP_EMBEDDED
     if (hasFlag(base::FormatFlags::User)) {
       std::string s = base::utils::s_currentUser;
       base::utils::Str::replaceFirstWithEscape(m_format, base::consts::kCurrentUserFormatSpecifier,
@@ -2422,6 +2437,7 @@ class LogFormat : public Loggable {
       base::utils::Str::replaceFirstWithEscape(m_format, base::consts::kCurrentHostFormatSpecifier,
       base::utils::s_currentHost);
     }
+    #endif // !ELPP_EMBEDDED
     // Ignore Level::Global and Level::Unknown
   }
 
@@ -3791,7 +3807,7 @@ class RegisteredLoggers : public base::utils::Registry<Logger, std::string> {
       logger_->m_logBuilder = m_defaultLogBuilder;
       registerNew(id, logger_);
       LoggerRegistrationCallback* callback = nullptr;
-      for (const std::pair<std::string, base::type::LoggerRegistrationCallbackPtr>& h
+      for (const std::pair<std::string, std::shared_ptr<el::LoggerRegistrationCallback>> h
            : m_loggerRegistrationCallbacks) {
         callback = h.second.get();
         if (callback != nullptr && callback->enabled()) {
@@ -4660,7 +4676,7 @@ class LogDispatcher : base::NoCopy {
     }
     LogDispatchCallback* callback = nullptr;
     LogDispatchData data;
-    for (const std::pair<std::string, base::type::LogDispatchCallbackPtr>& h
+    for (const std::pair<const std::string, std::shared_ptr<el::LogDispatchCallback> >& h
          : ELPP->m_logDispatchCallbacks) {
       callback = h.second.get();
       if (callback != nullptr && callback->enabled()) {

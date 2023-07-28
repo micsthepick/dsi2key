@@ -1,12 +1,18 @@
 #include <nds.h>
 #include <dsiwifi7.h>
 
-volatile bool exit_flag = false;
+static int countdown = 72;
 
 void VBlankHandler(void)
 {
+	if (countdown > 0) {
+		countdown -= 1;
+		if (countdown == 0) {
+			__asm("mov r11, r11");
+		}
+	}
 	Wifi_Update();
-	resyncClock();  // Fixes libnds bug for 3DS
+	resyncClock();  // Fixes libnds bug for 3DS (apparently needed for DSI too?)
 }
 
 void VCountHandler()
@@ -16,7 +22,7 @@ void VCountHandler()
 
 void PowerButtonCallback()
 {
-	exit_flag = true;
+	i2cWriteRegister(0x4A, 0x11, 0x01);		// Reset to DSi/3DS HOME Menu
 }
 
 int main()
@@ -31,10 +37,9 @@ int main()
 
 	SetYtrigger(80);
 
-	installWifiFIFO();
 	installSoundFIFO();
-
 	installSystemFIFO();
+	installWifiFIFO();
 
 	irqSet(IRQ_VCOUNT, VCountHandler);
 	irqSet(IRQ_VBLANK, VBlankHandler);
@@ -44,7 +49,7 @@ int main()
 	setPowerButtonCB(PowerButtonCallback);
 
 	// Keep the ARM7 mostly idle
-	while(exit_flag == false)
+	while(1)
 	{
 		swiWaitForVBlank();
 	}

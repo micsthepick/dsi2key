@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cerrno>
 
-#if defined(_3DS)
+#if defined(__3DS__)
 #include <3ds.h>
 #include <malloc.h>
 #include <cstdio>
@@ -28,14 +28,14 @@ INITIALIZE_EASYLOGGINGPP
 #include "config.h"
 
 #ifdef GYRO_STUFF
-#if defined(_3DS)
+#if defined(__3DS__)
 extern Handle hidHandle;
 #endif
 #endif
 
 namespace D2K {
 
-#ifdef _3DS
+#ifdef __3DS__
 // TODO: is this filter needed? possibly on server instead? is 8 right?
 #define FILTER_SIZE 8
 static accelVector accel[FILTER_SIZE]{};
@@ -73,7 +73,7 @@ void BacklightsOn()
 		backlights_status = !backlights_status;
 #if defined(_NDS)
 		powerOn(PM_BACKLIGHT_BOTTOM);
-#elif defined(_3DS)
+#elif defined(__3DS__)
 		GSPLCD_PowerOnBacklight(GSPLCD_SCREEN_BOTTOM);
 #endif
 	// Turn on top light only if enabled
@@ -81,7 +81,7 @@ void BacklightsOn()
 		{
 #if defined(_NDS)
 			powerOn(PM_BACKLIGHT_TOP);
-#elif defined(_3DS)
+#elif defined(__3DS__)
 			GSPLCD_PowerOnBacklight(GSPLCD_SCREEN_TOP);
 #endif
 		}
@@ -95,7 +95,7 @@ void BacklightsOff()
 		backlights_status = !backlights_status;
 #if defined(_NDS)
 		powerOff(PM_BACKLIGHT_BOTTOM);
-#elif defined(_3DS)
+#elif defined(__3DS__)
 		GSPLCD_PowerOffBacklight(GSPLCD_SCREEN_BOTTOM);
 #endif
 	// Turn off top light only if enabled
@@ -103,7 +103,7 @@ void BacklightsOff()
 		{
 #if defined(_NDS)
 			powerOff(PM_BACKLIGHT_TOP);
-#elif defined(_3DS)
+#elif defined(__3DS__)
 			GSPLCD_PowerOffBacklight(GSPLCD_SCREEN_TOP);
 #endif
 		}
@@ -127,7 +127,12 @@ char* GetTime()
 	int minute = time_struct->tm_min;
 	int second = time_struct->tm_sec;
 	bool am = false;
-	
+
+	if (hour < 0 || minute < 0 || second < 0 || hour >= 24 || minute >= 60 || second >= 60) {
+		sprintf(s_time_char, "TIME ERROR");
+		return s_time_char;
+	}
+
 	if(hour < 12)
 		am = true;
 
@@ -135,7 +140,7 @@ char* GetTime()
 		hour = 12;
 	else if(hour > 12)
 		hour = hour - 12;
-
+	
 	
 	if(am)
 		sprintf(s_time_char, "%02i:%02i:%02i AM", hour, minute, second);
@@ -145,7 +150,7 @@ char* GetTime()
 	return s_time_char;
 }
 
-#ifdef _3DS
+#ifdef __3DS__
 static uint8_t lid_open{};
 uint8_t old_lid_open{};
 
@@ -183,7 +188,7 @@ uint32_t LidUp()
 #endif
 
 #ifdef GYRO_STUFF
-#if defined(_3DS)
+#if defined(__3DS__)
 Result HIDUSER_GetGyroscopeLowCalibrateParam(u8 result[20]){
     u32* cmdbuf = getThreadCommandBuffer();
     cmdbuf[0] = IPC_MakeHeader(0x16, 0, 0); // 0x160000
@@ -225,7 +230,7 @@ angularRate gyro_calibration{};
 #endif
 #endif
 
-#ifdef _3DS
+#ifdef __3DS__
 // debug printing
 //#include <cstdio>
 void UpdateGyroAccel()
@@ -255,9 +260,9 @@ void UpdateGyroAccel()
 		{
 			float accel_x = 0, accel_y = 0, accel_z = 0;
 			float gyro_x = 0, gyro_y = 0, gyro_z = 0;
+#ifdef GYRO_STUFF
 			for(size_t i = 0; i < FILTER_SIZE; ++i)
 			{
-#ifdef GYRO_STUFF
 // TODO: why are we scaling this? should we use float or decimal?
 				float scale = 1.0f / FILTER_SIZE;
 				accel_x += accel[i].x;
@@ -274,6 +279,8 @@ void UpdateGyroAccel()
 			g_gyro_status.y = gyro_y / FILTER_SIZE;
 			g_gyro_status.z = gyro_z / FILTER_SIZE;
 #else
+			for(size_t i = 0; i < FILTER_SIZE; ++i)
+			{
 // TODO: why are we scaling this? should we use float or decimal?
 				float scale = 0.1f / FILTER_SIZE;
 				accel_x += accel[i].x * scale;
@@ -317,7 +324,7 @@ void UpdateInputs()
 		g_keys_down = keysDown();
 		g_keys_up   = keysUp();
 
-#if defined(_3DS)
+#if defined(__3DS__)
 		UpdateGyroAccel();
 		hidCircleRead(&g_circle_position);
 		hidCstickRead(&g_cstick_position);
@@ -378,8 +385,8 @@ void UpdateLid()
 // vblank function we assign in Init()
 void VBlankFunction()
 {
+#ifdef __3DS__
 	uint32_t wifi_connected{};
-#ifdef _3DS
 #if EMULATOR == 1// these are all stub functions and just causes noise in citra's command line
 	wifi_status = 3;     // dummy max value
 	battery_level = 5;   // dummy max value
@@ -401,7 +408,7 @@ void VBlankFunction()
 
 void WaitForVBlank()
 {
-#if defined(_3DS)
+#if defined(__3DS__)
 	gspWaitForVBlank();
 	VBlankFunction();
 #elif defined(_NDS)
@@ -412,7 +419,7 @@ void WaitForVBlank()
 bool Init(int argc, char* argv[])
 {
 	// Screen setup
-#if defined(_3DS)
+#if defined(__3DS__)
 	gfxInitDefault();              // Graphics
 	gspLcdInit();                  // Backlight
 	ptmuInit();                    // Lid
@@ -441,25 +448,25 @@ bool Init(int argc, char* argv[])
 #elif defined(_NDS)
 	// PowerOff(PM_BACKLIGHT_TOP);
 	videoSetModeSub(MODE_0_2D);
-
 	// Console setup
 	consoleDemoInit();
 	vramSetPrimaryBanks(VRAM_A_LCD, VRAM_B_MAIN_SPRITE, VRAM_C_SUB_BG, VRAM_D_LCD);
-
 	videoSetMode(MODE_5_2D);
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
 	int background_3_id = bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0,0);
 	D2K::GUI::g_screen[0] = bgGetGfxPtr(background_3_id);
 	lcdSwap();
-
 	consoleClear();
 	
 	irqSet(IRQ_VBLANK, VBlankFunction); // Setup vblank function
+
+	if(!fatInitDefault())
+		std::cout << "Error (fatInitDefault): Failed to access storage\n";
 #endif
 
 	D2K::InitLogging(argc, argv);
 #ifdef GYRO_STUFF
-#if defined(_3DS)
+#if defined(__3DS__)
 #if false
 	for(int i = 0; i < 15; i++)
 	{
@@ -477,9 +484,6 @@ bool Init(int argc, char* argv[])
 	LOG(INFO) << "\n-";
 
 #if defined(_NDS)
-	if(!fatInitDefault())
-		LOG(ERROR) << "Error (fatInitDefault): Failed to access storage\n";
-
 	if(!EMULATOR) 
 	{
 		LOG(INFO) << "Connecting via WFC data\n";
@@ -490,7 +494,7 @@ bool Init(int argc, char* argv[])
 			return true; // Return with error
 		}
 	}
-#elif defined(_3DS)
+#elif defined(__3DS__)
 	const uint32_t SOC_ALIGN = 0x1000;
 	const uint32_t SOC_BUFFERSIZE = 0x100000;
 
@@ -525,7 +529,7 @@ bool Init(int argc, char* argv[])
 void DeInit()
 {
 	D2K::DeInitLogging();
-#ifdef _3DS
+#ifdef __3DS__
 // TODO: these should only be enabled when used?
 	HIDUSER_DisableGyroscope();     // Gyroscope
 	HIDUSER_DisableAccelerometer(); // Accelerometer
@@ -540,7 +544,7 @@ void DeInit()
 
 int Loop()
 {
-#if defined(_3DS)
+#if defined(__3DS__)
 // TODO: we should send a release of all keys if we knowingly disconnect
 	if(!aptMainLoop())
 		return 0;

@@ -16,28 +16,30 @@ export TOPDIR		:=	$(CURDIR)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-all: $(TARGET).nds
+all: $(TARGET).dsi
 
 #---------------------------------------------------------------------------------
-$(TARGET).nds	:	$(TARGET).arm7.elf $(TARGET).arm9.elf
-	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf
+$(TARGET).dsi	:	$(TARGET).arm7.elf $(TARGET).arm9.elf
+	ndstool	-c $(TARGET).dsi -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf -g DK2E 00 DSI2KEY 1 -o icon.bmp -b icon.bmp "DSI2KEY;Use DSI as PC remote;- Sypherce, mics"
+	cat $(TARGET).arm7.sym $(TARGET).arm9.sym > $(TARGET).sym
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm7.elf:
 	$(MAKE) -f Makefile_arm7
+	$(DEVKITARM)/bin/arm-none-eabi-nm -n $(TARGET).arm7.elf > $(TARGET).arm7.raw.sym
+	sed -r 's/([0-9a-fA-F]{8}) [a-zA-Z] (.*)/\1 \2/g' $(TARGET).arm7.raw.sym > $(TARGET).arm7.sym
+	rm $(TARGET).arm7.raw.sym
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm9.elf:
 	$(MAKE) -f Makefile_arm9
+	$(DEVKITARM)/bin/arm-none-eabi-nm -n $(TARGET).arm9.elf > $(TARGET).arm9.raw.sym
+	sed -r 's/([0-9a-fA-F]{8}) [a-zA-Z] (.*)/\1 \2/g' $(TARGET).arm9.raw.sym > $(TARGET).arm9.sym
+	rm $(TARGET).arm9.raw.sym
 
 #---------------------------------------------------------------------------------
 clean:
 	$(MAKE) -f Makefile_arm9 clean
 	$(MAKE) -f Makefile_arm7 clean
-	rm -f $(TARGET).nds $(TARGET).arm7 $(TARGET).arm9
-#---------------------------------------------------------------------------------
-run:
-	@echo launching via dslink
-	@start "" "C:\Program Files (x86)\DLDIrc\DLDIrc.cmd" dstwo "C:\Root\Programming\ds2key\master\ds2key\client\ds2key.nds"
-	@sleep 3s
-	@$(DEVKITARM)/bin/dslink -a 192.168.0.3 $(TARGET).nds
+	rm -f $(TARGET).dsi $(TARGET).arm7 $(TARGET).arm9
+

@@ -9,19 +9,14 @@
 #include <cstring> // strerror
 
 // system specific includes
-#if defined(_WIN32)
-#include <ws2tcpip.h>     // socklength_t
-#elif defined(__linux__)
-#include <unistd.h>       // close
-#include <arpa/inet.h>    // inet_ntoa
-#include <sys/ioctl.h>    // ioctl
-#elif defined(_NDS)
+#if defined(_NDS)
 #include <nds.h>
+#include <sys/socket.h>
 #include <dsiwifi9.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <cerrno>
-#elif defined(_3DS)
+#elif defined(__3DS__)
 #include <3ds.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -30,10 +25,16 @@
 #include <cstdio>
 #include <unistd.h>
 #include <fcntl.h>
+#elif defined(_WIN32)
+#include <ws2tcpip.h>     // socklength_t
+#elif defined(__linux__)
+#include <unistd.h>       // close
+#include <arpa/inet.h>    // inet_ntoa
+#include <sys/ioctl.h>    // ioctl
 #endif
 
 // shared (linux, nds, 3ds) defines
-#if defined(__linux__) || defined(_NDS) || defined(_3DS)
+#if defined(__linux__) || defined(_NDS) || defined(__3DS__)
 #define NETerrno errno
 #define NETEADDRINUSE EADDRINUSE
 #define NETEWOULDBLOCK EWOULDBLOCK
@@ -54,14 +55,14 @@
 #elif defined(_NDS)
 #define SOCKET_ERROR -1
 #define NETclosesocket close
-#elif defined(_3DS)
+#elif defined(__3DS__)
 #define SOCKET_ERROR -1
 #define NETclosesocket closesocket
 #endif
 
 #include "easylogging++Wrapper.h"
 
-#if defined(_NDS) || defined(_3DS)
+#if defined(_NDS) || defined(__3DS__)
 #include "core.h"
 #include "windows/commandWindow.h"
 #include "windows/configWindow.h"
@@ -125,8 +126,8 @@ int Connect(bool _non_blocking, uint16_t _port)
 		return 1;
 	}
 
+#if defined(__3DS__)
 	static bool wifi_not_connected_log{}; // Helps us not spam the log
-#if defined(_3DS)
 	if(wifi_status == WIFI_NOT_CONNECTED)
 	{
 		if(!wifi_not_connected_log)
@@ -136,8 +137,8 @@ int Connect(bool _non_blocking, uint16_t _port)
 		}
 		return 1;
 	}
-#endif
 	wifi_not_connected_log = false;
+#endif
 
 	if(IsConnected())     // If already connected
 		Disconnect(); // Disconnect first
@@ -160,7 +161,7 @@ int Connect(bool _non_blocking, uint16_t _port)
 	if(socket_id == INVALID_SOCKET)
 	{
 		int err = NETerrno;
-		LOG(ERROR) << "Error #" << err << " (socket): " << strerror(err) << "\n";
+		LOG_EVERY_N(300, ERROR) << "Error #" << err << " (socket): " << strerror(err) << "\n";
 		Disconnect();
 
 		return err;
@@ -181,7 +182,7 @@ int Connect(bool _non_blocking, uint16_t _port)
 	}
 #endif
 
-#ifdef _3DS
+#ifdef __3DS__
 	int flags = fcntl(socket_id, F_GETFL, 0);
 	if(UDP::non_blocking && fcntl(socket_id, F_SETFL, flags | O_NONBLOCK))
 	{
@@ -306,7 +307,7 @@ unsigned long GetLocalIP()
 {
 #if defined(_NDS)
 	return DSiWifi_GetIP();
-#elif defined(_3DS)
+#elif defined(__3DS__)
 	return gethostid();
 #elif defined(_WIN32) || defined(__linux__)
 	return local_sockaddr.sin_addr.s_addr;

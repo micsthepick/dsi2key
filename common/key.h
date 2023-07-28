@@ -1,13 +1,13 @@
 #pragma once
 
 #include <cstdint>
-#if defined(_WIN32)
+#if defined(_NDS) || defined(__3DS__)
+#include <cstring>
+#elif defined(_WIN32)
 #include <windows.h>
 #elif defined(__linux__)
 #include <cstring>
 #include <X11/keysym.h>
-#elif defined(_NDS) || defined(_3DS)
-#include <cstring>
 #endif
 
 namespace D2K {namespace Key {
@@ -348,7 +348,7 @@ enum {
 	KEY_OEM_CLEAR = VK_OEM_CLEAR,
 	KEY_SLASH = VK_OEM_2,
 	KEY_BACKSLASH = VK_OEM_5,
-#elif defined(_NDS) || defined(_3DS)
+#elif defined(_NDS) || defined(__3DS__)
 	KEY_VOID = KEY_NONE,
 	KEY_LBUTTON = DSKEY_LBUTTON,
 	KEY_RBUTTON = DSKEY_RBUTTON,
@@ -501,10 +501,10 @@ enum {
 	KEY_BACKSLASH = DSKEY_BACKSLASH,
 #elif defined(__linux__)
 	KEY_VOID = XK_VoidSymbol,
-	KEY_LBUTTON = 0x8000, // LBUTTON
-	KEY_RBUTTON = 0x8002, // RBUTTON
+	KEY_LBUTTON = 0x8001, // LBUTTON
+	KEY_RBUTTON = 0x8003, // RBUTTON
 	KEY_CANCEL = KEY_NONE, // CANCEL
-	KEY_MBUTTON = 0x8001, // MBUTTON
+	KEY_MBUTTON = 0x8002, // MBUTTON
 	KEY_BACK = XK_BackSpace,
 	KEY_TAB = XK_Tab,
 	KEY_CLEAR = XK_Clear,
@@ -706,7 +706,7 @@ enum {
 	KEY_OEM_PERIOD = KEY_NONE,
 	KEY_OEM_102 = KEY_NONE,
 	KEY_PACKET = KEY_NONE,
-#elif defined(_NDS) || defined(_3DS)
+#elif defined(_NDS) || defined(__3DS__)
 	KEY_XBUTTON1 = DSKEY_XBUTTON1,
 	KEY_XBUTTON2 = DSKEY_XBUTTON2,
 	KEY_BROWSER_BACK = DSKEY_BROWSER_BACK,

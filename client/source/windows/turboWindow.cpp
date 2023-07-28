@@ -12,7 +12,7 @@
 #include "core.h"
 #include "common/udp.h"
 
-#ifdef _3DS
+#ifdef __3DS__
 #include "gui/gui.h"
 #endif
 

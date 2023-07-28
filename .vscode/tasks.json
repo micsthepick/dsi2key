@@ -1,0 +1,246 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Make build-packages",
+            "command": "make",
+            "args": [
+                "build-packages"
+            ],
+            "problemMatcher": [
+                "$armcc5",
+                "$gcc",
+                {
+                    "owner": "cpp",
+                    "fileLocation": "absolute",
+                    "pattern": {
+                        "regexp": "^(.*?):(\\d+):(\\d+): (?:[fF]atal\\s)?([wW]arning|[eE]rror|[iI]nfo(?:rmation)?):\\s(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 4,
+                        "message": 5,
+                        "column": 3
+                    }
+                }
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Make server",
+            "command": "make",
+            "args": [
+                "server"
+            ],
+            "problemMatcher": [
+                "$gcc",
+                {
+                    "owner": "cpp",
+                    "fileLocation": "absolute",
+                    "pattern": {
+                        "regexp": "^(.*?):(\\d+):(\\d+): (?:[fF]atal\\s)?([wW]arning|[eE]rror|[iI]nfo(?:rmation)?):\\s(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 4,
+                        "message": 5,
+                        "column": 3
+                    }
+                },
+                {
+                    "owner": "ld",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/server/core"
+                    ],
+                    "pattern": {
+                        "regexp": "^.*?ld:\\s(.*):\\((.*)\\):\\s(undefined reference to\\s`.*')$",
+                        "file": 1,
+                        "code": 2,
+                        "message": 3
+                    },
+                    "severity": "error"
+                }
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Make client",
+            "command": "make",
+            "args": [
+                "client"
+            ],
+            "problemMatcher": [
+                "$gcc",
+                {
+                    "owner": "cpp",
+                    "fileLocation": "absolute",
+                    "pattern": {
+                        "regexp": "^(.*?):(\\d+):(\\d+): (?:[fF]atal\\s)?([wW]arning|[eE]rror|[iI]nfo(?:rmation)?):\\s(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 4,
+                        "message": 5,
+                        "column": 3
+                    }
+                },
+                {
+                    "owner": "make",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/client"
+                    ],
+                    "pattern": {
+                        "regexp": "^(make(?:\\[\\d+\\])?):\\s('(.*)' is up to date.)$",
+                        "file": 3,
+                        "code": 1,
+                        "message": 2
+                    },
+                    "severity": "info"
+                },
+                {
+                    "owner": "ld",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/client"
+                    ],
+                    "pattern": {
+                        "regexp": "^.*?ld:\\s(.*):\\((.*)\\):\\s(undefined reference to\\s`.*')$",
+                        "file": 1,
+                        "code": 2,
+                        "message": 3
+                    },
+                    "severity": "error"
+                }
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Make dsi",
+            "command": "make",
+            "args": [
+                "build_dsi"
+            ],
+            "problemMatcher": [
+                "$gcc",
+                {
+                    "owner": "cpp",
+                    "fileLocation": "absolute",
+                    "pattern": {
+                        "regexp": "^(.*?):(\\d+):(\\d+): (?:[fF]atal\\s)?([wW]arning|[eE]rror|[iI]nfo(?:rmation)?):\\s(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 4,
+                        "message": 5,
+                        "column": 3
+                    }
+                },
+                {
+                    "owner": "make",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}/client"
+                    ],
+                    "pattern": {
+                        "regexp": "^(make(?:\\[\\d+\\])?):\\s('(.*)' is up to date.)$",
+                        "file": 3,
+                        "code": 1,
+                        "message": 2
+                    },
+                    "severity": "info"
+                },
+                {
+                    "owner": "ld",
+                    "fileLocation": [
+                        "absolute"
+                    ],
+                    "pattern": [
+                        {
+                            "regexp": "^.*?ld:\\s(.*):(.*`.*'):$",
+                            "message": 2
+                        },
+                        {
+                            "regexp": "^(.*):(\\d+):\\s(undefined reference to `.*')$",
+                            "line": 2,
+                            "file": 1,
+                            "message": 3
+                        }
+                    ],
+                    "severity": "error"
+                }
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Make clean",
+            "type": "process",
+            "command": "make",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "DSI wifiboot",
+            "type": "process",
+            "command": "dslink",
+            "args": [
+                "./client/ds2key.dsi"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "DSI emulator",
+            "type": "process",
+            "command": "wine",
+            "dependsOn": "Make dsi",
+            "options": {
+                "cwd": "${userHome}/Apps/no$",
+            },
+            "args": [
+                "NO$GBA.EXE",
+                "..\\..\\source\\repos\\DSI2KEY\\client\\ds2key.dsi"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "Task generated by Debugger."
+        }
+    ]
+}

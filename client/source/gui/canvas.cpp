@@ -4,8 +4,6 @@
 
 namespace D2K {namespace GUI {
 
-extern const uint8_t SCREEN_BYTES;
-
 Canvas::Canvas(uint8_t screen, uint16_t x, uint16_t y, uint16_t w, uint16_t h) : Object(screen, GUI::Rect(x, y, w, h))
 {
 	m_w = w;

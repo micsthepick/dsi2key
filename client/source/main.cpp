@@ -9,21 +9,18 @@
 #include "common/udp.h"
 #include "config.h"
 
-#ifdef _3DS
-#include "gui.h" // this has guitarGrip stuff in it for now
-#endif
-
 int main(int argc, char* argv[])
 {
+	__asm__("mov r11, r11");
 	if(D2K::Init(argc, argv))                    // DS hardware setup
 	{
 		D2K::DeInit();
 
 		return 1;                            // halt on error
 	}
-	
-	// wait a few seconds on nds
-#ifdef _NDS
+
+	// wait a few seconds on nds & 3DS
+#if  defined(_NDS) || defined(__3DS__)
 	for (int i = 0; i < 60*5; i++)
 	{
 		D2K::WaitForVBlank();

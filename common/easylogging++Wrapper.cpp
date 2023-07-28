@@ -2,14 +2,12 @@
 
 namespace D2K {
 
-void InitLogging(int, char*[])
+void InitLogging(int argc, char *argv[])
 {
-// TODO: Fix logging.
-#if 0
 	const char* LOGGING_CONFIG = "\
 * GLOBAL:\n \
 FORMAT=\"[%datetime{%H:%m:%s}] %msg\"\n \
-FILENAME=\"/ds2key/ds2key.log\"\n \
+FILENAME=\"ds2key/ds2key.log\"\n \
 ENABLED=true\n \
 TO_FILE=true\n \
 TO_STANDARD_OUTPUT=true\n \
@@ -33,14 +31,11 @@ FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n";
 	c.setToDefault();
 	c.parseFromText(LOGGING_CONFIG);
 	el::Loggers::reconfigureLogger("default", c);
-#endif
 }
 
 void DeInitLogging()
 {
-#if 0
 	el::Loggers::flushAll();
-#endif
 }
 
 } // namespace D2K

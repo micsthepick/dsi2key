@@ -1,0 +1,72 @@
+{
+    "configurations": [
+        {
+            "name": "DSI",
+            "includePath": [
+                "${workspaceFolder}/dsiwifi/include",
+                "/opt/devkitpro/libnds/include/",
+                "/opt/devkitpro/devkitARM/include/",
+                "/opt/devkitpro/devkitARM/arm-none-eabi/include/",
+                "/opt/devkitpro/portlibs/nds/include/",
+                "/opt/devkitpro/portlibs/nds/include/freetype2/",
+                "${workspaceFolder}/client/source",
+                "${workspaceFolder}/client/source/gui",
+                "${workspaceFolder}/common",
+                "${workspaceFolder}/client",
+                "${workspaceFolder}/"
+            ],
+            "defines": [
+                "ARM9",
+                "_NDS",
+                "D2KCLIENT",
+                "EMULATOR=0"
+            ],
+            "compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "linux-gcc-arm"
+        },
+        {
+            "name": "3DS",
+            "includePath": [
+                "${workspaceFolder}/client/source",
+                "${workspaceFolder}/client/source/gui",
+                "${workspaceFolder}/client/source/windows",
+                "${workspaceFolder}",
+                "/opt/devkitpro/libctru/include/",
+                "/opt/devkitpro/devkitARM/include/",
+                "/opt/devkitpro/devkitARM/arm-none-eabi/include/",
+                "/opt/devkitpro/portlibs/3ds/include/",
+                "/opt/devkitpro/portlibs/3ds/include/freetype2/",
+                "${workspaceFolder}/common",
+                "${workspaceFolder}/client"
+            ],
+            "defines": [
+                "ARM9",
+                "__3DS__",
+                "D2KCLIENT",
+                "EMULATOR=0"
+            ],
+            "compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "linux-gcc-arm"
+        },
+        {
+            "name": "SERVER",
+            "includePath": [
+                "${workspaceFolder}"
+            ],
+            "defines": [
+                "D2KSERVER",
+                "EMULATOR=0",
+                "NULL_VALUE=0"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
