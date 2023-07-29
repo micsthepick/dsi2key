@@ -1,8 +1,6 @@
 #include <nds.h>
 #include <dsiwifi7.h>
 
-static int countdown = 72;
-
 void VBlankHandler(void)
 {
 	Wifi_Update();

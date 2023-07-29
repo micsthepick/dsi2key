@@ -338,14 +338,6 @@ void UpdateInputs()
 		g_keys_held |= LidHeld();
 		g_keys_down |= LidDown();
 		g_keys_up   |= LidUp();
-#elif defined(_NDS)
-		if(guitarGripIsInserted())
-		{
-			guitarGripScanKeys();
-			g_keys_held |= (guitarGripKeysHeld() << 24) >> 13;
-			g_keys_down |= (guitarGripKeysDown() << 24) >> 13;
-			g_keys_up   |= (guitarGripKeysUp()   << 24) >> 13;
-		}
 #endif
 
 		if(!(g_keys_up&KEY_TOUCH))
