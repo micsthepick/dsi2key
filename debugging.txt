@@ -1,0 +1,6 @@
+debugging:
+set a breakpoint in _strtod_l
+`crash` happens in second blx r3 in NotTWL. (__libc_init_array)
+ -- it calls __syscall_exit
+ 
+ __cxa_throw is a quicker way to debug

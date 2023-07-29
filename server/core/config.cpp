@@ -201,12 +201,7 @@ int LoadProfile(ProfileData* profile_data, uint8_t profile_number)
 	profile_data->SetValue(KEYS::CPAD_DOWN, iniParser::getstring(ini, "profile:cpaddown", "Key_None"));
 	profile_data->SetValue(KEYS::CPAD_LEFT, iniParser::getstring(ini, "profile:cpadleft", "Key_None"));
 	profile_data->SetValue(KEYS::CPAD_RIGHT, iniParser::getstring(ini, "profile:cpadright", "Key_None"));
-#ifdef COLOR_KEYS
-	profile_data->SetValue(KEYS::BLUE, iniParser::getstring(ini, "profile:blue", "Key_None"));
-	profile_data->SetValue(KEYS::YELLOW, iniParser::getstring(ini, "profile:yellow", "Key_None"));
-	profile_data->SetValue(KEYS::RED, iniParser::getstring(ini, "profile:red", "Key_None"));
-	profile_data->SetValue(KEYS::GREEN, iniParser::getstring(ini, "profile:green", "Key_None"));
-#endif
+
 	profile_data->SetValue(KEYS::SLIDER_VOLUME, iniParser::getstring(ini, "profile:slidervolume", "Key_None"));
 	profile_data->SetValue(KEYS::SLIDER_3D, iniParser::getstring(ini, "profile:slider3d", "Key_None"));
 

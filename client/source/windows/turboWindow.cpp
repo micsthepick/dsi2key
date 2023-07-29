@@ -82,13 +82,6 @@ WindowClass::WindowClass() : Window()
 	AppendObject(check_button_start         = new CheckButton(m_screen, Rect(145,115,10,10), "Start", &CheckButtonStartFunction));
 	AppendObject(check_button_select        = new CheckButton(m_screen, Rect(85,115,10,10), "Select", &CheckButtonSelectFunction));
 	AppendObject(check_button_enable        = new CheckButton(m_screen, Rect(100,35,10,10), "Enable", &CheckButtonEnableFunction));
-
-#ifdef _NDS
-	AppendObject(check_button_blue          = new CheckButton(m_screen, Rect(40,130,10,10), "Blue", &CheckButtonBlueFunction));
-	AppendObject(check_button_yellow        = new CheckButton(m_screen, Rect(90,130,10,10), "Yellow", &CheckButtonYellowFunction));
-	AppendObject(check_button_red           = new CheckButton(m_screen, Rect(140,130,10,10), "Red", &CheckButtonRedFunction));
-	AppendObject(check_button_green         = new CheckButton(m_screen, Rect(190,130,10,10), "Green", &CheckButtonGreenFunction));
-#endif
 }
 WindowClass::~WindowClass() { }
 

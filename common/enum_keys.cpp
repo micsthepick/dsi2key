@@ -38,15 +38,6 @@ std::string GetKeyName(int key)
 	case KEYS::SLIDER_3D:
 		return "3D Slider";
 
-	case KEYS::BLUE:
-		return "Blue";
-	case KEYS::YELLOW:
-		return "Yellow";
-	case KEYS::RED:
-		return "Red";
-	case KEYS::GREEN:
-		return "Green";
-
 	case KEYS::ZL:
 		return "ZL";
 	case KEYS::ZR:

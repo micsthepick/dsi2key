@@ -538,14 +538,6 @@ WindowClass::WindowClass() : Window()
 		sliders_y = gamepad_base_y + 130;
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(sliders_x,       sliders_y, 10, 10), "Volume", &ButtonGamepadSliderVolumeFunction));
 		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(sliders_x + 100, sliders_y, 10, 10), "3D Slider", &ButtonGamepadSlider3DFunction));
-	#elif defined(_NDS)
-		static uint16_t byrg_x, byrg_y;
-		byrg_x = gamepad_base_x + 40;
-		byrg_y = gamepad_base_y + 130;
-		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(byrg_x,       byrg_y, 10, 10), "Blue", &ButtonGamepadBlueFunction));
-		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(byrg_x + 50,  byrg_y, 10, 10), "Yellow", &ButtonGamepadYellowFunction));
-		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(byrg_x + 100, byrg_y, 10, 10), "Red", &ButtonGamepadRedFunction));
-		AppendObject(gamepad_buttons[buttons_counter++] = new Button(m_screen, Rect(byrg_x + 150, byrg_y, 10, 10), "Green", &ButtonGamepadGreenFunction));
 	#endif
 
 		static uint16_t lid_x, lid_y;

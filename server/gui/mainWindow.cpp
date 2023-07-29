@@ -374,10 +374,6 @@ void Setup()
 		listView1->Append("Start");
 		listView1->Append("Select");
 		listView1->Append("Lid");
-		listView1->Append("Blue");
-		listView1->Append("Yellow");
-		listView1->Append("Red");
-		listView1->Append("Green");
 		listView1->Append("Touch00");
 		listView1->Append("Touch01");
 		listView1->Append("Touch02");

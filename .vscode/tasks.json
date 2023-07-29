@@ -206,11 +206,20 @@
             "type": "process",
             "command": "wine",
             "dependsOn": "Make dsi",
+            "windows": {
+                "options": {
+                    "cwd": "${env:USERPROFILE}/Applications/no$"
+                },
+                "command": "PowerShell.exe",
+                //"args": [
+                //    "..\\..\\source\\repos\\DSI2KEY\\client\\ds2key.dsi"
+                //]
+            },
             "options": {
                 "cwd": "${userHome}/Apps/no$",
             },
             "args": [
-                "NO$GBA.EXE",
+                ".\\NO$GBA.EXE",
                 "..\\..\\source\\repos\\DSI2KEY\\client\\ds2key.dsi"
             ],
             "group": {

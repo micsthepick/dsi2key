@@ -5,12 +5,6 @@ static int countdown = 72;
 
 void VBlankHandler(void)
 {
-	if (countdown > 0) {
-		countdown -= 1;
-		if (countdown == 0) {
-			__asm("mov r11, r11");
-		}
-	}
 	Wifi_Update();
 	resyncClock();  // Fixes libnds bug for 3DS (apparently needed for DSI too?)
 }
@@ -27,6 +21,7 @@ void PowerButtonCallback()
 
 int main()
 {
+	__asm("mov r11, r11");
 	readUserSettings();
 
 	irqInit();

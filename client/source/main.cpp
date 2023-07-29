@@ -11,7 +11,6 @@
 
 int main(int argc, char* argv[])
 {
-	__asm__("mov r11, r11");
 	if(D2K::Init(argc, argv))                    // DS hardware setup
 	{
 		D2K::DeInit();
