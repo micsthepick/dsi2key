@@ -9,8 +9,10 @@
 //ELPP_DISABLE_ERROR_LOGS
 //ELPP_DISABLE_FATAL_LOGS
 #include  <iostream>
+#ifndef _NDS
 #define TRACE
 #define DEBUG
+#endif
 #define ERROR
 #define FATAL
 #define ELPP_DEFAULT_LOG_FILE "ds2key/ds2key.log"

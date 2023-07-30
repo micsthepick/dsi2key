@@ -4,3 +4,169 @@ set a breakpoint in _strtod_l
  -- it calls __syscall_exit
  
  __cxa_throw is a quicker way to debug
+
+ NotTWL - 2nd call to blx r3
+ 
+ bad alignment for _free_r:
+>> ldr r0,[r1,4h] (r1 = 0x0077FFF9)
+   mov r2, r12
+
+r1 is first arg of [free], so we are trying to free an invalid memory address...?
+
+call stack:
+
+_GLOBAL__sub_I__ZN2el4base5utils13s_currentUserB5cxx11E
+
+
+...
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEjjPKcj 
+    std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned int, unsigned int, char const*, unsigned int)
+
+_Znwj
+    operator new(unsigned int)
+
+_ZdlPvj
+	operator delete(void*, unsigned int)
+
+_ZdlPv
+    operator delete(void*)
+
+free...
+
+a full stacktrace:
+
+0203f715: fifoGetDatamsg
+021a620c: fifo_data_queue
+020c73ec: fifo_freewords
+021a620c: fifo_data_queue
+021a638c: processing
+021ab598: __twl_end__
+0209271d: __malloc_unlock
+021ab598: __twl_end__
+0209224b: _malloc_r
+02092709: __malloc_lock
+r13 =>  :
+0208d0b9: _free_r
+020c7a94: _impure_ptr
+0208fd37: free
+020538ab: operator delete(void*)
+020538b7: operator delete(void*, unsigned int)
+02054acd: __gnu_cxx::recursive_init_error::~recursive_init_error()
+0207a603: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_create(unsigned int&, unsigned int)
+0207a74f: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned int, unsigned int, char const*, unsigned int)
+020a77f8: vtable for D2K::GUI::Turbo::WindowClass
+021aabb8: __twl_end__
+0207ab25: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned int)
+0100026c: IntrRet
+02025519: el::base::TypedConfigurations::insertFile(el::Level, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+02023c0b: el::base::LogFormat::updateDateFormat(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
+...?
+
+after removing date format from elpp config (ds mode only):
+
+
+0202428b: void std::vector<el::Configuration*, std::allocator<el::Configuration*> >::_M_realloc_insert<el::Configuration* const&>(__gnu_cxx::__normal_iterator<el::Configuration**, std::vector<el::Configuration*, std::allocator<el::Configuration*> > >, el::Configuration* const&)
+02024649: std::_Function_handler<bool (), el::Configurations::unsafeSetGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
+020244a9: el::Configurations::unsafeSet(el::Level, el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+020b7074: std::money_base::_S_default_pattern
+00020001: DLDI_ALLOCATED_SPACE
+02021b1d: std::_Function_handler<bool (), el::Configurations::unsafeSetGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)::{lambda()#1}>::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
+02024519: std::_Function_handler<bool (), el::Configurations::unsafeSetGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
+02ff4000: __dtcm_top
+02029f2f: el::Configurations::setGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
+021a79f0: std::moneypunct<char, false>::id
+00013c3c: DLDI_ALLOCATED_SPACE
+020a7f48: vtable for std::_Sp_counted_ptr<std::basic_fstream<char, std::char_traits<char> >*, (__gnu_cxx::_Lock_policy)1>
+020027df: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) [clone .isra.0]
+021a5926: __dsimode
+020a7f48: vtable for std::_Sp_counted_ptr<std::basic_fstream<char, std::char_traits<char> >*, (__gnu_cxx::_Lock_policy)1>
+02029fd1: el::Configurations::setToDefault()
+0208fd23: malloc
+0202b06f: el::base::Storage::Storage(std::shared_ptr<el::LogBuilder> const&)
+0209271d: __malloc_unlock
+0209218b: _malloc_r
+0209271d: __malloc_unlock
+0209218b: _malloc_r
+0209271d: __malloc_unlock
+02ff4000: __dtcm_top
+021a5926: __dsimode
+02ff4000: __dtcm_top
+021a5926: __dsimode
+020c98fc: el::base::elStorage
+0202b46b: _GLOBAL__sub_I__ZN2el4base5utils13s_currentUserB5cxx11E
+020c5804: __frame_dummy_init_array_entry
+02098af3: __libc_init_array
+0200097c: NotTWL
+02fffe70: _libnds_argv
+
+after completely removing a bunch of random stuff from the nds config for elpp.
+
+02092797: raise
+0208ad21: abort
+02054607: __cxxabiv1::__terminate(void (*)())
+0205465f: std::terminate()
+020547ad: __cxa_rethrow
+02054b1d: operator new(unsigned int)
+0207a603: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_create(unsigned int&, unsigned int)
+0207a74f: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned int, unsigned int, char const*, unsigned int)
+020a77f8: vtable for D2K::GUI::Turbo::WindowClass
+0207ab25: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned int)
+02025519: el::base::TypedConfigurations::insertFile(el::Level, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+02023c0b: el::base::LogFormat::updateDateFormat(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)
+0256b558: __arm9i_lma__
+0207acf1: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::find(char const*, unsigned int, unsigned int) const
+020a77a8: vtable for D2K::GUI::Turbo::WindowClass
+02022f79: el::base::utils::Str::replaceFirstWithEscape(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+02023043: el::base::LogFormat::updateFormatSpec()
+0209271d: __malloc_unlock
+0209271d: __malloc_unlock
+0209218b: _malloc_r
+0209218b: _malloc_r
+0209271d: __malloc_unlock
+0208d165: _free_r
+02026327: el::base::TypedConfigurations::build(el::Configurations*)
+020a7cb4: vtable for el::base::LogFormat
+020a7ac4: vtable for D2K::GUI::Turbo::WindowClass
+00010001: DLDI_ALLOCATED_SPACE
+00010001: DLDI_ALLOCATED_SPACE
+0209271d: __malloc_unlock
+020a7cb4: vtable for el::base::LogFormat
+0209218b: _malloc_r
+0209218b: _malloc_r
+0208d165: _free_r
+021a2206: memp_memory_NETDB_base
+020a7cb4: vtable for el::base::LogFormat
+0209271d: __malloc_unlock
+0202714d: el::Logger::configure(el::Configurations const&)
+02024519: std::_Function_handler<bool (), el::Configurations::unsafeSetGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
+02021b1d: std::_Function_handler<bool (), el::Configurations::unsafeSetGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)::{lambda()#1}>::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
+02021b1d: std::_Function_handler<bool (), el::Configurations::unsafeSetGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)::{lambda()#1}>::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
+02024519: std::_Function_handler<bool (), el::Configurations::unsafeSetGlobally(el::ConfigurationType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
+020277eb: el::base::RegisteredLoggers::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool)
+020b633c: construction vtable for std::basic_istream<char, std::char_traits<char> >-in-std::__cxx11::basic_stringstream<char, std::char_traits<char>, std::allocator<char> >
+020b6350: construction vtable for std::basic_istream<char, std::char_traits<char> >-in-std::__cxx11::basic_stringstream<char, std::char_traits<char>, std::allocator<char> >
+020b592c: vtable for std::basic_ios<char, std::char_traits<char> >
+021a0100: memp_memory_PBUF_base
+0209271d: __malloc_unlock
+02021ab5: std::_Function_handler<bool (), el::Logger::initUnflushedCount()::{lambda()#1}>::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
+02021d11: std::_Function_handler<bool (), el::Logger::initUnflushedCount()::{lambda()#1}>::_M_invoke(std::_Any_data const&)
+020a6fa8: vtable for D2K::GUI::Turbo::WindowClass
+02ff4000: __dtcm_top
+0202b12f: el::base::Storage::Storage(std::shared_ptr<el::LogBuilder> const&)
+0209218b: _malloc_r
+0209271d: __malloc_unlock
+0209218b: _malloc_r
+0209271d: __malloc_unlock
+02ff4000: __dtcm_top
+021a58b6: __dsimode
+020c9884: el::base::elStorage
+0202b46b: _GLOBAL__sub_I__ZN2el4base5utils13s_currentUserB5cxx11E
+020c578c: __frame_dummy_init_array_entry
+02098af3: __libc_init_array
+0200097c: NotTWL
+02fffe70: _libnds_argv
+020b7800: one
+02026e78: el::Logger::configure(el::Configurations const&)
+0208a0b4: _Unwind_VRS_Pop
+00040001: DLDI_ALLOCATED_SPACE

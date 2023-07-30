@@ -210,11 +210,6 @@ void ButtonGamepadStartFunction()          { append(Key::JOY+7); }
 #if defined(__3DS__)
 void ButtonGamepadSliderVolumeFunction()   { append(Key::DSKEY_VOLUME_UP); }
 void ButtonGamepadSlider3DFunction()       { append(Key::JOY+9); }
-#elif defined(_NDS)
-void ButtonGamepadBlueFunction()           { append(Key::JOY+4); }
-void ButtonGamepadYellowFunction()         { append(Key::JOY+5); }
-void ButtonGamepadRedFunction()            { append(Key::JOY+8); }
-void ButtonGamepadGreenFunction()          { append(Key::JOY+9); }
 #endif
 
 void ButtonGamepadLidFunction()            { append(Key::JOY+10); }

@@ -96,12 +96,7 @@ void NewProfile(ProfileData* profile_data, uint8_t profile_number)
 	profile_data->SetVirtualKey(KEYS::CPAD_DOWN, Key::KEY_END);
 	profile_data->SetVirtualKey(KEYS::CPAD_LEFT, Key::KEY_DELETE);
 	profile_data->SetVirtualKey(KEYS::CPAD_RIGHT, Key::KEY_NEXT);
-#ifdef COLOR_KEYS
-	profile_data->SetVirtualKey(KEYS::BLUE, Key::KEY_NUMPAD1);
-	profile_data->SetVirtualKey(KEYS::YELLOW, Key::KEY_NUMPAD3);
-	profile_data->SetVirtualKey(KEYS::RED, Key::KEY_NUMPAD7);
-	profile_data->SetVirtualKey(KEYS::GREEN, Key::KEY_NUMPAD9);
-#endif
+
 	profile_data->SetVirtualKey(KEYS::SLIDER_VOLUME, Key::KEY_NUMPAD1);
 	profile_data->SetVirtualKey(KEYS::SLIDER_3D, Key::KEY_NUMPAD3);
 
@@ -345,12 +340,7 @@ int SaveProfile(ProfileData* Profile, uint8_t profileNumber)
 	fprintf(file, "CPadDown=%s\n", Profile->GetButtonString(KEYS::CPAD_DOWN).c_str());
 	fprintf(file, "CPadLeft=%s\n", Profile->GetButtonString(KEYS::CPAD_LEFT).c_str());
 	fprintf(file, "CPadRight=%s\n", Profile->GetButtonString(KEYS::CPAD_RIGHT).c_str());
-#ifdef COLOR_KEYS
-	fprintf(file, "Blue=%s\n", Profile->GetButtonString(KEYS::BLUE).c_str());
-	fprintf(file, "Yellow=%s\n", Profile->GetButtonString(KEYS::YELLOW).c_str());
-	fprintf(file, "Red=%s\n", Profile->GetButtonString(KEYS::RED).c_str());
-	fprintf(file, "Green=%s\n", Profile->GetButtonString(KEYS::GREEN).c_str());
-#endif
+
 	fprintf(file, "SliderVolume=%s\n", Profile->GetButtonString(KEYS::SLIDER_VOLUME).c_str());
 	fprintf(file, "Slider3D=%s\n", Profile->GetButtonString(KEYS::SLIDER_3D).c_str());
 

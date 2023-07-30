@@ -31,10 +31,6 @@ extern void CheckButtonYFunction();
 extern void CheckButtonStartFunction();
 extern void CheckButtonSelectFunction();
 extern void CheckButtonEnableFunction();
-extern void CheckButtonBlueFunction();
-extern void CheckButtonYellowFunction();
-extern void CheckButtonRedFunction();
-extern void CheckButtonGreenFunction();
 
 WindowClass g_window;
 CheckButton* check_button_l;
@@ -50,10 +46,6 @@ CheckButton* check_button_y;
 CheckButton* check_button_start;
 CheckButton* check_button_select;
 CheckButton* check_button_enable;
-CheckButton* check_button_blue;
-CheckButton* check_button_yellow;
-CheckButton* check_button_red;
-CheckButton* check_button_green;
 
 void ButtonCloseFunction()
 {
@@ -219,21 +211,5 @@ void CheckButtonSelectFunction()
 void CheckButtonEnableFunction()
 {
 	check_button_enable->ToggleChecked();
-}
-void CheckButtonBlueFunction()
-{
-	check_button_blue->ToggleChecked();
-}
-void CheckButtonYellowFunction()
-{
-	check_button_yellow->ToggleChecked();
-}
-void CheckButtonGreenFunction()
-{
-	check_button_green->ToggleChecked();
-}
-void CheckButtonRedFunction()
-{
-	check_button_red->ToggleChecked();
 }
 }}} // namespace D2K::GUI::Turbo

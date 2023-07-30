@@ -31,11 +31,6 @@ static const uint32_t DS2KEY_LID = (1U << (13));
 static const uint32_t DS2KEY_ZL = (1U << (14));
 static const uint32_t DS2KEY_ZR = (1U << (15));
 
-static const uint32_t DS2KEY_BLUE = (1U << (16));
-static const uint32_t DS2KEY_YELLOW = (1U << (17));
-static const uint32_t DS2KEY_RED = (1U << (18));
-static const uint32_t DS2KEY_GREEN = (1U << (19));
-
 // previously defined
 // static const uint32_t DS2KEY_TOUCH = (1U << (12)) | (1 << (20));
 
@@ -128,8 +123,6 @@ public:
 	std::string m_cstick_up, m_cstick_down, m_cstick_left, m_cstick_right;
 
 	std::string m_cpad_up, m_cpad_down, m_cpad_left, m_cpad_right;
-
-	std::string m_blue, m_yellow, m_red, m_green;
 
 	std::string m_slider_volume, m_slider_3d;
 

@@ -75,15 +75,6 @@ uint32_t EnumKeyToNDSKeypadBit(int enum_key)
 	case KEYS::CPAD_RIGHT:
 		return DS2KEY_CPAD_RIGHT;
 
-	case KEYS::BLUE:
-		return DS2KEY_BLUE;
-	case KEYS::YELLOW:
-		return DS2KEY_YELLOW;
-	case KEYS::RED:
-		return DS2KEY_RED;
-	case KEYS::GREEN:
-		return DS2KEY_GREEN;
-
 	case KEYS::SLIDER_VOLUME:
 		return DS2KEY_SLIDER_VOLUME;
 	case KEYS::SLIDER_3D:
@@ -186,15 +177,6 @@ std::string& ProfileData::GetStringReference(int enum_key)
 		return m_slider_volume;
 	case KEYS::SLIDER_3D:
 		return m_slider_3d;
-
-	case KEYS::BLUE:
-		return m_blue;
-	case KEYS::YELLOW:
-		return m_yellow;
-	case KEYS::RED:
-		return m_red;
-	case KEYS::GREEN:
-		return m_green;
 
 	case KEYS::ZL:
 		return m_zl;

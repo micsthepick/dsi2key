@@ -4,6 +4,18 @@ namespace D2K {
 
 void InitLogging(int argc, char *argv[])
 {
+#ifdef _NDS
+    const char* LOGGING_CONFIG = \
+"FILENAME=\"ds2key/ds2key.log\"\n \
+* GLOBAL:\n \
+FORMAT=\"%msg\"\n \
+ENABLED=true\n \
+TO_FILE=false\n \
+TO_STANDARD_OUTPUT=true\n \
+PERFORMANCE_TRACKING=false\n \
+MAX_LOG_FILE_SIZE=524266##500KB\n \
+LOG_FLUSH_THRESHOLD=1\n";
+#else
 	const char* LOGGING_CONFIG = "\
 * GLOBAL:\n \
 FORMAT=\"[%datetime{%H:%m:%s}] %msg\"\n \
@@ -25,6 +37,7 @@ FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n \
 FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n \
 * DEBUG:\n \
 FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n";
+#endif
 
 	START_EASYLOGGINGPP(argc, argv);
 	el::Configurations c;

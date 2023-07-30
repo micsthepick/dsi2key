@@ -167,18 +167,6 @@ void ButtonSelectFunction()
 {
 	SendNewSetting(KEYS::SELECT);
 }
-void ButtonBlueFunction()
-{
-	SendNewSetting(KEYS::BLUE);
-}
-void ButtonYellowFunction()
-{
-	SendNewSetting(KEYS::YELLOW);
-}
-void ButtonGreenFunction()
-{
-	SendNewSetting(KEYS::GREEN);
-}
 void ButtonSliderVolumeFunction()
 {
 	SendNewSetting(KEYS::SLIDER_VOLUME);
@@ -190,10 +178,6 @@ void ButtonSlider3DFunction()
 void ButtonLidFunction()
 {
 	SendNewSetting(KEYS::LID);
-}
-void ButtonRedFunction()
-{
-	SendNewSetting(KEYS::RED);
 }
 
 WindowClass::WindowClass() : Window()
