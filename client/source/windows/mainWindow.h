@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gui/window.h"
+#include "../gui/window.h"
 
 namespace D2K {namespace GUI {namespace Main {
 

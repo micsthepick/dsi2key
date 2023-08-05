@@ -63,9 +63,9 @@
 #include "easylogging++Wrapper.h"
 
 #if defined(_NDS) || defined(__3DS__)
-#include "core.h"
-#include "windows/commandWindow.h"
-#include "windows/configWindow.h"
+#include "../client/source/core.h"
+#include "../client//source/windows/commandWindow.h"
+#include "../client//source/windows/configWindow.h"
 #endif
 
 #include "udp.h"

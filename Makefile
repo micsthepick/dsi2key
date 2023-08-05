@@ -1,8 +1,11 @@
-.PHONY: clean client server build dsi
+.PHONY: clean clean_dsi client server build build_dsi
 
 clean:
 	$(MAKE) -C client clean
 	$(MAKE) -C server clean
+
+clean_dsi:
+	$(MAKE) -C client clean_dsi
 
 client:
 	$(MAKE) -C client

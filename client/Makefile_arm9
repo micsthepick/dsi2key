@@ -17,7 +17,7 @@ include $(DEVKITARM)/ds_rules
 BUILD		:=	build_arm9
 SOURCES		:=	source source/gui source/windows ../common ../common/iniparser/src
 DATA		:=
-INCLUDES	:=	source source/gui source/windows .. ../dsiwifi/include
+INCLUDES	:= ../dsiwifi/include
 GRAPHICS	:=	
 PORTLIBS	:= $(DEVKITPRO)/portlibs/nds
 
@@ -29,13 +29,14 @@ ARCH	:=	-mthumb -mthumb-interwork
 CFLAGS	:=	-g -Wall -O2\
 			-march=armv5te -mtune=arm946e-s -fomit-frame-pointer\
 			-ffast-math \
+			-ffunction-sections -fdata-sections \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -I$(PORTLIBS)/include -I$(PORTLIBS)/include/freetype2 -DARM9 -D_NDS -DD2KCLIENT -DEMULATOR=0
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=c++11
 
 ASFLAGS	:=	-g $(ARCH)
-LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
+LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map) -Wl,--gc-sections
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)

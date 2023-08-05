@@ -1,7 +1,7 @@
 #include <string> // std::string
 #include <png.h>
-#include "common/easylogging++Wrapper.h"
-#include "core.h"
+#include "../../../common/easylogging++Wrapper.h"
+#include "../core.h"
 #include "edit.h"
 #include "gui.h"
 

@@ -356,7 +356,7 @@ ELPP_INTERNAL_DEBUGGING_OUT_INFO << ELPP_INTERNAL_DEBUGGING_MSG(internalInfoStre
 #         include <winsock.h>
 #      endif // defined(ELPP_WINSOCK2)
 #  endif // defined(WIN32_LEAN_AND_MEAN)
-#endif  // ELPP_OS_UNIX
+#endif  // ELPP_OS_UNIX || ELPP_EMBEDDED
 #include <string>
 #include <vector>
 #include <map>

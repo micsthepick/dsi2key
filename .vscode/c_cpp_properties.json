@@ -9,11 +9,8 @@
                 "/opt/devkitpro/devkitARM/arm-none-eabi/include/",
                 "/opt/devkitpro/portlibs/nds/include/",
                 "/opt/devkitpro/portlibs/nds/include/freetype2/",
-                "${workspaceFolder}/client/source",
-                "${workspaceFolder}/client/source/gui",
                 "${workspaceFolder}/common",
-                "${workspaceFolder}/client",
-                "${workspaceFolder}/"
+                "${workspaceFolder}/client"
             ],
             "defines": [
                 "ARM9",
@@ -29,10 +26,6 @@
         {
             "name": "3DS",
             "includePath": [
-                "${workspaceFolder}/client/source",
-                "${workspaceFolder}/client/source/gui",
-                "${workspaceFolder}/client/source/windows",
-                "${workspaceFolder}",
                 "/opt/devkitpro/libctru/include/",
                 "/opt/devkitpro/devkitARM/include/",
                 "/opt/devkitpro/devkitARM/arm-none-eabi/include/",

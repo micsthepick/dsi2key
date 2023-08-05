@@ -4,18 +4,18 @@
 #include "barWindow.h"
 
 // controls
-#include "gui/gui.h"
-#include "gui/edit.h"
-#include "gui/button.h"
-#include "gui/label.h"
-#include "gui/canvas.h"
-#include "gui/frame.h"
+#include "../gui/gui.h"
+#include "../gui/edit.h"
+#include "../gui/button.h"
+#include "../gui/label.h"
+#include "../gui/canvas.h"
+#include "../gui/frame.h"
 
 // core
-#include "core.h"
-#include "common/udp.h"
-#include "common/misc.h"
-#include "config.h"
+#include "../core.h"
+#include "../../../common/udp.h"
+#include "../../../common/misc.h"
+#include "../config.h"
 
 namespace D2K {namespace GUI {namespace Bar {
 

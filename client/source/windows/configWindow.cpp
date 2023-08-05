@@ -7,22 +7,22 @@
 #include "turboWindow.h"
 
 // controls
-#include "gui/button.h"
-#include "gui/label.h"
+#include "../gui/button.h"
+#include "../gui/label.h"
 
 // core
-#include "core.h"
-#include "common/enum_keys.h"
-#include "common/key.h"
-#include "common/udp.h"
-#include "config.h"
+#include "../core.h"
+#include "../../../common/enum_keys.h"
+#include "../../../common/key.h"
+#include "../../../common/udp.h"
+#include "../config.h"
 
 #ifdef __3DS__
-#include "gui/gui.h"
+#include "../gui/gui.h"
 #endif
 
 // TODO: Remove
-#include "common/misc.h"
+#include "../../../common/misc.h"
 
 namespace D2K {namespace GUI {namespace ConfigWindow {
 

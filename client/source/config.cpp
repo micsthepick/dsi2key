@@ -5,10 +5,10 @@
 #include <cerrno>
 #include "config.h"
 #include "gui/gui.h"
-#include "common/easylogging++Wrapper.h"
-#include "common/udp.h"
-#include "common/iniParserWrapper.h"
-#include "common/misc.h"
+#include "../../common/easylogging++Wrapper.h"
+#include "../../common/udp.h"
+#include "../../common/iniParserWrapper.h"
+#include "../../common/misc.h"
 
 namespace D2K {namespace Config {
 

@@ -6,11 +6,11 @@
 #include "turboWindow.h"
 
 // controls
-#include "gui/button.h"
+#include "../gui/button.h"
 
 // core
-#include "core.h"
-#include "common/udp.h"
+#include "../core.h"
+#include "../../../common/udp.h"
 
 namespace D2K {namespace GUI {namespace Command {
 

@@ -5,15 +5,15 @@
 #include "barWindow.h"
 
 // controls
-#include "gui/checkButton.h"
-#include "gui/label.h"
+#include "../gui/checkButton.h"
+#include "../gui/label.h"
 
 // core
-#include "core.h"
-#include "common/udp.h"
+#include "../core.h"
+#include "../../../common/udp.h"
 
 #ifdef __3DS__
-#include "gui/gui.h"
+#include "../gui/gui.h"
 #endif
 
 namespace D2K {namespace GUI {namespace Turbo {
@@ -56,7 +56,7 @@ WindowClass::WindowClass() : Window()
 {
 	m_screen = 0;
 
-	AppendObject(new Button(m_screen, Rect(220, 1, 10, 10), "Close", ButtonCloseFunction));
+	AppendObject(new Button(m_screen, Rect(220, 1, 10, 10), "Close", &ButtonCloseFunction));
 				
 	AppendObject(check_button_l             = new CheckButton(m_screen, Rect(39,39,10,10), "L", &CheckButtonLFunction));
 	AppendObject(check_button_r             = new CheckButton(m_screen, Rect(205,40,10,10), "R", &CheckButtonRFunction));

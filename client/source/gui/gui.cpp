@@ -4,11 +4,11 @@
 #endif
 #include <algorithm>        // std::min, std::max
 #include <cstring>
-#include "common/easylogging++Wrapper.h"
+#include "../../../common/easylogging++Wrapper.h"
 #include "gui.h"
 #include "png_format.h"
 #include "ttf_format.h"
-#include "common/screen_size.h"
+#include "../../../common/screen_size.h"
 
 namespace D2K {namespace GUI {
 

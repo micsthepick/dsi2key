@@ -20,11 +20,11 @@
 #include "gui/gui.h" // D2K::GUI::Screen
 
 // This looks wrong because it's a macro
-#include "common/easylogging++Wrapper.h"
+#include "../../common/easylogging++Wrapper.h"
 INITIALIZE_EASYLOGGINGPP
 
-#include "common/udp.h"
-#include "common/misc.h"
+#include "../../common/udp.h"
+#include "../../common/misc.h"
 #include "config.h"
 
 #ifdef GYRO_STUFF

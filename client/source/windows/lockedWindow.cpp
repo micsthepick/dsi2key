@@ -6,10 +6,10 @@
 #include "barWindow.h"
 
 // controls
-#include "gui/label.h"
+#include "../gui/label.h"
 
 // core
-#include "core.h" // g_keys_down
+#include "../core.h" // g_keys_down
 
 namespace D2K {namespace GUI {namespace Locked {
 

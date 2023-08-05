@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../gui/window.h"
-#include "common/enum_keys.h"
-#include "common/udp.h"
+#include "../../../common/enum_keys.h"
+#include "../../../common/udp.h"
 
 namespace D2K {namespace GUI {namespace ConfigWindow {
 

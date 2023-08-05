@@ -6,12 +6,12 @@
 #include "turboWindow.h"
 
 // controls
-#include "gui/button.h"
-#include "gui/letterButton.h"
+#include "../gui/button.h"
+#include "../gui/letterButton.h"
 
 // core
-#include "core.h" // g_keys_down
-#include "common/udp.h"
+#include "../core.h" // g_keys_down
+#include "../../../common/udp.h"
 
 namespace D2K {namespace GUI {namespace Main {
 

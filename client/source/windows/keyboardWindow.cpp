@@ -2,11 +2,11 @@
 #include "keyboardWindow.h"
 #include "configWindow.h"
 #include "turboWindow.h"
-#include "gui/gui.h"
-#include "common/udp.h"
-#include "common/key.h"
-#include "config.h"
-#include "core.h"
+#include "../gui/gui.h"
+#include "../../../common/udp.h"
+#include "../../../common/key.h"
+#include "../config.h"
+#include "../core.h"
 
 namespace D2K {namespace GUI {namespace Keyboard {
 

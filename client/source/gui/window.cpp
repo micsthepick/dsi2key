@@ -1,9 +1,9 @@
 #include <iostream>
 #include "window.h"
 #include "gui.h"
-#include "common/easylogging++Wrapper.h"
-#include "common/misc.h"
-#include "common/udp.h"
+#include "../../../common/easylogging++Wrapper.h"
+#include "../../../common/misc.h"
+#include "../../../common/udp.h"
 #include "../core.h"
 
 namespace D2K {namespace GUI {

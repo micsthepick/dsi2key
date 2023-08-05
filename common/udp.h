@@ -3,17 +3,18 @@
 #include <cstdint> // uint16_t
 #include <string>  // std::string
 
-#include "common/ds2keyPacket.h"
+#include "ds2keyPacket.h"
 
-#ifdef __linux__
-#include <netdb.h>
-#elif defined(_NDS)
+
+#if defined(_NDS)
 #include <nds.h>
 #include <netinet/in.h>  // sockaddr_in
-#include "dummy_types.h" // 3ds types: circlePosition, etc
+#include "../client/source/dummy_types.h" // 3ds types: circlePosition, etc
 #elif defined(__3DS__)
 #include <3ds.h>
 #include <netinet/in.h>  // sockaddr_in
+#elif defined(__linux__)
+#include <netdb.h>
 #endif
 
 #ifndef _WIN32

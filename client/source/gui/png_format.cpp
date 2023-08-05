@@ -3,7 +3,7 @@
 #include <cstring> // memcpy
 #include <iomanip> // setprecision
 #include <png.h>
-#include "common/easylogging++Wrapper.h"
+#include "../../../common/easylogging++Wrapper.h"
 
 namespace D2K {namespace GUI{
 

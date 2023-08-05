@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string> // std::string
-#include "gui/window.h"
-#include "gui/edit.h"
-#include "gui/label.h"
+#include "../gui/window.h"
+#include "../gui/edit.h"
+#include "../gui/label.h"
 
 namespace D2K {namespace GUI {namespace Keyboard {
 

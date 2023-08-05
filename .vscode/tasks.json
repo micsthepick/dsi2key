@@ -192,6 +192,28 @@
             }
         },
         {
+            "label": "Make clean dsi",
+            "type": "process",
+            "command": "make",
+            "args": [
+                "clean_dsi"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "push to DSI",
+            "type": "shell",
+            "command": "echo -e \"put client/ds2key.dsi ds2key.dsi\\nquit\" | ftp -n 192.168.1.15 5000",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "DSI wifiboot",
             "type": "process",
             "command": "dslink",
@@ -227,6 +249,18 @@
                 "isDefault": true
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Rebuild dsi",
+            "dependsOn": [
+                "Make clean dsi",
+                "Make dsi"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "type": "cppbuild",

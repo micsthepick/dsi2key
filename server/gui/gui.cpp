@@ -5,8 +5,8 @@ Windows GUI
 #include <windows.h>
 #include <commctrl.h>
 #include <iostream>//std::cout, std::clog
-#include "gui/gui.h"
-#include "gui/resource.h"
+#include "gui.h"
+#include "resource.h"
 
 namespace D2K {namespace GUI {
 
