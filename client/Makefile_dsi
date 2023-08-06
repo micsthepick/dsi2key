@@ -11,7 +11,7 @@ export TARGET		:=	ds2key
 export TOPDIR		:=	$(CURDIR)
 
 # GMAE_ICON is the image used to create the game icon, leave blank to use default rule
-## GAME_ICON := banner.bin
+GAME_ICON := banner.bin
 
 # These set the information text in the nds file
 ## GAME_TITLE     := DSI2KEY
@@ -28,7 +28,7 @@ all: $(TARGET).dsi
 
 #---------------------------------------------------------------------------------
 $(TARGET).dsi	:	$(TARGET).arm7.elf $(TARGET).arm9.elf
-	ndstool	-c $(TARGET).dsi -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf \
+	ndstool	-c $(TARGET).dsi -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf -t banner.bin \
 	$(_ADDFILES)
 	cat $(TARGET).arm9.sym $(TARGET).arm7.sym | uniq | grep -E '.+ .+' > $(TARGET).sym
 

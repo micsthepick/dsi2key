@@ -29,9 +29,9 @@ int main()
 
 	SetYtrigger(80);
 
+	installWifiFIFO();
 	installSoundFIFO();
 	installSystemFIFO();
-	installWifiFIFO();
 
 	irqSet(IRQ_VCOUNT, VCountHandler);
 	irqSet(IRQ_VBLANK, VBlankHandler);

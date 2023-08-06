@@ -140,7 +140,7 @@ char* GetTime()
 		hour = 12;
 	else if(hour > 12)
 		hour = hour - 12;
-	
+
 	
 	if(am)
 		sprintf(s_time_char, "%02i:%02i:%02i AM", hour, minute, second);
