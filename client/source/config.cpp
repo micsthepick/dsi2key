@@ -14,7 +14,7 @@ namespace D2K {namespace Config {
 
 const std::string DEFAULT_IP = "192.168.1.255";
 const std::string DEFAULT_PROFILE = "0";
-const std::string INI_FILENAME = "/ds2key/settings.ini";
+const std::string INI_FILENAME = "/ds2key/ds2key.ini";
 const std::string DEFAULT_BACKGROUND = "/ds2key/background.png";
 const std::string DEFAULT_FONT = "/ds2key/FreeUniversal-Regular.ttf";
 const std::string DEFAULT_FONT_BOLD = "/ds2key/FreeUniversal-Bold.ttf";

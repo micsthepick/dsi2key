@@ -9,12 +9,8 @@
 #include "../../common/udp.h"
 #include "config.h"
 
-#include <nds.h>
-
 int main(int argc, char* argv[])
 {
-	__asm("mov r11, r11");
-	__asm("mov r11, r11");
 	if(D2K::Init(argc, argv))                    // DS hardware setup
 	{
 		D2K::DeInit();

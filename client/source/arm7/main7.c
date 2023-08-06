@@ -19,8 +19,6 @@ void PowerButtonCallback()
 
 int main()
 {
-	__asm("mov r11, r11");
-	__asm("mov r11, r11");
 	readUserSettings();
 
 	irqInit();
