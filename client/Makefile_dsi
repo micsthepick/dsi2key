@@ -11,12 +11,12 @@ export TARGET		:=	ds2key
 export TOPDIR		:=	$(CURDIR)
 
 # GMAE_ICON is the image used to create the game icon, leave blank to use default rule
-GAME_ICON := icon.bmp
+## GAME_ICON := banner.bin
 
 # These set the information text in the nds file
-GAME_TITLE     := DSI2KEY
-GAME_SUBTITLE1 := Use DSI as PC remote
-GAME_SUBTITLE2 := gh:micsthepick/dsi2key
+## GAME_TITLE     := DSI2KEY
+## GAME_SUBTITLE1 := Use DSI as PC remote
+## GAME_SUBTITLE2 := gh:micsthepick/dsi2key
 
 
 .PHONY: $(TARGET).arm7.elf $(TARGET).arm9.elf
@@ -29,7 +29,6 @@ all: $(TARGET).dsi
 #---------------------------------------------------------------------------------
 $(TARGET).dsi	:	$(TARGET).arm7.elf $(TARGET).arm9.elf
 	ndstool	-c $(TARGET).dsi -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf \
-	-b $(GAME_ICON) "$(GAME_TITLE);$(GAME_SUBTITLE1);$(GAME_SUBTITLE2)" \
 	$(_ADDFILES)
 	cat $(TARGET).arm9.sym $(TARGET).arm7.sym | uniq | grep -E '.+ .+' > $(TARGET).sym
 

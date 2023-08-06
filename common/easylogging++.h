@@ -109,7 +109,7 @@
 #  define ELPP_EMBEDDED 0
 #endif
 // Unix
-#if ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARIS) && (!ELPP_OS_WINDOWS && !ELPP_EMBEDDED))
+#if ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARI || ELPP_EMBEDDED) && (!ELPP_OS_WINDOWS))
 #  define ELPP_OS_UNIX 1
 #else
 #  define ELPP_OS_UNIX 0
@@ -277,7 +277,7 @@ ELPP_INTERNAL_DEBUGGING_OUT_INFO << ELPP_INTERNAL_DEBUGGING_MSG(internalInfoStre
 #undef ELPP_VARIADIC_TEMPLATES_SUPPORTED
 // Keep following line commented until features are fixed
 #define ELPP_VARIADIC_TEMPLATES_SUPPORTED \
-(ELPP_COMPILER_GCC || ELPP_COMPILER_CLANG || ELPP_COMPILER_INTEL || (ELPP_COMPILER_MSVC && _MSC_VER >= 1800))
+((ELPP_COMPILER_GCC || ELPP_COMPILER_CLANG || ELPP_COMPILER_INTEL || (ELPP_COMPILER_MSVC && _MSC_VER >= 1800)) && !ELPP_EMBEDDED) 
 // Logging Enable/Disable macros
 #define ELPP_LOGGING_ENABLED (!defined(ELPP_DISABLE_LOGS))
 #if (!defined(ELPP_DISABLE_DEBUG_LOGS) && (ELPP_LOGGING_ENABLED) && ((defined(_DEBUG)) || (!defined(NDEBUG))))
@@ -343,7 +343,7 @@ ELPP_INTERNAL_DEBUGGING_OUT_INFO << ELPP_INTERNAL_DEBUGGING_MSG(internalInfoStre
 #if ELPP_OS_ANDROID
 #   include <sys/system_properties.h>
 #endif  // ELPP_OS_ANDROID
-#if ELPP_OS_UNIX || ELPP_EMBEDDED
+#if ELPP_OS_UNIX
 #   include <sys/stat.h>
 #   include <sys/time.h>
 #elif ELPP_OS_WINDOWS
@@ -356,7 +356,7 @@ ELPP_INTERNAL_DEBUGGING_OUT_INFO << ELPP_INTERNAL_DEBUGGING_MSG(internalInfoStre
 #         include <winsock.h>
 #      endif // defined(ELPP_WINSOCK2)
 #  endif // defined(WIN32_LEAN_AND_MEAN)
-#endif  // ELPP_OS_UNIX || ELPP_EMBEDDED
+#endif  // ELPP_OS_UNIX
 #include <string>
 #include <vector>
 #include <map>
@@ -1205,7 +1205,7 @@ class File : base::StaticClass {
     if (path == nullptr) {
       return false;
     }
-#if ELPP_OS_UNIX || ELPP_EMBEDDED
+#if ELPP_OS_UNIX
     ELPP_UNUSED(considerFile);
     struct stat st;
     return (stat(path, &st) == 0);
@@ -1539,7 +1539,7 @@ class OS : base::StaticClass {
   /// @param command Bash command
   /// @return Result of bash output or empty string if no result found.
   static const std::string getBashOutput(const char* command) {
-#if (ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_CYGWIN)
+#if (ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_CYGWIN && !ELPP_EMBEDDED)
     if (command == nullptr) {
       return std::string();
     }
@@ -1560,7 +1560,7 @@ class OS : base::StaticClass {
 #else
     ELPP_UNUSED(command);
     return std::string();
-#endif  // (ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_CYGWIN)
+#endif  // (ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_CYGWIN && !ELPP_EMBEDDED)
   }
 
   /// @brief Gets environment variable. This is cross-platform and CRT safe (for VC++)
@@ -1570,13 +1570,13 @@ class OS : base::StaticClass {
   ///        in order to look for value user is looking for. E.g, for 'user' alternative command will 'whoami'
   static std::string getEnvironmentVariable(const char* variableName, const char* defaultVal,
       const char* alternativeBashCommand = nullptr) {
-#if ELPP_OS_UNIX
+#if ELPP_OS_UNIX && !ELPP_EMBEDDED
     const char* val = getenv(variableName);
 #elif ELPP_OS_WINDOWS
     const char* val = getWindowsEnvironmentVariable(variableName);
 #elif ELPP_EMBEDDED
     const char* val = nullptr;
-#endif  // ELPP_OS_UNIX
+#endif  // ELPP_OS_UNIX && !ELPP_EMBEDDED
     if ((val == nullptr) || ((strcmp(val, "") == 0))) {
 #if ELPP_OS_UNIX && defined(ELPP_FORCE_ENV_VAR_FROM_BASH)
       // Try harder on unix-based systems
@@ -1595,7 +1595,7 @@ class OS : base::StaticClass {
   }
   /// @brief Gets current username.
   static inline std::string currentUser(void) {
-#if ELPP_OS_UNIX && !ELPP_OS_ANDROID
+#if ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_EMBEDDED
     return getEnvironmentVariable("USER", base::consts::kUnknownUser, "whoami");
 #elif ELPP_OS_WINDOWS
     return getEnvironmentVariable("USERNAME", base::consts::kUnknownUser);
@@ -1604,14 +1604,14 @@ class OS : base::StaticClass {
     return std::string("android");
 #else
     return std::string();
-#endif  // ELPP_OS_UNIX && !ELPP_OS_ANDROID
+#endif  // ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_EMBEDDED
   }
 
   /// @brief Gets current host name or computer name.
   ///
   /// @detail For android systems this is device name with its manufacturer and model seperated by hyphen
   static inline std::string currentHost(void) {
-#if ELPP_OS_UNIX && !ELPP_OS_ANDROID
+#if ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_EMBEDDED
     return getEnvironmentVariable("HOSTNAME", base::consts::kUnknownHost, "hostname");
 #elif ELPP_OS_WINDOWS
     return getEnvironmentVariable("COMPUTERNAME", base::consts::kUnknownHost);
@@ -1620,7 +1620,7 @@ class OS : base::StaticClass {
     return getDeviceName();
 #else
     return std::string();
-#endif  // ELPP_OS_UNIX && !ELPP_OS_ANDROID
+#endif  // ELPP_OS_UNIX && !ELPP_OS_ANDROID && !ELPP_EMBEDDED
   }
   /// @brief Whether or not terminal supports colors
   static inline bool termSupportsColor(void) {
@@ -1676,6 +1676,12 @@ class DateTime : base::StaticClass {
       tv->tv_sec = static_cast<long>(present * secOffSet);
       tv->tv_usec = static_cast<long>(present % usecOffSet);
     }
+#elif ELPP_EMBEDDED
+  if (tv != nullptr) {
+	  time_t unix_time = time(nullptr);
+    tv->tv_sec = unix_time;
+    tv->tv_usec = 0;
+  }
 #else
     ::gettimeofday(tv, nullptr);
 #endif  // ELPP_OS_WINDOWS
