@@ -24,18 +24,18 @@ DATA		:=
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O2\
-		-mcpu=arm7tdmi -mtune=arm7tdmi -fomit-frame-pointer \
+CFLAGS	:=	-g -Wall -O3\
+		-mcpu=arm7tdmi -mtune=arm7tdmi \
 		-ffunction-sections -fdata-sections \
 		-ffast-math \
 		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM7
-CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions -fno-rtti
+CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions
 
 
 ASFLAGS	:=	-g $(ARCH)
-LDFLAGS	=	-specs=ds_arm7.specs -g $(ARCH) -Wl,-Map,$(notdir $*).map -Wl,--gc-sections
+LDFLAGS	=	-specs=ds_arm7.specs -g $(ARCH) -Wl,-Map,$(notdir $*).map
 
 LIBS	:=	-ldsiwifi7 -lnds7
 

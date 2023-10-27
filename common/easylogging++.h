@@ -109,7 +109,7 @@
 #  define ELPP_EMBEDDED 0
 #endif
 // Unix
-#if ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARI || ELPP_EMBEDDED) && (!ELPP_OS_WINDOWS))
+#if ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARIS || ELPP_EMBEDDED) && (!ELPP_OS_WINDOWS))
 #  define ELPP_OS_UNIX 1
 #else
 #  define ELPP_OS_UNIX 0
@@ -1570,13 +1570,13 @@ class OS : base::StaticClass {
   ///        in order to look for value user is looking for. E.g, for 'user' alternative command will 'whoami'
   static std::string getEnvironmentVariable(const char* variableName, const char* defaultVal,
       const char* alternativeBashCommand = nullptr) {
-#if ELPP_OS_UNIX && !ELPP_EMBEDDED
+#if ELPP_EMBEDDED
+    const char* val = nullptr;
+#elif ELPP_OS_UNIX
     const char* val = getenv(variableName);
 #elif ELPP_OS_WINDOWS
     const char* val = getWindowsEnvironmentVariable(variableName);
-#elif ELPP_EMBEDDED
-    const char* val = nullptr;
-#endif  // ELPP_OS_UNIX && !ELPP_EMBEDDED
+#endif  // ELPP_EMBEDDED
     if ((val == nullptr) || ((strcmp(val, "") == 0))) {
 #if ELPP_OS_UNIX && defined(ELPP_FORCE_ENV_VAR_FROM_BASH)
       // Try harder on unix-based systems
@@ -1624,13 +1624,13 @@ class OS : base::StaticClass {
   }
   /// @brief Whether or not terminal supports colors
   static inline bool termSupportsColor(void) {
-#ifndef ELPP_EMBEDDED // todo colors on 3DS?
+#ifdef ELPP_EMBEDDED
+    return true;
+#else
     std::string term = getEnvironmentVariable("TERM", "");
     return term == "xterm" || term == "xterm-color" || term == "xterm-256color"
            || term == "screen" || term == "linux" || term == "cygwin"
            || term == "screen-256color";
-#else
-    return false;
 #endif
   };
 };

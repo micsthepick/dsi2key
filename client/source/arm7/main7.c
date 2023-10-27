@@ -13,7 +13,9 @@ void VCountHandler()
 }
 
 void PowerButtonCallback()
-{
+{	
+	// This will skip the power-off/sleep mode screen when returning to HOME Menu
+	i2cWriteRegister(0x4A, 0x70, 0x01);		// Bootflag = Warmboot/SkipHealthSafety
 	i2cWriteRegister(0x4A, 0x11, 0x01);		// Reset to DSi/3DS HOME Menu
 }
 

@@ -207,7 +207,7 @@
         {
             "label": "push to DSI",
             "type": "shell",
-            "command": "echo -e \"put client/ds2key.dsi ds2key.dsi\\nquit\" | ftp -n 192.168.1.15 5000",
+            "command": "echo -e \"binary\\nput client/ds2key.dsi ds2key.dsi\\nquit\" | ftp -n 192.168.1.15 5000",
             "group": {
                 "kind": "build",
                 "isDefault": true

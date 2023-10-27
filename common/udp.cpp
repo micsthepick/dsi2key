@@ -58,6 +58,7 @@
 #elif defined(__3DS__)
 #define SOCKET_ERROR -1
 #define NETclosesocket closesocket
+#define NETIF_FLAG_BROADCAST 0x02U
 #endif
 
 #include "easylogging++Wrapper.h"
@@ -246,8 +247,12 @@ int Send(const void* buffer, unsigned int length)
 	}
 	else // Successful
 	{
+		int flags = 0;
+		if (!((remote_sockaddr.sin_addr.s_addr & 0xff) ^ 0xff)) {
+			flags |= NETIF_FLAG_BROADCAST;
+		}
 		int sockaddrlength = sizeof(struct sockaddr_in);
-		if(sendto(socket_id, (const char*)buffer, length, 0, (struct sockaddr*)&remote_sockaddr, sockaddrlength) == SOCKET_ERROR)
+		if(sendto(socket_id, (const char*)buffer, length, flags, (struct sockaddr*)&remote_sockaddr, sockaddrlength) == SOCKET_ERROR)
 		{
 			int err = NETerrno;
 			LOG(ERROR) << "Error #" << err << " (sendto): " << strerror(err) << "\n";

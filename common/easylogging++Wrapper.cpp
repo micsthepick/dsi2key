@@ -14,7 +14,7 @@ TO_FILE=true\n \
 TO_STANDARD_OUTPUT=true\n \
 PERFORMANCE_TRACKING=false\n \
 MAX_LOG_FILE_SIZE=12800##100KB\n \
-LOG_FLUSH_THRESHOLD=1\n";
+LOG_FLUSH_THRESHOLD=1";
 #else
 	const char* LOGGING_CONFIG = "\
 * GLOBAL:\n \
@@ -42,6 +42,7 @@ FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n";
 	el::Configurations c;
 	c.parseFromText(LOGGING_CONFIG);
 	el::Loggers::reconfigureLogger("default", c);
+	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
 }
 
 void DeInitLogging()

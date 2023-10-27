@@ -71,13 +71,7 @@
         "span": "cpp",
         "variant": "cpp",
         "nds.h": "c",
-        "clock.h": "c"
-    },
-    "makefile.launchConfigurations": [
-        {
-            "cwd": "/home/mike/source/repos/DSI2KEY/server",
-            "binaryPath": "/home/mike/source/repos/DSI2KEY/server/ds2key",
-            "binaryArgs": []
-        }
-    ]
+        "clock.h": "c",
+        "wifi_debug.h": "c"
+    }
 }

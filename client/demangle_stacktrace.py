@@ -1,5 +1,5 @@
 import os
-import re
+import sys
 import subprocess
 
 def demangle_cpp_names(stacktrace):
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         os.chdir(client_dir)
 
     # Replace 'stack.dmp' and 'ds2key.sym' with the actual file paths
-    with open('stack.dmp', 'rb') as hex_file:
+    with open(sys.argv[1], 'rb') as hex_file:
         hexdump_content = hex_file.read()
 
     with open('ds2key.sym', 'r') as sym_file:

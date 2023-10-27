@@ -398,6 +398,25 @@ void VBlankFunction()
 	UpdateLid();
 }
 
+// wifi event handlers
+void appwifi_log(const char* s)
+{
+    LOG(INFO) << s;
+}
+
+// void appwifi_connect(void)
+// {
+//     //rpc_init();
+//     //is_connected = true;
+// }
+
+// void appwifi_reconnect(void)
+// {
+//     //rpc_deinit();
+//     //rpc_init();
+//     //is_connected = true;
+// }
+
 void WaitForVBlank()
 {
 #if defined(__3DS__)
@@ -438,10 +457,14 @@ bool Init(int argc, char* argv[])
 	// Get the bottom screen's frame buffer
 	D2K::GUI::g_screen[0] = (uint16_t*)gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, nullptr, nullptr);
 #elif defined(_NDS)
+	defaultExceptionHandler();
+
 	// PowerOff(PM_BACKLIGHT_TOP);
 	videoSetModeSub(MODE_0_2D);
 	// Console setup
 	consoleDemoInit();
+    consoleDebugInit(DebugDevice_CONSOLE);
+	
 	vramSetPrimaryBanks(VRAM_A_LCD, VRAM_B_MAIN_SPRITE, VRAM_C_SUB_BG, VRAM_D_LCD);
 	videoSetMode(MODE_5_2D);
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
@@ -479,6 +502,9 @@ bool Init(int argc, char* argv[])
 	if(!EMULATOR) 
 	{
 		LOG(INFO) << "Connecting via WFC data\n";
+		DSiWifi_SetLogHandler(appwifi_log);
+    	//DSiWifi_SetConnectHandler(appwifi_connect);
+    	//DSiWifi_SetReconnectHandler(appwifi_reconnect);
 		if(!DSiWifi_InitDefault(WFC_CONNECT))
 		{
 			LOG(ERROR) << "Error (DSiWifi_InitDefault): Failed to connect\n";
@@ -504,6 +530,14 @@ bool Init(int argc, char* argv[])
 	{
 		LOG(ERROR) << "socInit: " << (unsigned int)soc_init;
 		return true;
+	}
+#endif
+
+	// wait a few seconds on nds & 3DS
+#if  defined(_NDS) || defined(__3DS__)
+	for (int i = 0; i < 60*5; i++)
+	{
+		D2K::WaitForVBlank();
 	}
 #endif
 
