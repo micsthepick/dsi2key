@@ -32,8 +32,8 @@ def get_local_ip():
 
 import time
 
-CHUNK_SIZE = 256
-SEND_DELAY = 0.005  # delay in seconds
+CHUNK_SIZE = 512
+SEND_DELAY = 0.01  # delay in seconds
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -55,6 +55,7 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     if not chunk:
                         break
                     self.wfile.write(chunk)
+                    self.wfile.flush()
                     time.sleep(SEND_DELAY)
         except Exception as e:
             print("Error while serving the file:", str(e))
