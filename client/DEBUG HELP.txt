@@ -14,3 +14,9 @@ Ensure using real firmware and sd card inserted in NO$GBA, don't run directly (i
 
 might help to set a breakpoint on D2K_INIT via asm volatile ("mov r11, r11");
 set another breakpoint in fatMount
+
+IRL Debugging:
+hopefully there is a Guru Meditation (in the case where "it don't work"):
+what I find most helpful is the values of r15 (pc) and r14 (lr) and extra points for finding patterns and near misses in the rest
+lately I think that r14 is often what is needed, and r15 is off doing its own thing, but maybe r0-r12 can be helpful when they start with 020.. or 021.. or maybe 023..
+but certainly look for 02... in the stack! (printed on bottom half)

@@ -19,6 +19,66 @@
 
 #include "gui/gui.h" // D2K::GUI::Screen
 
+static bool returnfalse() {
+	return false;
+}
+
+namespace D2K {
+bool ICanWriteSD() {
+#ifdef _NDS
+	// Console setup
+	defaultExceptionHandler();
+	consoleDemoInit();
+
+	// trying to mount SD
+	std::cout << "Attemptint to mount DSI SD IF sane.\n";
+
+	auto __io_dsi_sd = get_io_dsisd();
+
+	if (!__io_dsi_sd->startup)  {
+		// live patch (HACKY)
+		*(FN_MEDIUM_STARTUP *)&(__io_dsi_sd->startup) = returnfalse;
+		return false;
+	}
+
+	if (!__io_dsi_sd->isInserted) {
+		*(FN_MEDIUM_ISINSERTED *)&(__io_dsi_sd->isInserted) = returnfalse;
+		return false;
+	}
+
+	asm volatile ("mov r11, r11");
+	
+	if (!fatMountSimple("sd", __io_dsi_sd))
+		return false;
+#endif
+	return true;
+	}
+
+
+bool ICanWriteuSD() {
+	// clean up CanWriteuSD
+    fatUnmount("sd");
+
+	// trying to mount SD
+	std::cout << "Attemptint to mount DSI SD IF sane.\n";
+	
+	if (fatInitDefault())
+		return true;
+	return false;
+}
+
+	bool ICanNotWriteLogs() {
+		std::cout << "can't write logs!!!\n";
+		int i = 480;
+		while (i --> 0) {
+			WaitForVBlank();
+		}
+		return false;
+	}
+
+	bool canLogFile = ICanWriteSD() || ICanWriteuSD() || ICanNotWriteLogs();
+}
+
 // This looks wrong because it's a macro
 #include "../../common/easylogging++Wrapper.h"
 INITIALIZE_EASYLOGGINGPP
@@ -41,10 +101,10 @@ namespace D2K {
 static accelVector accel[FILTER_SIZE]{};
 static angularRate gyro[FILTER_SIZE]{};
 #endif
-circlePosition g_circle_position{};
-circlePosition g_cstick_position{};
-accelVector g_accel_status{};
-angularRate g_gyro_status{};
+circlePosition g_circle_position = {0, 0};
+circlePosition g_cstick_position = {0, 0};
+accelVector g_accel_status = {0, 0, 0};
+angularRate g_gyro_status = {0, 0, 0};
 touchPosition g_stylus_position{};
 float g_slider_3d_status{};
 uint8_t g_slider_volume_status{};
@@ -458,21 +518,8 @@ bool Init(int argc, char* argv[])
 	// Get the bottom screen's frame buffer
 	D2K::GUI::g_screen[0] = (uint16_t*)gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, nullptr, nullptr);
 #elif defined(_NDS)
-	// Console setup
 	irqSet(IRQ_VBLANK, VBlankFunction); // Setup vblank function
-	consoleDemoInit();
-
-	std::cout << "IF YOU SEE THIS THEN \n";
-	std::cout << "YOU MAY NEED TO DLDI PATCH (fat init fail)!\n";
-	
-	WaitForVBlank();
-
-	if(!fatInitDefault())
-		std::cout << "Error (fatInitDefault): Failed to access storage\n";
-
-	consoleClear();
-
-	defaultExceptionHandler();
+	asm volatile ("mov r11, r11");
 
 	// PowerOff(PM_BACKLIGHT_TOP);
 	videoSetModeSub(MODE_0_2D);
@@ -485,7 +532,7 @@ bool Init(int argc, char* argv[])
 	int background_3_id = bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0,0);
 	D2K::GUI::g_screen[0] = bgGetGfxPtr(background_3_id);
 	lcdSwap();
-	consoleClear();
+	//consoleClear();
 #endif
 
     asm volatile ("mov r11, r11");
@@ -549,6 +596,7 @@ bool Init(int argc, char* argv[])
 	{
 		D2K::WaitForVBlank();
 	}
+	LOG(ERROR) << "can't open filesystem to write logfile!";
 #endif
 
 	UDP::Init();    // Initilize UDP
