@@ -33,7 +33,7 @@ def get_local_ip():
 import time
 
 CHUNK_SIZE = 256
-SEND_DELAY = 0.000333333333  # delay in seconds
+SEND_DELAY = 0.005  # delay in seconds
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
