@@ -42,8 +42,8 @@ int main(int argc, char* argv[])
 	if(D2K::Setup(argc, argv)) // Exit if we don't connect properly
 	{
 		return 1;
-	}
 #endif
+	}
 
 		while(D2K::g_running)
 		{

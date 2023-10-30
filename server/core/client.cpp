@@ -462,7 +462,7 @@ void Client::SetIP(uint32_t ip_address)
 long Client::GetOffsetX()
 {
 	#ifdef _WIN32
-	return std::min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x)*25565 / screen_width;
+	return min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x)*25565 / screen_width;
 	#elif defined(__linux__)
 	return std::min(m_profile_data->m_absolute_top_left_x, m_profile_data->m_absolute_bot_right_x);
 	#endif
@@ -471,7 +471,7 @@ long Client::GetOffsetX()
 long Client::GetOffsetY()
 {
 	#ifdef _WIN32
-	return std::min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y)*25565 / screen_height;
+	return min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y)*25565 / screen_height;
 	#elif defined(__linux__)
 	return std::min(m_profile_data->m_absolute_top_left_y, m_profile_data->m_absolute_bot_right_y);
 	#endif
