@@ -19,8 +19,8 @@ server:
 build: client server
 
 copy-to-SD-root: client
-	mkdir -p copy-to-SD-root/ds2key
-	cp client/ds2key.dsi client/3DS2Key.3dsx copy-to-SD-root/
+	mkdir -p copy-to-SD-root/dsi2key
+	cp client/dsi2key.dsi client/3DS2Key.3dsx copy-to-SD-root/
 	cp client/ds2key.ini.example copy-to-SD-root/ds2key/ds2key.ini
 	touch copy-to-SD-root/ds2key/ds2key.log
 

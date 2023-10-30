@@ -119,7 +119,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NDS|ARM'">
     <NMakeBuildCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_nds"</NMakeBuildCommandLine>
-    <NMakeOutput>ds2key.nds</NMakeOutput>
+    <NMakeOutput>dsi2key.dsi</NMakeOutput>
     <NMakeCleanCommandLine>C:\devkitPro\msys2\msys2_shell.cmd -here -no-start -defterm -l -c "make -f Makefile_nds clean"</NMakeCleanCommandLine>
     <NMakePreprocessorDefinitions>EMULATOR=0;D2KCLIENT;ARM9;_NDS;</NMakePreprocessorDefinitions>
     <IncludePath>$(ProjectDir)source;$(ProjectDir)..\common;$(ProjectDir)..;$(ProjectDir)..\dsiwifi\include;C:\devkitPro\portlibs\nds\include\freetype2;C:\devkitPro\portlibs\nds\include;C:\devkitPro\devkitARM\include;C:\devkitPro\libnds\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>

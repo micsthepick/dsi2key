@@ -207,7 +207,7 @@
         {
             "label": "push to DSI",
             "type": "shell",
-            "command": "echo -e \"binary\\nput client/ds2key.dsi ds2key.dsi\\nquit\" | ftp -n 192.168.1.15 5000",
+            "command": "echo -e \"binary\\nput client/dsi2key.dsi dsi2key.dsi\\nquit\" | ftp -n 192.168.1.15 5000",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -218,7 +218,7 @@
             "type": "process",
             "command": "dslink",
             "args": [
-                "./client/ds2key.dsi"
+                "./client/dsi2key.dsi"
             ],
             "group": "build",
             "problemMatcher": []
@@ -234,7 +234,7 @@
                 },
                 "command": "PowerShell.exe",
                 //"args": [
-                //    "..\\..\\source\\repos\\DSI2KEY\\client\\ds2key.dsi"
+                //    "..\\..\\source\\repos\\DSI2KEY\\client\\dsi2key.dsi"
                 //]
             },
             "options": {
@@ -242,7 +242,7 @@
             },
             "args": [
                 ".\\NO$GBA.EXE",
-                "..\\..\\source\\repos\\DSI2KEY\\client\\ds2key.dsi"
+                "..\\..\\source\\repos\\DSI2KEY\\client\\dsi2key.dsi"
             ],
             "group": {
                 "kind": "build",
