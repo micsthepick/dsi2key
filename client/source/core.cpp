@@ -459,7 +459,13 @@ bool Init(int argc, char* argv[])
 	D2K::GUI::g_screen[0] = (uint16_t*)gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, nullptr, nullptr);
 #elif defined(_NDS)
 	// Console setup
+	irqSet(IRQ_VBLANK, VBlankFunction); // Setup vblank function
 	consoleDemoInit();
+
+	std::cout << "IF YOU SEE THIS THEN \n
+	YOU MAY NEED TO DLDI PATCH (fat init fail)!\n";
+	
+	WaitForVBlank();
 
 	if(!fatInitDefault())
 		std::cout << "Error (fatInitDefault): Failed to access storage\n";
@@ -478,8 +484,6 @@ bool Init(int argc, char* argv[])
 	D2K::GUI::g_screen[0] = bgGetGfxPtr(background_3_id);
 	lcdSwap();
 	consoleClear();
-	
-	irqSet(IRQ_VBLANK, VBlankFunction); // Setup vblank function
 #endif
 
     asm volatile ("mov r11, r11");
