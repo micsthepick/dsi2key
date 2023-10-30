@@ -49,6 +49,7 @@
 #define NETEWOULDBLOCK WSAEWOULDBLOCK
 #define NETclosesocket closesocket
 #define NETioctlsocket ioctlsocket
+#define D2K_FLAG_BROADCAST SO_BROADCAST
 #elif defined(__linux__)
 #define NETclosesocket close
 #define SOCKET_ERROR -1
@@ -56,11 +57,11 @@
 #elif defined(_NDS)
 #define SOCKET_ERROR -1
 #define NETclosesocket close
-#define D2K_FLAG_BROADCAST SOF_BROADCAST
+#define D2K_FLAG_BROADCAST SO_BROADCAST
 #elif defined(__3DS__)
 #define SOCKET_ERROR -1
 #define NETclosesocket closesocket
-#define D2K_FLAG_BROADCAST SOF_BROADCAST
+#define D2K_FLAG_BROADCAST SO_BROADCAST
 #endif
 
 #include "easylogging++Wrapper.h"

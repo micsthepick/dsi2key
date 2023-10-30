@@ -56,15 +56,17 @@ bool ICanWriteSD() {
 
 
 bool ICanWriteuSD() {
+#ifdef _NDS
 	// clean up CanWriteuSD
     fatUnmount("sd");
 
 	// trying to mount SD
 	std::cout << "Attemptint to mount DSI SD IF sane.\n";
 	
-	if (fatInitDefault())
-		return true;
-	return false;
+	if (!fatInitDefault())
+		return false;
+#endif
+	return true;
 }
 
 	bool ICanNotWriteLogs() {

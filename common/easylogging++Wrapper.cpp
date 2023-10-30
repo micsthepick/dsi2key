@@ -2,7 +2,9 @@
 
 namespace D2K {
 
+#ifdef _NDS
 extern bool canLogFile;
+#endif
 
 void InitLogging(int argc, char *argv[])
 {
@@ -42,6 +44,7 @@ FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n";
 #endif
 	START_EASYLOGGINGPP(argc, argv);
 	el::Configurations c;
+	#ifdef _NDS
 	if (!canLogFile) {
 		LOGGING_CONFIG[8] = 'f';
 		LOGGING_CONFIG[9] = 'a';
@@ -49,6 +52,7 @@ FORMAT=\"[%datetime{%H:%m:%s}]%levshort:%msg\"\n";
 		LOGGING_CONFIG[11] = 's';
 		LOGGING_CONFIG[12] = 'e';
 	}
+	#endif
 	c.parseFromText(LOGGING_CONFIG.c_str());
 	el::Loggers::reconfigureLogger("default", c);
 	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);

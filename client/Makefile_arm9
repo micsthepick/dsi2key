@@ -19,7 +19,6 @@ SOURCES		:=	source source/gui source/windows ../common ../common/iniparser/src
 DATA		:=
 INCLUDES	:= ../dsiwifi/include
 GRAPHICS	:=	
-PORTLIBS	:= $(DEVKITPRO)/portlibs/nds
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -32,7 +31,7 @@ CFLAGS	:=	-g -Wall\
 			-ffunction-sections -fdata-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -I$(PORTLIBS)/include -I$(PORTLIBS)/include/freetype2 -DARM9 -D_NDS -DD2KCLIENT -DEMULATOR=0
+CFLAGS	+=	$(INCLUDE) -DARM9 -D_NDS -DD2KCLIENT -DEMULATOR=0
 CXXFLAGS	:= $(CFLAGS) -std=c++11
 ##-fno-rtti
 
@@ -91,6 +90,7 @@ export OFILES	:=	$(addsuffix .o,$(BINFILES)) \
 
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+			$(foreach dir,$(LIBDIRS),-I$(dir)/include/freetype2) \
 			-I$(CURDIR)/$(BUILD)
 
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)

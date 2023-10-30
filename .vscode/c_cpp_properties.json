@@ -24,13 +24,12 @@
         {
             "name": "3DS",
             "includePath": [
-                "/opt/devkitpro/libctru/include/",
-                "/opt/devkitpro/portlibs/3ds/include/",
-                "/opt/devkitpro/portlibs/3ds/include/freetype2/",
-                "${workspaceFolder}/common",
-                "${workspaceFolder}/client",
-                "/opt/devkitpro/devkitARM/include/",
-                "/opt/devkitpro/devkitARM/arm-none-eabi/include/"
+                "/opt/devkitpro/libctru/include/**",
+                "/opt/devkitpro/portlibs/3ds/include/**",
+                "${workspaceFolder}/common/**",
+                "${workspaceFolder}/client/**",
+                "/opt/devkitpro/devkitARM/include/**",
+                "/opt/devkitpro/devkitARM/arm-none-eabi/include/**"
             ],
             "defines": [
                 "ARM9",

@@ -32,11 +32,10 @@ BUILD		:=	build_3ds
 SOURCES		:=	source source/gui source/windows ../common ../common/iniparser/src
 DATA		:=	data
 INCLUDES	:=	source source/gui source/windows ..
-PORTLIBS	:=	$(DEVKITPRO)/portlibs/3ds
 
 APP_TITLE		:=	$(TARGET)
 APP_DESCRIPTION	:=
-APP_AUTHOR		:=	sypherce
+APP_AUTHOR		:=	sypherce and micsthepick
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -47,7 +46,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -I$(PORTLIBS)/include -I$(PORTLIBS)/include/freetype2 -D__3DS__ -DD2KCLIENT -DEMULATOR=0
+CFLAGS	+=	$(INCLUDE) -D__3DS__ -DD2KCLIENT -DEMULATOR=0
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=c++11
 
@@ -105,6 +104,7 @@ export OFILES	:=	$(addsuffix .o,$(BINFILES)) \
 
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+			$(foreach dir,$(LIBDIRS),-I$(dir)/include/freetype2) \
 			-I$(CURDIR)/$(BUILD)
 
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
