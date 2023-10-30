@@ -24,14 +24,15 @@ DATA		:=
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O3\
+CFLAGS	:=	-g -Wall\
 		-mcpu=arm7tdmi -mtune=arm7tdmi \
 		-ffunction-sections -fdata-sections \
 		-ffast-math \
 		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM7
-CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions
+CXXFLAGS	:=	$(CFLAGS)
+## -fno-rtti -fno-exceptions
 
 
 ASFLAGS	:=	-g $(ARCH)

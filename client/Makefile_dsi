@@ -12,11 +12,12 @@ export TOPDIR		:=	$(CURDIR)
 
 # GMAE_ICON is the image used to create the game icon, leave blank to use default rule
 GAME_ICON := banner.bin
+GAME_CODE := DIDL
 
 # These set the information text in the nds file
-## GAME_TITLE     := DSI2KEY
-## GAME_SUBTITLE1 := Use DSI as PC remote
-## GAME_SUBTITLE2 := gh:micsthepick/dsi2key
+GAME_TITLE     := DSI2KEY
+GAME_SUBTITLE1 := Use DSI as PC remote
+GAME_SUBTITLE2 := gh:micsthepick/dsi2key
 
 
 .PHONY: $(TARGET).arm7.elf $(TARGET).arm9.elf
@@ -24,27 +25,36 @@ GAME_ICON := banner.bin
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-all: $(TARGET).dsi
+all: $(TARGET).dsi $(TARGET).sym
 
 #---------------------------------------------------------------------------------
-$(TARGET).dsi	:	$(TARGET).arm7.elf $(TARGET).arm9.elf
-	ndstool	-c $(TARGET).dsi -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf -t banner.bin \
+$(TARGET).dsi:	$(TARGET).arm7.elf $(TARGET).arm9.elf
+	ndstool -g $(GAME_CODE) 00 "DSIDL" -c $(TARGET).dsi -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf -t banner.bin \
 	$(_ADDFILES)
-	cat $(TARGET).arm9.sym $(TARGET).arm7.sym | uniq | grep -E '.+ .+' > $(TARGET).sym
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm7.elf:
 	$(MAKE) -f Makefile_arm7
+
+#---------------------------------------------------------------------------------
+$(TARGET).arm9.elf:
+	$(MAKE) -f Makefile_arm9
+
+#---------------------------------------------------------------------------------
+$(TARGET).arm7.sym:
 	$(DEVKITARM)/bin/arm-none-eabi-nm -n $(TARGET).arm7.elf > $(TARGET).arm7.raw.sym
 	sed -r 's/([0-9a-fA-F]{8}) [a-zA-Z] (.*)/\1 \2/g' $(TARGET).arm7.raw.sym > $(TARGET).arm7.sym
 	rm $(TARGET).arm7.raw.sym
 
 #---------------------------------------------------------------------------------
-$(TARGET).arm9.elf:
-	$(MAKE) -f Makefile_arm9
+$(TARGET).arm9.sym:
 	$(DEVKITARM)/bin/arm-none-eabi-nm -n $(TARGET).arm9.elf > $(TARGET).arm9.raw.sym
 	sed -r 's/([0-9a-fA-F]{8}) [a-zA-Z] (.*)/\1 \2/g' $(TARGET).arm9.raw.sym > $(TARGET).arm9.sym
 	rm $(TARGET).arm9.raw.sym
+
+#---------------------------------------------------------------------------------
+$(TARGET).sym:
+	cat $(TARGET).arm9.sym $(TARGET).arm7.sym | uniq | grep -E '.+ .+' > $(TARGET).sym
 
 #---------------------------------------------------------------------------------
 clean:

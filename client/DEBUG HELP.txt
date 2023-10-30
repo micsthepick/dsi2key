@@ -1,0 +1,16 @@
+Ensure using real firmware and sd card inserted in NO$GBA, don't run directly (i.e. use launcher or slot1launcher)
+0. Launch with bootstrapping from either
+1. Make sure that suspicious opcodes is enabled
+2. run until it jumps near 0
+3. scroll up in stack until 0000 N/A is repeated
+4. Note the first address after the N/A stops
+5. calculate with a hex calculator the difference between r13 and that address
+6. Click on data window, go to address r13
+7. Utility: Hex to file
+8. Enter in the difference in decimal e.g. python -c "print(int('2FF3D00', 16) - int('2DD3760', 16))"
+9. Save as all files "stack.dmp"
+10. Replace if necessary
+11. python demangle_stacktrace.py stack.dmp
+
+might help to set a breakpoint on D2K_INIT via asm volatile ("mov r11, r11");
+set another breakpoint in fatMount

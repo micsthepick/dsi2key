@@ -429,6 +429,7 @@ void WaitForVBlank()
 
 bool Init(int argc, char* argv[])
 {
+    asm volatile ("mov r11, r11");
 	// Screen setup
 #if defined(__3DS__)
 	gfxInitDefault();              // Graphics
@@ -457,12 +458,17 @@ bool Init(int argc, char* argv[])
 	// Get the bottom screen's frame buffer
 	D2K::GUI::g_screen[0] = (uint16_t*)gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, nullptr, nullptr);
 #elif defined(_NDS)
+	// Console setup
+	consoleDemoInit();
+
+	if(!fatInitDefault())
+		std::cout << "Error (fatInitDefault): Failed to access storage\n";
+
 	defaultExceptionHandler();
 
 	// PowerOff(PM_BACKLIGHT_TOP);
 	videoSetModeSub(MODE_0_2D);
-	// Console setup
-	consoleDemoInit();
+	
     consoleDebugInit(DebugDevice_CONSOLE);
 	
 	vramSetPrimaryBanks(VRAM_A_LCD, VRAM_B_MAIN_SPRITE, VRAM_C_SUB_BG, VRAM_D_LCD);
@@ -474,11 +480,9 @@ bool Init(int argc, char* argv[])
 	consoleClear();
 	
 	irqSet(IRQ_VBLANK, VBlankFunction); // Setup vblank function
-
-	if(!fatInitDefault())
-		std::cout << "Error (fatInitDefault): Failed to access storage\n";
 #endif
 
+    asm volatile ("mov r11, r11");
 	D2K::InitLogging(argc, argv);
 #ifdef GYRO_STUFF
 #if defined(__3DS__)

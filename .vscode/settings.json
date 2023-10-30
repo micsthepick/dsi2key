@@ -73,5 +73,6 @@
         "nds.h": "c",
         "clock.h": "c",
         "wifi_debug.h": "c"
-    }
+    },
+    "C_Cpp.default.compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-gcc"
 }

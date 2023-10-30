@@ -13,6 +13,7 @@
 #define ELPP_DISABLE_LOGGING_FLAGS_FROM_ARG
 #endif
 #define ELPP_DEFAULT_LOG_FILE "ds2key/ds2key.log"
+#define ELPP_FEATURE_CRASH_LOG
 
 #include "easylogging++.h"
 

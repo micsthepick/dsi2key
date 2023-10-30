@@ -26,14 +26,15 @@ PORTLIBS	:= $(DEVKITPRO)/portlibs/nds
 #---------------------------------------------------------------------------------
 ARCH	:=	-mthumb -mthumb-interwork
 
-CFLAGS	:=	-g -Wall -O2\
+CFLAGS	:=	-g -Wall\
 			-march=armv5te -mtune=arm946e-s \
 			-ffast-math \
 			-ffunction-sections -fdata-sections \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -I$(PORTLIBS)/include -I$(PORTLIBS)/include/freetype2 -DARM9 -D_NDS -DD2KCLIENT -DEMULATOR=0
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=c++11
+CXXFLAGS	:= $(CFLAGS) -std=c++11
+##-fno-rtti
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map) -Wl,--gc-sections
@@ -41,7 +42,7 @@ LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map) -Wl,--gc-sec
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)
 #---------------------------------------------------------------------------------
-LIBS	:= 	-lfat -ldsiwifi9 -lnds9 -lpng -lfreetype -lz
+LIBS	:= 	-lpng -lz -lfat -ldsiwifi9 -lnds9 -lfreetype
 
 
 #---------------------------------------------------------------------------------
@@ -104,7 +105,7 @@ $(BUILD): ../dsiwifi/lib/libdsiwifi9
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) *.elf *.bin
+	@rm -fr $(BUILD) *.elf
 	$(MAKE) -C ../dsiwifi/arm_host clean
 
 ../dsiwifi/lib/libdsiwifi9:
