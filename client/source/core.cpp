@@ -462,13 +462,15 @@ bool Init(int argc, char* argv[])
 	irqSet(IRQ_VBLANK, VBlankFunction); // Setup vblank function
 	consoleDemoInit();
 
-	std::cout << "IF YOU SEE THIS THEN \n
-	YOU MAY NEED TO DLDI PATCH (fat init fail)!\n";
+	std::cout << "IF YOU SEE THIS THEN \n";
+	std::cout << "YOU MAY NEED TO DLDI PATCH (fat init fail)!\n";
 	
 	WaitForVBlank();
 
 	if(!fatInitDefault())
 		std::cout << "Error (fatInitDefault): Failed to access storage\n";
+
+	consoleClear();
 
 	defaultExceptionHandler();
 
