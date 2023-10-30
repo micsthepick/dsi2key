@@ -53,7 +53,7 @@ $(TARGET).arm9.sym:
 	rm $(TARGET).arm9.raw.sym
 
 #---------------------------------------------------------------------------------
-$(TARGET).sym:
+$(TARGET).sym: $(TARGET).arm9.sym $(TARGET).arm7.sym
 	cat $(TARGET).arm9.sym $(TARGET).arm7.sym | uniq | grep -E '.+ .+' > $(TARGET).sym
 
 #---------------------------------------------------------------------------------
