@@ -214,6 +214,15 @@
             }
         },
         {
+            "label": "upload via dsidl",
+            "type": "shell",
+            "command": "python client/upload_via_dsidl.py client/dsi2key.dsi",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "DSI wifiboot",
             "type": "process",
             "command": "dslink",
