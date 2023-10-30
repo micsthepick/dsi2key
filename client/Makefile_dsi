@@ -20,7 +20,7 @@ GAME_SUBTITLE1 := Use DSI as PC remote
 GAME_SUBTITLE2 := gh:micsthepick/dsi2key
 
 
-.PHONY: clean $(TARGET).arm7.elf $(TARGET).arm9.elf $(TARGET).arm7.sym: $(TARGET).arm9.sym $(TARGET).sym
+.PHONY: clean $(TARGET).arm7.elf $(TARGET).arm9.elf $(TARGET).arm7.sym $(TARGET).arm9.sym $(TARGET).sym
 
 #---------------------------------------------------------------------------------
 # main targets
