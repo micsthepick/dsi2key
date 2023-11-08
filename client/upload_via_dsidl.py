@@ -32,21 +32,30 @@ def get_local_ip():
 
 import time
 
-CHUNK_SIZE = 512
+CHUNK_SIZE = 1024
 SEND_DELAY = 0.01  # delay in seconds
+KEEP_ALIVE_TIMEOUT = 10  # seconds
+
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-         # If requested path doesn't match the FILE_PATH
+        # Set the keep-alive header
+        self.protocol_version = 'HTTP/1.1'
+        self.close_connection = False
+
+        # If requested path doesn't match the FILE_PATH
         if self.path.strip('/') != FILE_PATH.strip('/'):
             self.send_error(404, "File not found")
             return
+        
         path = self.translate_path(self.path)
         try:
             with open(path, 'rb') as f:
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/octet-stream')  # Send as binary data
-                self.send_header('Content-Length', os.path.getsize(path))  # Explicitly set content length
+                self.send_header('Content-Length', str(os.path.getsize(path)))  # Explicitly set content length
+                self.send_header('Connection', 'keep-alive')  # Add keep-alive header
+                self.send_header('Keep-Alive', f'timeout={KEEP_ALIVE_TIMEOUT}')  # Define keep-alive timeout
                 self.end_headers()
 
                 # Serve the file in chunks with a delay
@@ -59,20 +68,21 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     time.sleep(SEND_DELAY)
         except Exception as e:
             print("Error while serving the file:", str(e))
+            self.close_connection = True
 
-    # def end_headers(self):
-    #     self.send_header('Content-Length', str(self.content_length))
-    #     super().end_headers()
+    def finish(self):
+        # Overriding finish to keep the connection open if not closing
+        if not self.close_connection:
+            self.wfile.flush()
+            self.rfile.close()
+            # Wait for the next request within the keep-alive timeout
+            self.connection.settimeout(KEEP_ALIVE_TIMEOUT)
+            try:
+                self.handle_one_request()
+            except (socket.timeout, socket.error):
+                pass
+        super().finish()
 
-    # def send_response_only(self, code, message=None):
-    #     self.content_length = int(self.headers.get('Content-Length', 0))
-    #     super().send_response_only(code, message)
-
-    # def do_GET(self):
-    #     if self.path == f"/{FILE_PATH}":
-    #         return super().do_GET()
-    #     else:
-    #         self.send_error(404, "File Not Found")
 
 def display_qr_code(url):
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=1, border=4)
