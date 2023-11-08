@@ -19,55 +19,19 @@
 
 #include "gui/gui.h" // D2K::GUI::Screen
 
-static bool returnfalse() {
-	return false;
-}
-
 namespace D2K {
-bool ICanWriteSD() {
+bool ICanWriteFAT() {
 #ifdef _NDS
+	asm volatile ("mov r11, r11");
 	// Console setup
 	defaultExceptionHandler();
 	consoleDemoInit();
-
-	// trying to mount SD
-	std::cout << "Attemptint to mount DSI SD IF sane.\n";
-
-	auto __io_dsi_sd = get_io_dsisd();
-
-	if (!__io_dsi_sd->startup)  {
-		// live patch (HACKY)
-		*(FN_MEDIUM_STARTUP *)&(__io_dsi_sd->startup) = returnfalse;
-		return false;
-	}
-
-	if (!__io_dsi_sd->isInserted) {
-		*(FN_MEDIUM_ISINSERTED *)&(__io_dsi_sd->isInserted) = returnfalse;
-		return false;
-	}
-
-	asm volatile ("mov r11, r11");
-	
-	if (!fatMountSimple("sd", __io_dsi_sd))
-		return false;
 #endif
-	return true;
-	}
 
-
-bool ICanWriteuSD() {
-#ifdef _NDS
-	// clean up CanWriteuSD
-    fatUnmount("sd");
-
-	// trying to mount SD
-	std::cout << "Attemptint to mount DSI SD IF sane.\n";
-	
 	if (!fatInitDefault())
 		return false;
-#endif
 	return true;
-}
+	}
 
 	bool ICanNotWriteLogs() {
 		std::cout << "can't write logs!!!\n";
@@ -78,7 +42,7 @@ bool ICanWriteuSD() {
 		return false;
 	}
 
-	bool canLogFile = ICanWriteSD() || ICanWriteuSD() || ICanNotWriteLogs();
+	bool canLogFile = ICanWriteFAT() || ICanNotWriteLogs();
 }
 
 // This looks wrong because it's a macro
@@ -491,7 +455,7 @@ void WaitForVBlank()
 
 bool Init(int argc, char* argv[])
 {
-    asm volatile ("mov r11, r11");
+	asm volatile ("mov r11, r11");
 	// Screen setup
 #if defined(__3DS__)
 	gfxInitDefault();              // Graphics
@@ -521,20 +485,19 @@ bool Init(int argc, char* argv[])
 	D2K::GUI::g_screen[0] = (uint16_t*)gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, nullptr, nullptr);
 #elif defined(_NDS)
 	irqSet(IRQ_VBLANK, VBlankFunction); // Setup vblank function
-	asm volatile ("mov r11, r11");
 
 	// PowerOff(PM_BACKLIGHT_TOP);
 	videoSetModeSub(MODE_0_2D);
-	
-    consoleDebugInit(DebugDevice_CONSOLE);
-	
+
+	consoleDebugInit(DebugDevice_CONSOLE);
+
 	vramSetPrimaryBanks(VRAM_A_LCD, VRAM_B_MAIN_SPRITE, VRAM_C_SUB_BG, VRAM_D_LCD);
 	videoSetMode(MODE_5_2D);
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
 	int background_3_id = bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0,0);
 	D2K::GUI::g_screen[0] = bgGetGfxPtr(background_3_id);
 	lcdSwap();
-	//consoleClear();
+	consoleClear();
 #endif
 
     asm volatile ("mov r11, r11");
@@ -562,8 +525,8 @@ bool Init(int argc, char* argv[])
 	{
 		LOG(INFO) << "Connecting via WFC data\n";
 		DSiWifi_SetLogHandler(appwifi_log);
-    	//DSiWifi_SetConnectHandler(appwifi_connect);
-    	//DSiWifi_SetReconnectHandler(appwifi_reconnect);
+		//DSiWifi_SetConnectHandler(appwifi_connect);
+		//DSiWifi_SetReconnectHandler(appwifi_reconnect);
 		if(!DSiWifi_InitDefault(WFC_CONNECT))
 		{
 			LOG(ERROR) << "Error (DSiWifi_InitDefault): Failed to connect\n";
@@ -598,15 +561,16 @@ bool Init(int argc, char* argv[])
 	{
 		D2K::WaitForVBlank();
 	}
-	LOG(ERROR) << "can't open filesystem to write logfile!";
 #endif
 
 	UDP::Init();    // Initilize UDP
 	Config::Load(); // Load UDP settings
 	UDP::Connect(); // Connect with settings
 #ifdef _NDS
-	if(!toggle_both_lights)
+	if(!toggle_both_lights) {
+		powerOff(PM_BACKLIGHT_BOTTOM);
 		powerOff(PM_BACKLIGHT_TOP);
+	}
 #endif
 
 	return false;   // Return without error
@@ -658,9 +622,9 @@ int Loop()
 bool MagicKeys()
 {
 	return g_keys_held&KEY_START
-	    && g_keys_held&KEY_SELECT
-	    && g_keys_held&KEY_L
-	    && g_keys_held&KEY_R;
+		&& g_keys_held&KEY_SELECT
+		&& g_keys_held&KEY_L
+		&& g_keys_held&KEY_R;
 }
 
 } // namespace D2K

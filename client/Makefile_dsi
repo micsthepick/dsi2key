@@ -12,7 +12,7 @@ export TOPDIR		:=	$(CURDIR)
 
 # GMAE_ICON is the image used to create the game icon, leave blank to use default rule
 GAME_ICON := banner.bin
-GAME_CODE := DIDL
+GAME_CODE := DI2K
 
 # These set the information text in the nds file
 GAME_TITLE     := DSI2KEY
