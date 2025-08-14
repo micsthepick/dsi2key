@@ -7,6 +7,8 @@ export BLOCKSDSEXT              ?= /opt/blocksds/external
 
 export WONDERFUL_TOOLCHAIN      ?= /opt/wonderful
 
+export PREFIX                   ?= /opt/wonderful/toolchain/arm-none-eabi-
+
 #---------------------------------------------------------------------------------
 # BUILD is the directory where object files & intermediate files will be placed
 # SOURCES is a list of directories containing source code
