@@ -3,12 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server\server.vcxproj", "{90C7424E-D238-441D-8590-3A125AA0C29B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client\client.vcxproj", "{6CEBDB4B-370A-4F11-A723-651484B0EF49}"
-	ProjectSection(ProjectDependencies) = postProject
-		{90C7424E-D238-441D-8590-3A125AA0C29B} = {90C7424E-D238-441D-8590-3A125AA0C29B}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server\server.vcxproj"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dsiwifi", "dsiwifi", "{5450C5B6-A202-4689-9369-92A4F0D95B2A}"
 	ProjectSection(SolutionItems) = preProject
@@ -45,16 +40,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.3DS|x86.ActiveCfg = Debug|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.Debug|x86.ActiveCfg = Debug|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.Debug|x86.Build.0 = Debug|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Debug|x86.ActiveCfg = GUI Debug|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Debug|x86.Build.0 = GUI Debug|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Release|x86.ActiveCfg = GUI Release|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.GUI Release|x86.Build.0 = GUI Release|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.NDS|x86.ActiveCfg = Debug|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.Release|x86.ActiveCfg = Release|Win32
-		{90C7424E-D238-441D-8590-3A125AA0C29B}.Release|x86.Build.0 = Release|Win32
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.3DS|x86.ActiveCfg = 3DS|ARM
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.3DS|x86.Build.0 = 3DS|ARM
 		{6CEBDB4B-370A-4F11-A723-651484B0EF49}.Debug|x86.ActiveCfg = 3DS|ARM

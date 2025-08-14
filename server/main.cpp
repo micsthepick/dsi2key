@@ -29,7 +29,7 @@ void SendClient()
 	long long time_difference = duration_cast<milliseconds>(time_current - time_previous).count();
 	if(time_difference >= 5000)
 	{
-		D2K::ExecuteCommand("C:\\devkitPro\\devkitARM\\bin\\3dslink.exe C:\\Root\\Programming\\ds2key\\master\\ds2key\\client\\ds2key.3dsx");
+		D2K::ExecuteCommand("3dslink.exe C:\\Root\\Programming\\ds2key\\master\\ds2key\\client\\ds2key.3dsx");
 		time_previous = time_current;
 	}
 }

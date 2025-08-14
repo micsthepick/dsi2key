@@ -2,12 +2,10 @@
 .SUFFIXES:
 #---------------------------------------------------------------------------------
 
-ifeq ($(strip $(DEVKITARM)),)
-$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
-endif
+export BLOCKSDS                 ?= /opt/blocksds/core
+export BLOCKSDSEXT              ?= /opt/blocksds/external
 
-TOPDIR ?= $(CURDIR)
-include $(DEVKITARM)/3ds_rules
+export WONDERFUL_TOOLCHAIN      ?= /opt/wonderful
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
@@ -146,7 +144,7 @@ clean:
 #---------------------------------------------------------------------------------
 run:
 	@echo launching via 3dslink
-	@$(DEVKITARM)/bin/3dslink $(TARGET).3dsx
+	@$(BLOCKSDS)/bin/3dslink $(TARGET).3dsx
 
 
 #---------------------------------------------------------------------------------
@@ -163,7 +161,6 @@ else
 $(OUTPUT).3dsx	:	$(OUTPUT).elf
 endif
 
-# see https://github.com/devkitPro/3ds-examples/pull/46
 # $(OUTPUT).3ds	:	$(OUTPUT).stripped.elf
 # 	makerom -f cci -o $(OUTPUT).3ds -rsf "$(TOPDIR)/cxi/gw_workaround.rsf" -target d -exefslogo -elf $(OUTPUT).stripped.elf -icon "$(TOPDIR)/cxi/icon.icn" -banner "$(TOPDIR)/cxi/banner.bnr"
 # 

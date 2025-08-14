@@ -1,11 +1,11 @@
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
-ifeq ($(strip $(DEVKITARM)),)
-$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
-endif
 
-include $(DEVKITARM)/ds_rules
+export BLOCKSDS                 ?= /opt/blocksds/core
+export BLOCKSDSEXT              ?= /opt/blocksds/external
+
+export WONDERFUL_TOOLCHAIN      ?= /opt/wonderful
 
 #---------------------------------------------------------------------------------
 # BUILD is the directory where object files & intermediate files will be placed

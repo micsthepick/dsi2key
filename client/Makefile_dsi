@@ -1,11 +1,10 @@
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
-ifeq ($(strip $(DEVKITARM)),)
-$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
-endif
+export BLOCKSDS                 ?= /opt/blocksds/core
+export BLOCKSDSEXT              ?= /opt/blocksds/external
 
-include $(DEVKITARM)/ds_rules
+export WONDERFUL_TOOLCHAIN      ?= /opt/wonderful
 
 export TARGET		:=	dsi2key
 export TOPDIR		:=	$(CURDIR)
@@ -42,13 +41,13 @@ $(TARGET).arm9.elf:
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm7.sym:
-	$(DEVKITARM)/bin/arm-none-eabi-nm -n $(TARGET).arm7.elf > $(TARGET).arm7.raw.sym
+	$(BLOCKSDS)/bin/arm-none-eabi-nm -n $(TARGET).arm7.elf > $(TARGET).arm7.raw.sym
 	sed -r 's/([0-9a-fA-F]{8}) [a-zA-Z] (.*)/\1 \2/g' $(TARGET).arm7.raw.sym > $(TARGET).arm7.sym
 	rm $(TARGET).arm7.raw.sym
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm9.sym:
-	$(DEVKITARM)/bin/arm-none-eabi-nm -n $(TARGET).arm9.elf > $(TARGET).arm9.raw.sym
+	$(BLOCKSDS)/bin/arm-none-eabi-nm -n $(TARGET).arm9.elf > $(TARGET).arm9.raw.sym
 	sed -r 's/([0-9a-fA-F]{8}) [a-zA-Z] (.*)/\1 \2/g' $(TARGET).arm9.raw.sym > $(TARGET).arm9.sym
 	rm $(TARGET).arm9.raw.sym
 
