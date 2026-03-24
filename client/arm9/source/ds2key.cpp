@@ -1,8 +1,8 @@
 /*
 	ds2key networking
 */
-#include <nds/ndstypes.h>//dswifi9.h
-#include <dswifi9.h>
+#include <nds/ndstypes.h>//dsiwifi9.h
+#include <dsiwifi9.h>
 #include <netinet/in.h>
 #include <netdb.h>
 
@@ -11,6 +11,8 @@
 #include <errno.h>
 
 #include "ds2key.h"
+#define closesocket close
+
 
 namespace D2K {
 	//private
@@ -165,6 +167,7 @@ namespace D2K {
 			printf("Error (sendto): #%d\n", errno);
 	}
 
+/*
 	void DS2Key::ServerLookup() {
 		if(EMULATOR) return;
 		char host[128];
@@ -181,7 +184,7 @@ namespace D2K {
 		//while(hostEnt->h_addr_list[i] != 0)
 		{
 			addr.s_addr = *(u_long *) hostEnt->h_addr_list[i++];
-			u32 ip = Wifi_GetIP();
+			u32 ip = DSiWifi_GetIP();
 			sprintf(host, "%i.%i.%i.%i", (ip ) & 0xFF, (ip >> 8) & 0xFF, (ip >> 16) & 0xFF, 0xFF);
 			inet_aton(host, &addr);
 			sockaddr.sin_addr = addr;
@@ -195,7 +198,7 @@ namespace D2K {
 		if(sendto(sock, (char*)&packet, sizeof(ds2keyPacket), 0, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
 			printf("Error (sendto): #%d\n", errno);
 		sockaddr.sin_addr = originalAddr;
-		int sockaddrLen = sizeof(struct sockaddr_in);
+		socklen_t sockaddrLen = sizeof(struct sockaddr_in);
 
 		memset(&packet, 0, sizeof(ds2keyPacket));
 		if(recvfrom(sock, (char*)&packet, sizeof(ds2keyPacket), 0, (struct sockaddr *)&sockaddr, &sockaddrLen) == -1) {
@@ -210,4 +213,5 @@ namespace D2K {
 			SetIP(host);
 		}
 	}
+*/
 }

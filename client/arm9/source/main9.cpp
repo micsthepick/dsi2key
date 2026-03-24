@@ -20,6 +20,10 @@ int main() {
 			AP::Print(i);
 	}
 
+	for (int i = 0; i < 60*4; i++) {
+		swiWaitForVBlank();
+	}
+
 	DS2Key::Init();
 	Main::Window = new Main::WindowClass();
 	Keypad::Window = new Keypad::WindowClass();

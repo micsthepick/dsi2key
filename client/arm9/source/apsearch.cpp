@@ -1,6 +1,6 @@
 #include <nds.h>
 #include <stdio.h>
-#include <dswifi9.h>
+#include <dsiwifi9.h>
 #include "apsearch.h"
 
 namespace D2K {
@@ -9,7 +9,7 @@ namespace D2K {
 		bool searching = false;
 		int Update() {
 			if(searching) {
-				count = Wifi_GetNumAP();
+				count = DSiWifi_GetNumAP();
 			}
 			else {
 				count = -1;
@@ -17,7 +17,7 @@ namespace D2K {
 			return count;
 		}
 		void Init() {
-			Wifi_ScanMode();
+			DSiWifi_ScanMode();
 			searching = true;
 			Update();
 		}
@@ -25,7 +25,7 @@ namespace D2K {
 			Update();
 			if(i <= count)
 			{
-				Wifi_GetAPData(i, &ap);
+				DSiWifi_GetAPData(i, &ap);
 				return &ap;
 			}
 			return (Wifi_AccessPoint*)NULL;

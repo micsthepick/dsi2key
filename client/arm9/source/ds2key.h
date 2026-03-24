@@ -25,7 +25,7 @@ namespace D2K {
 		void DeInit();
 		//void Update(uint32_t keys, uint32_t gripKeys, touchPosition *pos);
 		void Update(uint32_t keys, uint32_t keysTurbo, uint32_t gripKeys, uint32_t gripKeysTurbo, touchPosition *pos);
-		void ServerLookup();
+		//void ServerLookup();
 	};
 }
 

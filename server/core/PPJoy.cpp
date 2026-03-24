@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <winioctl.h>
 #include <sstream>//ostringstream
-#include "PPJioctl.h"
+#include "public.h"
 #include "PPJoy.h"
 
 namespace D2K {

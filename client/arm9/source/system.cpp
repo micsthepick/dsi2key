@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <nds.h>
 #include <fat.h>
-#include <dswifi9.h>
+#include <dsiwifi9.h>
 #include "system.h"
 #include "config.h"
 #include "gui.h"
@@ -98,8 +98,8 @@ namespace D2K {
 
 			iprintf("Connecting via WFC data\n");
 			if(!EMULATOR)
-			if(!Wifi_InitDefault(WFC_CONNECT)) {
-				printf("Error (Wifi_InitDefault): Failed to connect\n");
+			if(!DSiWifi_InitDefault(WFC_CONNECT)) {
+				printf("Error (DSiWifi_InitDefault): Failed to connect\n");
 			}
 
 			//setup vblank IRQ

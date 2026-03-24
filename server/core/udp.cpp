@@ -3,13 +3,13 @@
 */
 
 #include <stdio.h>//stderr, fprintf
-#ifndef WIN32
+//#ifndef WIN32
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
 #include <string.h>
 #define closesocket close
-#endif//WIN32
+//#endif//WIN32
 #include "udp.h"
 
 namespace D2K

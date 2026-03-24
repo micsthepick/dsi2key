@@ -1,7 +1,7 @@
 #ifndef __APSEARCH_H__
 #define __APSEARCH_H__
 
-#include <dswifi9.h>
+#include <dsiwifi9.h>
 
 namespace D2K {
 	namespace AP {

@@ -17,7 +17,7 @@ include $(DEVKITARM)/ds_rules
 BUILD		:=	build
 SOURCES		:=	source source/iniparser/src source/gui
 DATA		:=
-INCLUDES	:=	include source/iniparser/src source/gui
+INCLUDES	:=	include source/iniparser/src source/gui ../../../dsiwifi/include
 GRAPHICS	:=	gfx
 
 
@@ -35,19 +35,19 @@ CFLAGS	+=	$(INCLUDE) -DARM9 -DEMULATOR=0 -DVERSION_STRING="\"DS2Key SVN Build\""
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
 
 ASFLAGS	:=	-g $(ARCH)
-LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
+LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-v,-Map,$(notdir $*.map)
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)
 #---------------------------------------------------------------------------------
-LIBS	:= 	-lfat -ldswifi9 -lnds9
+LIBS	:= 	-lfat -ldsiwifi9 -lnds9
 
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	$(LIBNDS)
+LIBDIRS	:=	../../../dsiwifi $(LIBNDS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
