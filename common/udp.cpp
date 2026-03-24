@@ -17,7 +17,7 @@
 #include <sys/ioctl.h>    // ioctl
 #elif defined(_NDS)
 #include <nds.h>
-#include <dswifi9.h>
+#include <dsiwifi9.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <cerrno>
@@ -52,7 +52,9 @@
 #define NETclosesocket close
 #define SOCKET_ERROR -1
 #elif defined(_NDS)
-typedef int socklen_t;
+#define SOCKET_ERROR -1
+//typedef int socklen_t;
+#define closesocket(s)    close(s)
 #define NETclosesocket closesocket
 #elif defined(_3DS)
 #define SOCKET_ERROR -1
@@ -305,7 +307,7 @@ int Recv(void* buffer, unsigned int length, struct sockaddr* _remote_sockaddr)
 unsigned long GetLocalIP()
 {
 #if defined(_NDS)
-	return Wifi_GetIP();
+	return DSiWifi_GetIP();
 #elif defined(_3DS)
 	return gethostid();
 #elif defined(_WIN32) || defined(__linux__)

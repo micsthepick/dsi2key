@@ -12,7 +12,7 @@
 #elif defined(_NDS)
 #include <nds.h>
 #include <fat.h>
-#include <dswifi9.h>
+#include <dsiwifi9.h>
 #endif
 
 #include "core.h"
@@ -483,7 +483,7 @@ bool Init(int argc, char* argv[])
 	if(!EMULATOR) 
 	{
 		LOG(INFO) << "Connecting via WFC data\n";
-		if(!Wifi_InitDefault(WFC_CONNECT))
+		if(!DSiWifi_InitDefault(WFC_CONNECT))
 		{
 			LOG(ERROR) << "Error (Wifi_InitDefault): Failed to connect\n";
 

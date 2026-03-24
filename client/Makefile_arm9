@@ -17,9 +17,9 @@ include $(DEVKITARM)/ds_rules
 BUILD		:=	build_arm9
 SOURCES		:=	source source/gui source/windows ../common ../common/iniparser/src
 DATA		:=
-INCLUDES	:=	source source/gui source/windows ..
+INCLUDES	:=	source source/gui source/windows .. ../dsiwifi/include
 GRAPHICS	:=	
-PORTLIBS	:=	$(DEVKITPRO)/portlibs/armv5te
+PORTLIBS	:=	$(DEVKITPRO)/portlibs/nds
 
 
 #---------------------------------------------------------------------------------
@@ -41,14 +41,14 @@ LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)
 #---------------------------------------------------------------------------------
-LIBS	:= 	-lfat -ldswifi9 -lnds9 -lpng -lfreetype -lz
+LIBS	:= -lfat -ldsiwifi9 -lnds9 -lpng -lfreetype -lz
 
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	$(LIBNDS) $(PORTLIBS)
+LIBDIRS	:=	../../dsiwifi $(LIBNDS) $(PORTLIBS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional

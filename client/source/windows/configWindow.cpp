@@ -7,7 +7,7 @@
 #include "turboWindow.h"
 
 // controls
-#include "gui/Button.h"
+#include "gui/button.h"
 #include "gui/label.h"
 
 // core
@@ -16,6 +16,8 @@
 #include "common/key.h"
 #include "common/udp.h"
 #include "config.h"
+
+#include "server/core/client.h"
 
 #ifdef _3DS
 #include "gui/gui.h"
@@ -321,13 +323,13 @@ bool WindowClass::Update()
 		last_slider_3d_status = g_slider_3d_status;
 	}
 #elif defined(_NDS)
-	else if(g_keys_down&KEY_BLUE)
+	else if(g_keys_down&DS2KEY_BLUE)
 		ButtonBlueFunction();
-	else if(g_keys_down&KEY_YELLOW)
+	else if(g_keys_down&DS2KEY_YELLOW)
 		ButtonYellowFunction();
-	else if(g_keys_down&KEY_RED)
+	else if(g_keys_down&DS2KEY_RED)
 		ButtonRedFunction();
-	else if(g_keys_down&KEY_GREEN)
+	else if(g_keys_down&DS2KEY_GREEN)
 		ButtonGreenFunction();
 #endif
 	else if(g_keys_down&KEY_LID)
